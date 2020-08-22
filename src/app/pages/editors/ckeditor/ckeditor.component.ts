@@ -11,10 +11,15 @@ import 'ckeditor';
         CKEditor
       </nb-card-header>
       <nb-card-body>
-        <ckeditor [config]="{ extraPlugins: 'divarea', height: '320' }"></ckeditor>
+        <ckeditor [config]="{ extraPlugins: 'divarea', height: '320' }" (change)="op($event)"></ckeditor>
       </nb-card-body>
     </nb-card>
   `,
 })
 export class CKEditorComponent {
+  x;
+  op(e){
+    console.log(e)
+    console.log(this.x)
+  }
 }
