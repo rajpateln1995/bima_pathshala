@@ -48,13 +48,13 @@
                         <td>{{d.motherTongue}}</td>
                         
                       </tr>
-                      <tr *ngIf="total !== 0">
+                      <tr *ngIf="total == 0">
                         <td style="text-align: center;">No Data Available</td>                    
                       </tr>
                     </tbody>
                   </table>
             </div>
-            <div *ngIf="total == 0" class="row">
+            <div *ngIf="total !== 0" class="row">
                 <div class="col-md-8 center">
                     <pagination-controls id="pagination" (pageChange)="curr_page = $event"></pagination-controls>
                 </div>
