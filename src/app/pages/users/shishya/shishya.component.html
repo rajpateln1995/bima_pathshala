@@ -1,44 +1,48 @@
-<button nbButton status="success" class="float" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Add New</button>
+<button nbButton status="success" class="float" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Add New Shishya</button>
+<button nbButton status="primary" data-toggle="modal" data-target="#filterModal"><i class="fa fa-filter mr-2" aria-hidden="true"></i>Filter
+ 
+</button>
+<button (click)="uploadCsv()" nbButton status="success" ><i class="fa fa-upload mr-2" aria-hidden="true"></i>Upload Csv</button>
+<button nbButton status="primary"(click)="downloadSampleCsv()" ><i class="fa fa-download mr-2" aria-hidden="true"></i>Download Sample Csv</button>
+<button nbButton status="success" (click)="downloadCsv()" ><i class="fa fa-download mr-2" aria-hidden="true"></i>Download Data</button>
 <div class="row">
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
-          <b>Shishya</b>
+          <b>Shishya  [Total : {{total}}]</b>
         </div>
         <div class="card-body">
             <div class="responsive">
                 <table class="table table-bordered table-striped table-md">
                     <thead>
                       <tr>
-                        <th *ngFor="let data of table_head">{{data}}</th>
+                        <th *ngFor="let th of table_head">{{th}}</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let d of data | paginate: { id: 'pagination',
                       itemsPerPage: pageSize,
                       currentPage: curr_page }">
-                        <td >{{d.userId}}</td>
-                        <td>{{d.bimaId}}</td>
-                        <td>{{d.email}}</td>
-                        <td>{{d.userName}}</td>
-                        <td>{{d.description}}</td>
-                        <td>{{d.website}}</td>
-                        <td>{{d.dob}}</td>
-                        <td>{{d.number}}</td>
-                        <td>{{d.name}}</td>
-                        <td>{{d.location.coordinates[0]}}, {{d.location.coordinates[1]}}</td>
-                        <td>{{d.country}}</td>
-                        <td>{{d.state}}</td>
-                        <td>{{d.city}}</td>
+                        <td >{{d.email}}</td>
+                        <td>{{d.rollNumber}}</td>
+                        <td>{{d.aadharNumber}}</td>
+                        <td>{{d.gender}}</td>
+                        <td>{{d.age}}</td>
+                        <td>{{d.address.pincode}}</td>
+                        <td>{{d.address.city}}</td>
+                        <td>{{d.address.state}}</td>
+                        <td>{{d.address.country}}</td>
+                        <td>{{d.occupation}}</td>
+                        <td>{{d.motherTongue}}</td>
                       </tr>
-                      <tr *ngIf="data.length == 0">
+                      <tr *ngIf="total == 0">
                         <td style="text-align: center;">No Data Available</td>                    
                       </tr>
                     </tbody>
                   </table>
             </div>
             <div class="row">
-                <div class="col-md-8 center">
+                <div *ngIf="total !== 0" class="col-md-8 center">
                     <pagination-controls id="pagination" (pageChange)="curr_page = $event"></pagination-controls>
                 </div>
                 <div class="col-md-4 center">
@@ -50,7 +54,6 @@
                     </select>
                 </div>  
             </div>
-            
         </div>
       </div>
     </div>
@@ -62,44 +65,126 @@
     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add New Shishya</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Add New Guru</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
+          
             <form [formGroup]="createSanchalak">
+              <div class="form-group center">
+                <label class="label">Fields Marked with <span style="color: red;">*</span> are Mandatory !</label>
+              </div>
                 <div class="form-group">
-                    <label for="inputFirstName" class="label">Full Name</label>
-                    <input formControlName="name" type="text" nbInput fullWidth  placeholder="Enter Full Name ">
+                    <label for="inputFirstName" class="label">Full Name of Guru <span style="color: red;">*</span></label>
+                    <input  type="text" nbInput fullWidth  placeholder="Enter Full Name ">
+                </div>
+                <!-- <div class="form-group">
+                  <label for="inputFirstName" class="label">Guru Type <span style="color: red;">*</span></label>
+                  <select class="form-control" style="width: 50%;">
+                    <option selected>--Select--</option>
+                    <option value="Full Time">Full Time</option>
+                    <option value="Part Time">Part Time</option>
+                    <option value="Retainer">Retainer</option>
+                  </select>
                 </div>
                 <div class="form-group">
-                    <label for="inputFirstName" class="label">Email</label>
-                    <input formControlName="email" type="text" nbInput fullWidth  placeholder="Enter Email">
+                  <label for="inputFirstName" class="label">Guru Level <span style="color: red;">*</span></label>
+                  <select class="form-control" style="width: 50%">
+                    <option selected>--Select--</option>
+                    <option value="level 1">Level 1</option>
+                    <option value="level 2">Level 2</option>
+                    <option value="level 3">Level 3</option>
+                  </select>
+                </div> -->
+                
+                <div class="form-group">
+                    <label for="inputFirstName" class="label">Email <span style="color: red;">*</span></label>
+                    <input  type="text" nbInput fullWidth  placeholder="Enter Email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="inputFirstName" class="label">Contact No. <span style="color: red;">*</span></label>
+                    <!-- <div class="row">
+                      <div class="col-md-8"> -->
+                        <input [disabled] = "disable_contact" [ngModelOptions]="{standalone: true}" [(ngModel)] = "contact" type="text" nbInput fullWidth  placeholder="Enter Contact No.">
+                      <!-- </div>
+                      <div class="col-md-4">
+                        <button nbButton status="primary" type="button" [disabled] = "disable_contact" (click)="onVerify()" class="mt-0"><i class="fa fa-check mr-2" aria-hidden="true"></i>Verify</button>
+                      </div>
+                    </div> -->
+                </div>
+                <!-- <div *ngIf="show_otp" class="form-group">
+                  <label *ngIf="verified.length === 0" for="inputFirstName" class="label d-block">Please enter otp sent at </label>
+                  <ng-otp-input *ngIf="verified.length === 0" class="d-inline-block" (onInputChange)="onOtpChange($event)"  [config]="{length:4}"></ng-otp-input>
+                  <h5 *ngIf="verified.length > 0" style="color: #00d68f; text-align:center;">
+                    <i class="fa fa-check mr-2" aria-hidden="true"></i>{{verified}}
+                  </h5>
+                </div>
+                <div *ngIf="contact_error.length > 0" class="alert alert-danger mt-3" style="text-align: center;">
+                  {{contact_error}}
+                </div> -->
+                
+                <div class="form-group">
+                  <label for="inputFirstName" class="label">Aadhaar Number</label>
+                  <input  type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Country Name">                
                 </div>
                 <div class="form-group">
-                    <label for="inputFirstName" class="label">Contact No.</label>
-                    <input formControlName="contact_no" type="text" nbInput fullWidth  placeholder="Enter Contact No.">
-                </div>
+                  <label for="inputFirstName" class="label">Aadhaar Card Image</label>
+                  <input  class="d-block" type="file" >                
+              </div>
                 <div class="form-group">
                     <label for="inputFirstName" class="label">Description</label>
-                    <textarea formControlName="description" nbInput placeholder="Description" fullWidth></textarea>
+                    <textarea  maxlength="700" minlength="20" nbInput placeholder="Description" fullWidth></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="inputFirstName" class="label">Country</label>
-                    <input formControlName="country" type="text" nbInput fullWidth  placeholder="Enter Country Name">                
+                  <label for="inputFirstName" class="label">Gender</label>
+                  <nb-radio-group [(value)]="genderValue">
+                    <nb-radio
+                      [value]="'male'">
+                      Male
+                    </nb-radio>
+                    <nb-radio
+                      [value]="'female'">
+                      Female
+                    </nb-radio>
+                    <nb-radio
+                      [value]="'NA'">
+                      NA
+                    </nb-radio>
+                  </nb-radio-group>
                 </div>
                 <div class="form-group">
-                    <label for="inputFirstName" class="label">State</label>
-                    <input formControlName="state" type="text" nbInput fullWidth  placeholder="Enter State">               
+                  <label for="inputFirstName" class="label">Marital Status</label>
+                  <input type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Country Name">                
                 </div>
                 <div class="form-group">
-                    <label for="inputFirstName" class="label">City</label>
-                    <input formControlName="city" type="text" nbInput fullWidth  placeholder="Enter City">                
+                  <label for="inputFirstName" class="label">Mother Tongue</label>
+                  <input type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Country Name">                
                 </div>
                 <div class="form-group">
-                    <label for="inputFirstName" class="label">Profile Picture</label>
-                    <input formControlName="profile_picture" class="d-block" type="file" >                
+                  <label for="inputFirstName" class="label">Occupation</label>
+                  <input type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Country Name">                
+                </div>
+                <div class="form-group">
+                  <label for="inputFirstName" class="label">Pincode</label>
+                  <input [(ngModel)]="pinCode" [ngModelOptions]="{standalone: true}" maxlength="6" (input)="pincode($event)" type="text" nbInput fullWidth  placeholder="Enter Pin Code">                
+                </div>
+                <div *ngIf="pincodeInvalid" class="form-group">
+                  <label class="label" style="color: red;">Invalid Pincode</label>
+                </div>
+                <div class="form-group">
+                    <label for="inputFirstName" class="label">Country <span style="color: red;">*</span></label>
+                    <input [(ngModel)]="country" [ngModelOptions]="{standalone: true}" type="text" nbInput fullWidth  placeholder="Enter Country Name">                
+                </div>
+                <div class="form-group">
+                    <label for="inputFirstName" class="label">State <span style="color: red;">*</span></label>
+                    <input [(ngModel)]="state" [ngModelOptions]="{standalone: true}" type="text" nbInput fullWidth  placeholder="Enter State">               
+                </div>
+                <div class="form-group">
+                    <label for="inputFirstName" class="label">City / District <span style="color: red;">*</span></label>
+                    <input [(ngModel)]="city" [ngModelOptions]="{standalone: true}" type="text" nbInput fullWidth  placeholder="Enter City">                
                 </div>
                 
             </form>
@@ -108,6 +193,30 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <button id="triggerPincode" data-toggle="modal" data-target="#pincodeModal"></button>
+  <div class="modal fade" id="pincodeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+      <div class="modal-content" style="width: 70%;">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Select Locality</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="locModal" *ngFor="let loc of location">
+              <div data-dismiss="modal">
+                <p (click)="selectLocality(loc)" class="center">{{loc.name}}</p>
+              </div>
+              
+            </div>
         </div>
       </div>
     </div>

@@ -7,9 +7,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
   //   link: '',
   //   home: true,
   // },
+  
   {
     title: 'Users',
-    icon: 'layout-outline',
+    icon: 'people',
     children: [
       {
         title: 'Sanchalak',
@@ -27,31 +28,31 @@ export const MENU_ITEMS: NbMenuItem[] = [
   },
   {
       title: 'Our Courses',
-      icon: '',
+      icon: 'award',
       link: '',
       home: true,
   },
   {
     title: 'Sessions',
-    icon: '',
+    icon: 'book-open',
     link: '',
     home: true,
   },
   {
     title: 'Expense Manager',
-    icon: '',
+    icon: 'credit-card',
     link: '',
     home: true,
   },
   {
     title: 'MIS Report(S)',
-    icon: '',
+    icon: 'pie-chart',
     link: '',
     home: true,
   },
   {
     title: 'Config',
-    icon: '',
+    icon: 'settings',
     link: '',
     home: true,
   }

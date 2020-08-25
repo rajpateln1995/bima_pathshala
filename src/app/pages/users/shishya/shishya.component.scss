@@ -75,3 +75,26 @@ nb-checkbox {
   nb-option{
       z-index: 10000;
   }
+
+  #triggerPincode{
+    display: none;
+  }
+
+  .locModal{
+    border-radius: 4px;
+  }
+
+  .locModal:hover{
+    background-color: #3366ff;
+    p{
+      color: white;
+    }
+  }
+
+  .locModal p{
+    margin-bottom: 0px;
+    margin-right: 40px;
+    margin-left: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
