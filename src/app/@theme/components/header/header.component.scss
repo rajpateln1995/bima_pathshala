@@ -31,6 +31,7 @@
     display: flex;
     align-items: center;
     width: auto;
+    cursor: pointer;
 
     .sidebar-toggle {
       @include nb-ltr(padding-right, 1.25rem);
@@ -67,4 +68,32 @@
       display: none;
     }
   }
+}
+
+
+.profile_image{
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background-color: black;
+}
+
+.dropdown{
+  // border:solid #eaeef5 1px;
+  border-radius:5px;
+  position: absolute;
+  top: 76px;
+  right: 20px;
+}
+
+.menuItem{
+  padding: 10px 30px;
+  background-color: #ffffff;
+  border:solid #eaeef5 1px;
+  border-radius:5px;
+}
+
+.menuItem:hover{
+  color: #3366ff;
+  cursor: pointer;
 }

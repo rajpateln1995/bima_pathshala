@@ -22,6 +22,7 @@ import {
   NbWindowModule,
   NbButtonModule, 
   NbInputModule,
+  NbLayoutModule,
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
@@ -37,6 +38,7 @@ import { LoginComponent } from './components/login/login.component';
     AppRoutingModule,
     NbInputModule,
     NbButtonModule,
+    NbLayoutModule,
     FormsModule,
     ReactiveFormsModule,
     NbSidebarModule.forRoot(),

@@ -18,6 +18,11 @@ export const routes: Routes = [
       .then(m => m.PagesModule),
   },
   {
+    path: '',
+    redirectTo: 'auth', 
+    pathMatch: 'full',
+  },
+  {
     path: 'auth',
     
     children: [

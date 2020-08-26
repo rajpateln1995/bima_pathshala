@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { User } from '../user.model';
+import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -7,14 +11,13 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private router : Router) {
 
   }
 
- setAuthHeader(){
-
- }
-
+  user = new Subject<User>()
+  
   base_url = "https://bimapath.herokuapp.com/api";
   token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiX2lkIjoiNWY0MmRjN2I4MzgzYTExNzU2MTg1NzEyIiwicm9sZSI6InNhbmNoYWxhayJ9LCJpYXQiOjE1OTgyMTczNDAsImV4cCI6MTU5ODgyMjE0MH0.3iydDnMgF4G69qlTt2PmNosGR9yd2PR1vzcf1G8TnpI"
 
@@ -23,22 +26,37 @@ export class AuthService {
     return this.http.post(this.base_url + '/user/login' , {
       "email" : email,
       "password" : password
-    })
+    }).pipe(tap(res => {
+      const data:any = res;
+      const Obj = {
+        'email' : data.data.email,
+        'token' : data.data.auth.token,
+        'expDate' : data.data.auth.expires,
+      };
+      localStorage.setItem('Token',JSON.stringify(Obj))
+    }))
   }
 
-  getUsers(type:string , limit:string , page: string){
-
-    let q_params = new HttpParams();
-    q_params = q_params.append('limit' , limit);
-    q_params = q_params.append('role' , type);
-    q_params = q_params.append('page' , page);
-
-    let header = new HttpHeaders()
-    header = header.append('Authorization', this.token)
-
-    return this.http.get(this.base_url + '/user/', { headers : header , params : q_params })
-     
+  register(email:string, password:string){
+    return this.http.post(this.base_url + '/user/register', {
+      'email': email,
+      'role' : 'sanchalak',
+      'password' : 'password'
+    }).pipe(tap(res => {
+      const data:any = res;
+      const Obj = {
+        'email' : data.data.email,
+        'token' : data.data.auth.token,
+        'expDate' : data.data.auth.expires,
+      };
+      localStorage.setItem('Token',JSON.stringify(Obj))
+    }))
   }
 
+
+  logout(){
+    localStorage.removeItem('Token');
+    this.router.navigateByUrl('auth/login');
+  }
 
 }

@@ -3,10 +3,6 @@
     padding: 0px;;
 }
 
-body{
-    font-family: Arial, Helvetica, sans-serif;
-}
-
 .container
 {
     display: grid;
@@ -41,6 +37,10 @@ body{
     margin: 30px auto;
 }
 
+.colorWhite{
+    color: white;
+}
+
 .content-holder button
 {
     border:none;
@@ -71,6 +71,7 @@ body{
     color: black;
     font-size: 24px;
     padding: 20px;
+    text-align: center;
 }
 
 .input-field
@@ -80,7 +81,7 @@ body{
     padding: 10px;
     border-radius: 7px;
     border: 1px solid rgb(168, 168, 168);
-    width: 250px;
+    width: 60%  ;
     outline: none;
 }
 
@@ -91,7 +92,7 @@ body{
     padding: 13px;
     border-radius: 7px;
     border: none;
-    width: 250px;
+    width: 60%;
     outline: none;
     background-color: rgb(56, 102, 189);
 }

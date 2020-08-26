@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NbSpinnerService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-login',
@@ -11,14 +12,18 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   constructor(private auth: AuthService,
-              private router : Router) { }
+              private router : Router,
+              private spinner$: NbSpinnerService) { }
 
+              
 
+          
 
   btn_valid: boolean = false; 
   login_form: FormGroup;
 
   ngOnInit(): void {
+    this.spinner$.load();
     this.login_form = new FormGroup({
       'email' : new FormControl(null, [Validators.required , Validators.email]),
       'password' : new FormControl(null, Validators.required)

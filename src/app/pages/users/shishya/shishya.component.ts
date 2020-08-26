@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { guru } from '../guru/guru.model';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../../services/auth.service';
+import { UserService } from '../../../services/user.service';
 import { saveAs } from 'file-saver';
 
 @Component({
@@ -13,7 +13,7 @@ import { saveAs } from 'file-saver';
 export class ShishyaComponent implements OnInit {
 
   constructor(private http: HttpClient,
-              private auth : AuthService) { }
+              private user : UserService) { }
 
   data: any;
   total:Number = 0;
@@ -62,7 +62,7 @@ export class ShishyaComponent implements OnInit {
       'city' : new FormControl(),
       'profile_picture' : new FormControl()
     });
-    this.auth.getUsers('sishya', '200', '1').subscribe(res => {
+    this.user.getUsers('sishya', '200', '1').subscribe(res => {
       console.log(res);
       this.data = res;
       this.data = this.data.data.sishya;      

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { guru } from './guru.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../../services/auth.service';
+import { UserService } from '../../../services/user.service';
 import { NbDateService } from '@nebular/theme';
 import { saveAs } from 'file-saver';
 
@@ -15,7 +15,7 @@ import { saveAs } from 'file-saver';
 export class GuruComponent implements OnInit {
 
   constructor(private http:HttpClient,
-              private auth : AuthService) { }
+              private user : UserService) { }
 
   data : any;
   total :Number;
@@ -62,7 +62,7 @@ export class GuruComponent implements OnInit {
 
     })
 
-    this.auth.getUsers('guru', '100', '1').subscribe(res => {
+    this.user.getUsers('guru', '100', '1').subscribe(res => {
       console.log(res);
       this.data = res;
       this.data = this.data.data.guru;

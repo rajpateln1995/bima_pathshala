@@ -5,7 +5,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { table } from 'console';
 import { saveAs } from 'file-saver';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../../../services/auth.service';
+import { UserService } from '../../../services/user.service';
+
  
 
 @Component({
@@ -16,7 +17,7 @@ import { AuthService } from '../../../services/auth.service';
 export class SanchalakComponent implements OnInit {
 
   constructor(private http: HttpClient,
-              private auth: AuthService) { }
+              private user: UserService) { }
 
 
 
@@ -76,8 +77,8 @@ export class SanchalakComponent implements OnInit {
       'profile_picture' : new FormControl(null)
     });
 
-    this.auth.login('email@jmail.com' , 'lols');
-    this.auth.getUsers('sanchalak', '200', '1').subscribe(res => {
+    
+    this.user.getUsers('sanchalak', '200', '1').subscribe(res => {
       console.log(res);
       this.data = res;
       this.data = this.data.data.sanchalak;

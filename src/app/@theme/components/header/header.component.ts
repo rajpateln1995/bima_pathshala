@@ -5,6 +5,7 @@ import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'ngx-header',
@@ -13,9 +14,16 @@ import { Subject } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
+  toogleMenu: boolean = false;
+
+
+
+
+
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
+
 
   themes = [
     {
@@ -45,7 +53,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private themeService: NbThemeService,
               private userService: UserData,
               private layoutService: LayoutService,
-              private breakpointService: NbMediaBreakpointsService) {
+              private breakpointService: NbMediaBreakpointsService,
+              private auth: AuthService) {
   }
 
   ngOnInit() {
@@ -70,6 +79,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
       )
       .subscribe(themeName => this.currentTheme = themeName);
   }
+
+
+  logout(){
+    this.auth.logout();
+    this.toogleMenu = false;
+  }
+
+  profile(){
+    this.toogleMenu = false;
+  }
+
 
   ngOnDestroy() {
     this.destroy$.next();
