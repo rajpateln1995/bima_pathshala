@@ -19,7 +19,7 @@ export class UserService {
     if (data.expDate < Date.now()){
       alert("Your Session has expired! Please Log In Again");
       this.auth.logout();
-      return null;  
+      return null;
     }else{
       return 'Bearer ' + data.token;
     }

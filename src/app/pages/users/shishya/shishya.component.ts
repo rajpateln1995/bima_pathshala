@@ -28,7 +28,7 @@ export class ShishyaComponent implements OnInit {
     'Country',
     'Occupation',
     'Mother Tongue'];
-
+  limit: string = '6';
 
   pageSize: string = '5';
   curr_page: number = 1;
@@ -62,11 +62,26 @@ export class ShishyaComponent implements OnInit {
       'city' : new FormControl(),
       'profile_picture' : new FormControl()
     });
-    this.user.getUsers('sishya', '200', '1').subscribe(res => {
+    this.user.getUsers('sishya', this.limit, '1').subscribe(res => {
       console.log(res);
       this.data = res;
-      this.data = this.data.data.sishya;      
+      this.data = this.data.data.sishya;
       this.total = this.data.length;
+    },
+    err => {
+      console.log(err);
+    });
+  }
+
+
+  getPage(page) {
+    console.log(page)
+    this.user.getUsers('sishya', this.limit, page).subscribe(res => {
+      console.log(res);
+      this.data = res;
+      this.data = this.data.data.sishya;
+      this.total = this.data.length;
+      this.curr_page = page;
     },
     err => {
       console.log(err);

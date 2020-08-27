@@ -6,6 +6,7 @@ import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -55,7 +56,7 @@ export class AuthService {
 
 
   logout(){
-    localStorage.removeItem('Token');
+    localStorage.setItem('Token', null)
     this.router.navigateByUrl('auth/login');
   }
 

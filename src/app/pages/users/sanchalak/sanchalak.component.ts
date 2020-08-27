@@ -38,6 +38,7 @@ export class SanchalakComponent implements OnInit {
     'Occupation',
     'Mother Tongue'];
     pageSize: string = '5';
+  limit: string = '6';
   curr_page: number = 1;
   createSanchalak: FormGroup;
   location = new Array();
@@ -85,6 +86,20 @@ export class SanchalakComponent implements OnInit {
       console.log(this.data)
       this.total = this.data.length;
 
+    },
+    err => {
+      console.log(err);
+    });
+  }
+
+  getPage(page) {
+    console.log(page)
+    this.user.getUsers('sishya', this.limit, page).subscribe(res => {
+      console.log(res);
+      this.data = res;
+      this.data = this.data.data.sishya;
+      this.total = this.data.length;
+      this.curr_page = page;
     },
     err => {
       console.log(err);

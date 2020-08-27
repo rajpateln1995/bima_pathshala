@@ -30,12 +30,13 @@ export class GuruComponent implements OnInit {
   'Country',
   'Occupation',
   'Mother Tongue'];
+  limit: string = '6';
   
   location = new Array();
   country: String = "";
   city: String = "";
   state: String = "";
-  pinCode :String = "";
+  pinCode: String = "";
   pincodeInvalid: boolean = false;
   genderValue = "male";
 
@@ -74,6 +75,20 @@ export class GuruComponent implements OnInit {
     
   }
 
+  getPage(page) {
+    console.log(page)
+    this.user.getUsers('sishya', this.limit, page).subscribe(res => {
+      console.log(res);
+      this.data = res;
+      this.data = this.data.data.sishya;
+      this.total = this.data.length;
+      this.curr_page = page;
+    },
+    err => {
+      console.log(err);
+    });
+  }
+
 
   date(){
     setTimeout(() => {
@@ -109,7 +124,7 @@ export class GuruComponent implements OnInit {
     let dataObj = [];
     for (const data of this.data){
       dataObj.push({
-        'Email' : data.email,
+      'Email' : data.email,
       'Roll No.': data.rollNumber ,
       'Aadhaar No.' : data.aadharNumber,
       'Gender' : data.gender,
@@ -126,7 +141,6 @@ export class GuruComponent implements OnInit {
     let blob = new Blob([d], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, "Guru-Export.csv");
    }
-  
 
    downloadSampleCsv(){
      const d =this.ConvertToCSV({},this.table_head);
@@ -158,7 +172,6 @@ export class GuruComponent implements OnInit {
       this.contact_error = "Invalid Contact !";
       this.contact = ""
     }
-    
   }
 
   pincode(event){
@@ -190,7 +203,6 @@ export class GuruComponent implements OnInit {
                 document.getElementById("triggerPincode").click();
                 this.location = loc_obj;
               }
-              
             }else{
               this.location = loc_obj;
               this.pincodeInvalid = true;

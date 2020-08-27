@@ -23,7 +23,8 @@
                         
                       <tr *ngFor="let d of data | paginate: { id: 'pagination',
                       itemsPerPage: pageSize,
-                      currentPage: curr_page }">
+                      currentPage: curr_page,
+                      totalItems: total}">
                         <td >{{d.email}}</td>
                         <td>{{d.rollNumber}}</td>
                         <td>{{d.aadharNumber}}</td>
@@ -44,7 +45,7 @@
             </div>
             <div class="row">
                 <div *ngIf="total !== 0" class="col-md-8 center">
-                    <pagination-controls id="pagination" (pageChange)="curr_page = $event"></pagination-controls>
+                  <pagination-controls id="pagination" (pageChange)="getPage($event)"></pagination-controls>
                 </div>
                 <div class="col-md-4 center">
                     <label class="label-margin">No. of Rows per page :</label>
