@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { NbSpinnerService } from '@nebular/theme';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(private auth: AuthService,
               private router: Router,
@@ -31,6 +31,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(){
+    this.loading = false;
+  }
+
 
   login(){
     this.loading = true;
@@ -42,7 +46,7 @@ export class LoginComponent implements OnInit {
       if (r['success'] === 1) {
         this.router.navigateByUrl('/pages/users/sanchalak');
       }
-      this.loading = false;
+      
     },
     err => {
       console.log(err);

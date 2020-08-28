@@ -36,17 +36,23 @@
                       itemsPerPage: pageSize,
                       currentPage: curr_page,
                       totalItems: total}">
+                        <td >{{d.fName}}</td>
+                        <td >{{d.lName}}</td>
                         <td >{{d.email}}</td>
+                        <td >{{d.phone}}</td>
                         <td>{{d.rollNumber}}</td>
                         <td>{{d.aadharNumber}}</td>
                         <td>{{d.gender}}</td>
+                        <td>{{d.dob}}</td>
                         <td>{{d.age}}</td>
                         <td>{{d.address.pincode}}</td>
+                        <td>{{d.address.locality}}</td>
                         <td>{{d.address.city}}</td>
                         <td>{{d.address.state}}</td>
                         <td>{{d.address.country}}</td>
                         <td>{{d.occupation}}</td>
                         <td>{{d.motherTongue}}</td>
+                        <td>{{d.maritalStatus}}</td>
                         
                       </tr>
                       <tr *ngIf="total == 0">
@@ -224,38 +230,42 @@
           </button>
         </div>
         <div class="modal-body">
-            <form [formGroup]="createSanchalak">
+            <form [formGroup]="filter">
                 <div class="form-group">
                     <label  class="label">Search by Name</label>
-                    <input  type="text" nbInput fullWidth  placeholder="Enter name to search">
+                    <input formControlName="name" type="text" nbInput fullWidth  placeholder="Enter name to search">
                 </div>
                 <div class="form-group">
                     <label  class="label">Search by Email</label>
-                    <input  type="text" nbInput fullWidth  placeholder="Enter email to search">
+                    <input formControlName="email" type="text" nbInput fullWidth  placeholder="Enter email to search">
                 </div>
                 <div class="form-group">
                     <label  class="label">Search by Contact No.</label>
-                    <input  type="text" nbInput fullWidth  placeholder="Enter Contact No. to search">
+                    <input formControlName="contact" type="text" nbInput fullWidth  placeholder="Enter Contact No. to search">
                 </div>
                 <div class="form-group">
-                    <label  class="label">Search by Country</label>
-                    <input  type="text" nbInput fullWidth  placeholder="Enter Country Name">                
-                </div>
-                <div class="form-group">
-                    <label  class="label">Search by State</label>
-                    <input  type="text" nbInput fullWidth  placeholder="Enter State">               
+                  <label  class="label">Search by Pincode</label>
+                  <input formControlName="pincode" type="text" nbInput fullWidth  placeholder="Enter Country Name">                
                 </div>
                 <div class="form-group">
                     <label  class="label">Search by City</label>
-                    <input  type="text" nbInput fullWidth  placeholder="Enter City">                
+                    <input formControlName="city" type="text" nbInput fullWidth  placeholder="Enter City">                
                 </div>
-                
-                                            
+                <div class="form-group">
+                    <label  class="label">Search by State</label>
+                    <input formControlName="state" type="text" nbInput fullWidth  placeholder="Enter State">               
+                </div>
+                <div class="form-group">
+                  <label  class="label">Search by Country</label>
+                  <input formControlName="country" type="text" nbInput fullWidth  placeholder="Enter Country Name">                
+                </div>         
             </form>       
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button nbButton status="success" >Apply Filter</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" nbButton status="basic">Close</button>
+          <button [disabled] = "filter.pristine" nbButton status="danger" (click)="removeFilters()">Remove Filters</button>
+          <button [disabled] = "filter.pristine" nbButton status="success" (click)="filterUsers()">Apply Filter</button>
+          
         </div>
       </div>
     </div>
@@ -283,3 +293,4 @@
       </div>
     </div>
   </div>
+
