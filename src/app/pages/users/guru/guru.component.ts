@@ -293,14 +293,14 @@ export class GuruComponent implements OnInit {
 
   }
 
-  selectLocality(data){
+  selectLocality(data) {
     console.log(data);
     this.state = data.state;
     this.country = data.country;
     this.city = data.city;
   }
 
-  uploadCsv(event){
+  uploadCsv(event) {
     const file = event.target.files;
     if( file[0].size !== 0 && file[0].name.slice(-3,file[0].name.length) === 'csv' ) {
       console.log("valid")

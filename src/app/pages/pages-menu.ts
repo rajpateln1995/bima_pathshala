@@ -29,7 +29,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
       title: 'Our Courses',
       icon: 'award',
-      link: '',
+      link: 'courses',
       home: true,
   },
   {

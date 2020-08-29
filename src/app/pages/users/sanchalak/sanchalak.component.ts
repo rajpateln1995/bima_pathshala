@@ -163,9 +163,7 @@ export class SanchalakComponent implements OnInit {
     });
   }
 
-  dataChange(){
-    console.log(this.data);
-  }
+ 
 
   ConvertToCSV(objArray, headerList) {
     const array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;

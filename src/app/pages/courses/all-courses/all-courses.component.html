@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <b>Sanchalak  [Total : {{total}}]</b>
+        </div>
+        <div class="card-body">
+            <div class="responsive">
+                <table class="table table-bordered table-striped table-md">
+                    <thead>
+                      <tr>
+                        <th *ngFor="let th of table_head">{{th}}</th>
+
+                      </tr>
+                    </thead>
+                    <tbody >
+                      <tr *ngIf="total == 0">
+                        <td style="text-align: center;">No Data Available</td>                    
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+            <div *ngIf="total !== 0" class="row">
+                <div class="col-md-8 center">
+                  <pagination-controls id="pagination" (pageChange)="getPage($event)"></pagination-controls>
+                </div>
+                <div class="col-md-4 center">
+                    <label class="label-margin">No. of Rows per page :</label>
+                    <select class="form-control form-control-width" selected="5" [(ngModel)]="pageSize">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                    </select>
+                </div>  
+            </div>
+            
+        </div>
+      </div>
+    </div>
+    <!--/.col-->
+  </div>

@@ -13,17 +13,7 @@ export class UserService {
   base_url = 'https://bimapath.herokuapp.com/api';
 
 
-  getToken(){
-    const data = JSON.parse(localStorage.getItem('Token'));
-    console.log(Date.now());
-    if (data.expDate < Date.now()){
-      alert('Your Session has expired! Please Log In Again');
-      this.auth.logout();
-      return null;
-    }else{
-      return 'Bearer ' + data.token;
-    }
-  }
+
 
   getUsers(type: string ,
     limit: string ,
@@ -50,7 +40,7 @@ export class UserService {
 
 
     let header = new HttpHeaders();
-    header = header.append('Authorization', this.getToken());
+    header = header.append('Authorization', this.auth.getToken());
 
     return this.http.get(this.base_url + '/user/', { headers : header , params : q_params });
 

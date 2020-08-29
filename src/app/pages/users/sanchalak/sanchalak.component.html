@@ -30,7 +30,7 @@
 
                       </tr>
                     </thead>
-                    <tbody (change)="dataChange()">
+                    <tbody>
                         
                       <tr *ngFor="let d of data | filter:filterByKeywords | paginate: { id: 'pagination',
                       itemsPerPage: pageSize,

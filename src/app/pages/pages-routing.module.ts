@@ -16,6 +16,11 @@ const routes: Routes = [{
         .then(m => m.UsersModule),
     },
     {
+      path: 'courses',
+      loadChildren: () => import('./courses/courses.module')
+        .then(m => m.CoursesModule),
+    },
+    {
       path: 'iot-dashboard',
       component: DashboardComponent,
     },
