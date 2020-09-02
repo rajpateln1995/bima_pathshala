@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { guru } from '../guru/guru.model';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../../services/user.service';
 import { saveAs } from 'file-saver';
 import { Router } from '@angular/router';
+import { Papa } from 'ngx-papaparse';
 
 @Component({
   selector: 'ngx-shishya',
@@ -15,7 +15,8 @@ export class ShishyaComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private user: UserService,
-              private router: Router) { }
+              private router: Router,
+              private papa: Papa) { }
 
   data: any;
   total: Number = 0;
@@ -62,9 +63,9 @@ export class ShishyaComponent implements OnInit {
       'Marital Status': false,
     }
 
-  limit: string = '6';
+  limit: string = '10';
 
-  pageSize: string = '5';
+  pageSize: string = '';
   curr_page: number = 1;
   createShishya: FormGroup;
   location = new Array();
@@ -75,7 +76,6 @@ export class ShishyaComponent implements OnInit {
   locality: string = "";
   pincodeInvalid: boolean = false;
   genderValue = 'male';
-  createGuru: FormGroup;
   otp: String = '';
   show_otp: boolean = false;
   contact_error: String = '';
@@ -84,6 +84,7 @@ export class ShishyaComponent implements OnInit {
   disable_contact: Boolean = false;
   postalUrl = 'https://api.postalpincode.in/pincode/';
   filter: FormGroup;
+  bulkJson: any;
 
   ngOnInit(): void {
 
@@ -115,8 +116,9 @@ export class ShishyaComponent implements OnInit {
     this.user.getUsers('sishya', this.limit, '1').subscribe(res => {
       console.log(res);
       this.data = res;
+      this.total = this.data.total;
       this.data = this.data.data.sishya;
-      this.total = this.data.length;
+      
     },
     err => {
       console.log(err);
@@ -178,8 +180,8 @@ export class ShishyaComponent implements OnInit {
     this.user.getUsers('sishya', this.limit, page).subscribe(res => {
       console.log(res);
       this.data = res;
-      this.data = this.data.data.sishya;
-      this.total = this.data.length;
+      this.total = this.data.total;
+      this.data = this.data.data.sishya;      
       this.curr_page = page;
     },
     err => {
@@ -249,6 +251,69 @@ export class ShishyaComponent implements OnInit {
     this.locality = data.name
   }
 
+
+  parseToJson(event) {
+    const file = event.target.files[0];
+    console.log(event.target.files[0]);
+    const options = {
+      complete: (results) => {
+        console.log('Parsed: ', results);
+        this.bulkJson = results;
+
+      },
+      header : true,
+    };
+    this.papa.parse(file, options);
+  }
+
+  rejectedfields: any[] = [];
+  uploadCsv(){
+    console.log(this.bulkJson);
+    this.bulkJson.data.pop();
+    const objArray = {
+      'data':  [],
+    };
+    for (const data of this.bulkJson.data) {
+      const obj: any = {
+        'fName': data['First Name'],
+        'lName': data['Last Name'],
+        'email': data['Email'],
+        'password': 'default',
+        'dob': data['Date of Birth'],
+        'aadharNumber': data['Aadhaar Number'],
+        'motherTongue': data['Mother Tongue'],
+        'maritalStatus': data['Marital Status'],
+        'occupation': data['Occupation'],
+        'gender': data['Gender'],
+        'address': {
+          'pinCode': data['Pincode'],
+          'locality': data['Locality'],
+          'country': data['Country'],
+          'state': data['State'],
+          'city': data['City / District'],
+        },
+        'role': 'sishya',
+      };
+      
+      const match = String(obj.email).match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+      if (match[0] === obj.email
+        && String(obj.aadharNumber).length === 12
+        && String(obj.address.pinCode).length === 6
+        && obj.role === 'sishya' === true) {
+          objArray.data.push(obj);
+          console.log(objArray);
+      }else{
+        this.rejectedfields.push(obj);
+      }
+
+    }
+    console.log(objArray);
+    document.getElementById('close-upload').click();
+    document.getElementById('rejected').click();
+  }
+
+
+
   date(){
     setTimeout(() => {
       if (document.getElementsByClassName('cdk-overlay-container')[0]){
@@ -279,7 +344,7 @@ export class ShishyaComponent implements OnInit {
     return str;
    }
 
-  downloadCsv(){
+  downloadCsv() {
 
     const dataObj = [];
     for (const data of this.data){
@@ -309,19 +374,26 @@ export class ShishyaComponent implements OnInit {
    }
 
 
-
+   csvHeader = [
+    'First Name',
+       'Last Name',
+       'Email',
+       'Date of Birth',
+       'Aadhaar Number',
+       'Gender',
+       'Marital Status',
+       'Mother Tongue',
+       'Occupation',
+       'Pincode',
+       'Locality',
+       'City / District',
+       'State',
+       'Country',
+   ];
   downloadSampleCsv(){
-    const d = this.ConvertToCSV({}, this.table_head);
+    const d = this.ConvertToCSV({}, this.csvHeader);
     const blob = new Blob([d], { type: 'text/csv;charset=utf-8;'});
     saveAs(blob, 'Sample-CSV-Sishya.csv');
-  }
-
-
-  uploadCsv(event){
-    const file = event.target.files;
-    if( file[0].size !== 0 && file[0].name.slice(-3,file[0].name.length) === 'csv' ) {
-      console.log("valid")
-    }
   }
 
 
@@ -373,3 +445,5 @@ export class ShishyaComponent implements OnInit {
 
 
 }
+
+

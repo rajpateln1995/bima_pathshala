@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service'
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-user-details',
@@ -14,7 +14,8 @@ import { ActivatedRoute } from '@angular/router';
 export class UserDetailsComponent implements OnInit {
 
   constructor(private user: UserService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   userId: string = "";
   details: any;
@@ -36,6 +37,31 @@ export class UserDetailsComponent implements OnInit {
       console.log(err);
     })
     
+  }
+
+
+  save(){
+    const data ={
+        "role": this.role, 
+        "status": 1,
+        "_id": this.userId,
+        "dob": this.details.dob,
+        "email": this.details.email,
+        "gender": this.details.gender,
+        "fName": this.details.fName,
+        "lName": this.details.lName,
+        "age": this.details.age,
+        "motherTongue": this.details.motherTongue,
+        "maritalStatus": this.details.maritalStatus,
+        "occupation": this.details.occupation,
+    }
+    this.user.updateUserDetails(data).subscribe(res => {
+      console.log(res);
+    },
+    err => {
+      console.log(err);
+    });
+    this.router.navigate(['pages/users/shishya']);
   }
 
 }

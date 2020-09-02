@@ -45,7 +45,7 @@
                     <tbody>
                         
                       <tr *ngFor="let d of data | paginate: { id: 'pagination',
-                      itemsPerPage: pageSize,
+                      itemsPerPage: limit,
                       currentPage: curr_page,
                       totalItems: total}">
                         <td *ngIf="table_head_obj['View / Edit'] " (click)="showUser(d._id)" style="color:#28a745; cursor: pointer;"><i class="fa fa-eye" aria-hidden="true"></i></td>
@@ -80,9 +80,9 @@
                 </div>
                 <div class="col-md-4 center">
                     <label class="label-margin">No. of Rows per page :</label>
-                    <select class="form-control form-control-width" selected="5" [(ngModel)]="pageSize">
-                        <option value="5">5</option>
+                    <select class="form-control form-control-width" selected="10" [(ngModel)]="limit">
                         <option value="10">10</option>
+                        <option value="15">15</option>
                         <option value="25">25</option>
                     </select>
                 </div>  
@@ -240,7 +240,7 @@
                 
         </div>
         <div class="modal-footer">
-          <button nbButton status="danger" data-dismiss="modal">Close</button>
+          <button id="close-btn" nbButton status="danger" data-dismiss="modal">Close</button>
           <button [disabled]="!createGuru.valid" nbButton status="success" (click)="createUser()">Create</button>
         </div>
       </div>
@@ -335,11 +335,56 @@
         </div>
         <div class="modal-body" style="text-align: center;">
           <p>Please Upload a CSV file similar to sample CSV file</p>
-          <input type="file" (change)="uploadCsv($event)">
+          <input type="file" (change)="parseToJson($event)">
         </div>
         <div class="modal-footer">
-          <button data-dismiss="modal" nbButton status="basic">Close</button>
-          <button nbButton status="success" >Upload</button>
+          <button id="close-upload" data-dismiss="modal" nbButton status="basic">Close</button>
+          <button nbButton status="success" (click)="uploadCsv()">Upload</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button style="display: none;" id="rejected" data-toggle="modal" data-target="#rejectedModal"></button>
+  <div class="modal" tabindex="-1" id="rejectedModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 style="color: red;" class="modal-title">Error Occoured !</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" style="text-align: center;">
+          <p style="color: red;">The following fiels from uploaded csv file were invalid please add manually</p>
+          <div class="responsive">
+            <table class="table table-bordered table-striped table-md text-center">
+              <thead>
+                <th *ngFor="let head of csvHeader">{{head}}</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of rejectedfields">
+                  <td>{{data.fName}}</td>
+                  <td>{{data.lName}}</td>
+                  <td>{{data.email}}</td>
+                  <td>{{data.dob}}</td>
+                  <td>{{data.aadharNumber}}</td>
+                  <td>{{data.gender}}</td>
+                  <td>{{data.maritalStatus}}</td>
+                  <td>{{data.motherTongue}}</td>
+                  <td>{{data.occupation}}</td>
+                  <td>{{data.address.pincode}}</td>
+                  <td>{{data.address.locality}}</td>
+                  <td>{{data.address.city}}</td>
+                  <td>{{data.address.state}}</td>
+                  <td>{{data.address.country}}</td>
+                </tr>                
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button id="close-upload" data-dismiss="modal" nbButton status="primary">Ok</button>
         </div>
       </div>
     </div>

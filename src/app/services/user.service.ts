@@ -53,4 +53,11 @@ export class UserService {
     return this.http.post(this.base_url + '/user/addMultiple' , data, { headers : header });
   }
 
+  updateUserDetails(data: any){
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.auth.getToken());
+
+    return this.http.put(this.base_url + '/user/' , data, { headers : header });
+  }
+
 }

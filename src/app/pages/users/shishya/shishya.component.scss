@@ -38,16 +38,26 @@
 }
 
 
-.modal-dialog{
-    margin-bottom: 0px;
-    margin-top: 0px;
-    min-height: 100vh;
-    margin-right: 0px;
-    // transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
-    -webkit-transform: translate(50px,0);
-    transform: translate(0,0);
-    
+#exampleModal .modal-dialog{
+  margin-bottom: 0px;
+  margin-top: 0px;
+  min-height: 100vh;
+  margin-right: 0px;
+  // transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
+  -webkit-transform: translate(50px,0);
+  transform: translate(0,0);
+  
+}#filterModal .modal-dialog{
+  margin-bottom: 0px;
+  margin-top: 0px;
+  min-height: 100vh;
+  margin-right: 0px;
+  // transition: transform 0.3s ease-out, -webkit-transform 0.3s ease-out;
+  -webkit-transform: translate(50px,0);
+  transform: translate(0,0);
+  
 }
+
 .float{
     position: fixed;
     z-index: 10;

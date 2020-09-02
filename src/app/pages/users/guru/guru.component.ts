@@ -6,6 +6,7 @@ import { UserService } from '../../../services/user.service';
 import { NbDateService } from '@nebular/theme';
 import { saveAs } from 'file-saver';
 import { Router } from '@angular/router';
+import { Papa } from 'ngx-papaparse';
 
 
 @Component({
@@ -17,11 +18,12 @@ export class GuruComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private user: UserService,
-              private router: Router) { }
+              private router: Router,
+              private papa: Papa) { }
 
   data: any;
   total: Number;
-  table_head =[
+  table_head = [
     'View / Edit',
     'First Name',
     'Last Name',
@@ -62,8 +64,8 @@ export class GuruComponent implements OnInit {
       'Occupation': false,
       'Mother Tongue': false,
       'Marital Status': false,
-    }
-  limit: string = '6';
+    };
+  limit: string = '10';
   locality: string = '';
   location = new Array();
   country: String = '';
@@ -85,7 +87,7 @@ export class GuruComponent implements OnInit {
   disable_contact: Boolean = false;
   postalUrl = 'https://api.postalpincode.in/pincode/';
   filter: FormGroup;
-
+  bulkJson: any;
 
   ngOnInit(): void {
 
@@ -93,7 +95,7 @@ export class GuruComponent implements OnInit {
     this.createGuru = new FormGroup({
       'fName' : new FormControl(null, Validators.required),
       'lName' : new FormControl(null, Validators.required),
-      'email' : new FormControl(null, Validators.required),
+      'email' : new FormControl(null, [Validators.required, Validators.email]),
       'dob' : new FormControl(null, Validators.required),
       'aadhaarNo' : new FormControl(null, Validators.required),
       'aadhaarImg' : new FormControl(null, Validators.required),
@@ -113,11 +115,12 @@ export class GuruComponent implements OnInit {
       'country' : new FormControl(''),
     });
 
-    this.user.getUsers('guru', '100', '1').subscribe(res => {
+    this.user.getUsers('guru', this.limit, '1').subscribe(res => {
       console.log(res);
       this.data = res;
+      this.total = this.data.total;
       this.data = this.data.data.guru;
-      this.total = this.data.length;
+
     },
     err => {
       console.log(err);
@@ -177,11 +180,11 @@ export class GuruComponent implements OnInit {
 
   getPage(page) {
     console.log(page);
-    this.user.getUsers('sishya', this.limit, page).subscribe(res => {
+    this.user.getUsers('guru', this.limit, page).subscribe(res => {
       console.log(res);
       this.data = res;
-      this.data = this.data.data.sishya;
-      this.total = this.data.length;
+      this.total = this.data.total;
+      this.data = this.data.data.guru;
       this.curr_page = page;
     },
     err => {
@@ -202,7 +205,7 @@ export class GuruComponent implements OnInit {
   ConvertToCSV(objArray, headerList) {
     const array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
     let str = '';
-    let row = 'S.No,';
+    let row = '';
     for (const index in headerList) {
      row += headerList[index] + ',';
     }
@@ -248,8 +251,25 @@ export class GuruComponent implements OnInit {
     saveAs(blob, 'Guru-Export.csv');
    }
 
+   csvHeader = [
+    'First Name',
+       'Last Name',
+       'Email',
+       'Date of Birth',
+       'Aadhaar Number',
+       'Gender',
+       'Marital Status',
+       'Mother Tongue',
+       'Occupation',
+       'Pincode',
+       'Locality',
+       'City / District',
+       'State',
+       'Country',
+   ];
+
    downloadSampleCsv(){
-     const d = this.ConvertToCSV({}, this.table_head);
+     const d = this.ConvertToCSV({}, this.csvHeader);
      const blob = new Blob([d], { type: 'text/csv;charset=utf-8;'});
      saveAs(blob, 'Sample-CSV-Guru.csv');
    }
@@ -276,7 +296,7 @@ export class GuruComponent implements OnInit {
       }
     }else{
       this.contact_error = 'Invalid Contact !';
-      this.contact = ''
+      this.contact = '';
     }
   }
 
@@ -340,12 +360,66 @@ export class GuruComponent implements OnInit {
     this.locality = data.name;
   }
 
-  uploadCsv(event) {
-    const file = event.target.files;
-    if( file[0].size !== 0 && file[0].name.slice(-3,file[0].name.length) === 'csv' ) {
-      console.log("valid")
-    }
+  parseToJson(event) {
+    const file = event.target.files[0];
+    console.log(event.target.files[0]);
+    const options = {
+      complete: (results) => {
+        console.log('Parsed: ', results);
+        this.bulkJson = results;
+
+      },
+      header : true,
+    };
+    this.papa.parse(file, options);
   }
+
+  rejectedfields: any[] = [];
+  uploadCsv(){
+    console.log(this.bulkJson);
+    this.bulkJson.data.pop();
+    const objArray = {
+      'data':  [],
+    };
+    for (const data of this.bulkJson.data) {
+      const obj: any = {
+        'fName': data['First Name'],
+        'lName': data['Last Name'],
+        'email': data['Email'],
+        'password': 'default',
+        'dob': data['Date of Birth'],
+        'aadharNumber': data['Aadhaar Number'],
+        'motherTongue': data['Mother Tongue'],
+        'maritalStatus': data['Marital Status'],
+        'occupation': data['Occupation'],
+        'gender': data['Gender'],
+        'address': {
+          'pinCode': data['Pincode'],
+          'locality': data['Locality'],
+          'country': data['Country'],
+          'state': data['State'],
+          'city': data['City / District'],
+        },
+        'role': 'guru',
+      };
+      
+      const match = String(obj.email).match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+      if (match[0] === obj.email
+        && String(obj.aadharNumber).length === 12
+        && String(obj.address.pinCode).length === 6
+        && obj.role === 'guru' === true) {
+          objArray.data.push(obj);
+          console.log(objArray);
+      }else{
+        this.rejectedfields.push(obj);
+      }
+    }
+    document.getElementById('close-upload').click();
+    document.getElementById('rejected').click();
+    
+    console.log(this.rejectedfields);
+  }
+
 
   showUser(id){
     this.router.navigateByUrl(`/pages/users/user-details/guru/${id}`);
@@ -374,9 +448,9 @@ export class GuruComponent implements OnInit {
         },
         'role': 'guru',
       }],
-    }
+    };
 
-    console.log(obj)
+    console.log(obj);
     this.user.createUser(obj).subscribe(res => {
       console.log(res);
       this.createGuru.reset();
@@ -386,7 +460,7 @@ export class GuruComponent implements OnInit {
       console.log(err);
     });
 
-  }  
-  
+  }
+
 
 }

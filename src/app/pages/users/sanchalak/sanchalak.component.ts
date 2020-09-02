@@ -26,6 +26,7 @@ export class SanchalakComponent implements OnInit {
   data: any;
   total: number = 0;
   filterByKeywords: String = '';
+  locality: string = '';
   table_head =[
     'View / Edit',
     'First Name',
@@ -69,7 +70,7 @@ export class SanchalakComponent implements OnInit {
       'Marital Status': false,
     }
     pageSize: string = '5';
-  limit: string = '6';
+  limit: string = '10';
   curr_page: number = 1;
   createSanchalak: FormGroup;
   location = new Array();
@@ -101,14 +102,16 @@ export class SanchalakComponent implements OnInit {
     // console.log(this.table_head);
 
     this.createSanchalak = new FormGroup({
-      'name' : new FormControl(null, Validators.required),
+      'fName' : new FormControl(null, Validators.required),
+      'lName' : new FormControl(null, Validators.required),
       'email' : new FormControl(null, [Validators.required, Validators.email]),
-      'contact_no' : new FormControl(null, [Validators.required, Validators.maxLength(10), Validators.minLength(8)]),
-      'country' : new FormControl(null, Validators.required),
-      'state' : new FormControl(null, Validators.required),
-      'city' : new FormControl(null, Validators.required),
+      'dob' : new FormControl(null, Validators.required),
+      'aadhaarNo' : new FormControl(null, Validators.required),
+      'aadhaarImg' : new FormControl(null, Validators.required),
+      'maritalStatus' : new FormControl(null),
+      'motherTongue' : new FormControl(null),
+      'occupation' : new FormControl(null),
     });
-
     this.filter = new FormGroup({
       'name' : new FormControl(''),
       'email' : new FormControl(''),
@@ -119,12 +122,12 @@ export class SanchalakComponent implements OnInit {
       'country' : new FormControl(''),
     });
 
-    this.user.getUsers('sanchalak', '200', '1').subscribe(res => {
+    this.user.getUsers('sanchalak', this.limit, '1').subscribe(res => {
       console.log(res);
       this.data = res;
+      this.total = this.data.total;
       this.data = this.data.data.sanchalak;
       console.log(this.data);
-      this.total = this.data.length;
 
     },
     err => {
@@ -158,6 +161,15 @@ export class SanchalakComponent implements OnInit {
     });
   }
 
+  date(){
+    setTimeout(() => {
+      if (document.getElementsByClassName('cdk-overlay-container')[0]){
+        document.getElementsByClassName('cdk-overlay-container')[0].setAttribute('style', 'z-index: 1080;');
+      }
+    }, 200);
+
+  }
+
 
   addField(field){
     console.log(field);
@@ -187,11 +199,11 @@ export class SanchalakComponent implements OnInit {
 
   getPage(page) {
     console.log(page);
-    this.user.getUsers('sishya', this.limit, page).subscribe(res => {
+    this.user.getUsers('sanchalak', this.limit, page).subscribe(res => {
       console.log(res);
       this.data = res;
+      this.total = this.data.total;
       this.data = this.data.data.sishya;
-      this.total = this.data.length;
       this.curr_page = page;
     },
     err => {
@@ -221,28 +233,7 @@ export class SanchalakComponent implements OnInit {
     return str;
    }
 
-   createUser(){
-    //  var user:sanchalak =  {
-    //  "name" : this.createSanchalak.value.name,
-    //  "email" : this.createSanchalak.value.email,
-    //  "number" : this.createSanchalak.value.contact_no,
-    //  "description" : this.createSanchalak.value.description,
-    //  "country" : this.createSanchalak.value.country,
-    //  "state" : this.createSanchalak.value.state,
-    //  "city" : this.createSanchalak.value.city,
-    //  "userId" : "",
-    //  "bimaId" : "",
-    //  "userName": "",
-    //  "website" : "",
-    //  "dob" : "",
-    //  "location" : {
-    //    "type" : "",
-    //    "coordinates" : [0, 0]
-    //  },
-    //  }
-    //  this.data.push(user);
-    //  localStorage.setItem('sanchalak',JSON.stringify(this.data));
-  }
+
    downloadCsv(){
 
     const dataObj = [];
@@ -297,6 +288,7 @@ export class SanchalakComponent implements OnInit {
                 this.city = loc_obj[0].city;
                 this.state = loc_obj[0].state;
                 this.country = loc_obj[0].country;
+                this.locality = loc_obj[0].name;
               }else{
                 document.getElementById('triggerPincode').click();
                 this.location = loc_obj;
@@ -329,6 +321,7 @@ export class SanchalakComponent implements OnInit {
     this.state = data.state;
     this.country = data.country;
     this.city = data.city;
+    this.locality = data.name;
   }
 
   uploadCsv(){
@@ -339,4 +332,42 @@ export class SanchalakComponent implements OnInit {
   showUser(id){
     this.router.navigateByUrl(`/pages/users/user-details/sanchalak/${id}`);
   }
+
+  createUser(){
+    const obj = {
+      'data' : [{
+        'fName': this.createSanchalak.value.fName,
+        'lName': this.createSanchalak.value.lName,
+        'email': this.createSanchalak.value.email,
+        'password': 'default',
+        'dob': this.createSanchalak.value.dob,
+        'aadharNumber': this.createSanchalak.value.aadhaarNo,
+        'aadhaarImg': this.createSanchalak.value.aadhaarImg,
+        'motherTongue': this.createSanchalak.value.motherTongue,
+        'maritalStatus': this.createSanchalak.value.maritalStatus,
+        'occupation': this.createSanchalak.value.occupation,
+        'gender': this.genderValue,
+        'address': {
+          'pinCode': this.pinCode,
+          'locality': this.locality,
+          'country': this.country,
+          'state': this.state,
+          'city': this.city,
+        },
+        'role': 'sanchalak',
+      }],
+    }
+
+    console.log(obj)
+    this.user.createUser(obj).subscribe(res => {
+      console.log(res);
+      this.createSanchalak.reset();
+      document.getElementById('close-btn').click();
+    },
+    err => {
+      console.log(err);
+    });
+
+  }  
+
 }

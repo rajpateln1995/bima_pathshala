@@ -80,10 +80,23 @@
                 <ng-container *ngIf="role === 'sishya'">
                     <hr>
                     <h5 class="text-center mb-4">Course Taken</h5>  
-                    <div>
+                    
                         <ul class="list-group">
                             <li class="list-group-item">
                                 <div class="row">
+                                    <div class="col-md-4 text-center">
+                                        <b>Name</b>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <b>Type</b>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <b>View / Edit</b>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">                               
                                     <div class="col-md-4 text-center">
                                         sdf
                                     </div>
@@ -96,29 +109,62 @@
                                 </div>
                             </li>
                         </ul>
-                    </div>
+                    
                 </ng-container>
                 <ng-container>
                     <hr>
-                    <h5 class="text-center mb-4">Session Details</h5>
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-md-3 text-center">
-                                    sdfsdsd
+                    <h5 class="text-center mb-4">Session Details</h5>                    
+                    
+                        <ul class="list-group">
+                            <li class="list-group-item mb-0">
+                                <div class="row">
+                                    <div class="col-md-3 text-center">
+                                        <b>Name</b>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <b>Date</b>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <b>Type</b>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <b>View / Edit</b>
+                                    </div>
                                 </div>
-                                <div class="col-md-3 text-center">
-                                    30 August 2020, 12:23 pm
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">                               
+                                    <div class="col-md-3 text-center">
+                                        sdf
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        12/12/12
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        (free)
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <i style="color: #28a745;" class="fa fa-eye" aria-hidden="true"></i>
+                                    </div>
                                 </div>
-                                <div class="col-md-3 text-center">
-                                    300 ₹
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">                               
+                                    <div class="col-md-3 text-center">
+                                        sdf
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        12/12/12
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        (free)
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <i style="color: #28a745;" class="fa fa-eye" aria-hidden="true"></i>
+                                    </div>
                                 </div>
-                                <div class="col-md-3 text-center">
-                                    <i style="color: #28a745;" class="fa fa-eye" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
                 </ng-container>
                 <ng-container *ngIf="role === 'sishya'" >
                     <hr>
@@ -158,5 +204,5 @@
 
 <div class="text-center float">
     <button class="mr-3 btn-shadow" (click)="editable = true" nbButton status="primary">Edit</button>
-    <button class="btn-shadow" nbButton status="success">Save</button>
+    <button class="btn-shadow" nbButton status="success" (click)="save()">Save</button>
 </div>
