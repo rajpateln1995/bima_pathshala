@@ -6,6 +6,7 @@ import { table } from 'console';
 import { saveAs } from 'file-saver';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../../services/user.service';
+import { Router } from '@angular/router';
 
 
 
@@ -17,16 +18,19 @@ import { UserService } from '../../../services/user.service';
 export class SanchalakComponent implements OnInit {
 
   constructor(private http: HttpClient,
-              private user: UserService) { }
+              private user: UserService,
+              private router: Router) { }
 
 
 
   data: any;
   total: number = 0;
   filterByKeywords: String = '';
-  table_head = [
+  table_head =[
+    'View / Edit',
     'First Name',
     'Last Name',
+    'Status',
     'Email',
     'Phone',
     'Roll No.',
@@ -42,6 +46,28 @@ export class SanchalakComponent implements OnInit {
     'Occupation',
     'Mother Tongue',
     'Marital Status'];
+
+    table_head_obj = {
+      'View / Edit' : true,
+      'First Name': true,
+      'Last Name': true,
+      'Status': true,
+      'Email': false,
+      'Phone': false,
+      'Roll No.': false,
+      'Aadhaar No.': false,
+      'Gender': false,
+      'Date of Birth': false,
+      'Age': false,
+      'Pincode': false,
+      'Locality': false,
+      'City': false,
+      'State': false,
+      'Country': false,
+      'Occupation': false,
+      'Mother Tongue': false,
+      'Marital Status': false,
+    }
     pageSize: string = '5';
   limit: string = '6';
   curr_page: number = 1;
@@ -132,6 +158,16 @@ export class SanchalakComponent implements OnInit {
     });
   }
 
+
+  addField(field){
+    console.log(field);
+    this.table_head_obj[field] = !this.table_head_obj[field];
+  }
+
+  removeField(field){
+    console.log(field);
+    this.table_head_obj[field] = !this.table_head_obj[field];
+  }
 
   removeFilters() {
     this.filter.reset();
@@ -297,5 +333,10 @@ export class SanchalakComponent implements OnInit {
 
   uploadCsv(){
     console.log(this.data);
+  }
+
+
+  showUser(id){
+    this.router.navigateByUrl(`/pages/users/user-details/sanchalak/${id}`);
   }
 }

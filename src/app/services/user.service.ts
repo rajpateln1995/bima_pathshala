@@ -13,11 +13,10 @@ export class UserService {
   base_url = 'https://bimapath.herokuapp.com/api';
 
 
-
-
-  getUsers(type: string ,
-    limit: string ,
-    page: string ,
+  getUsers(type: string = '',
+    limit: string = '10',
+    page: string = '1',
+    _id: string = '',
     name: string = '' ,
     email: string = '' ,
     contact: string = '' ,
@@ -25,11 +24,11 @@ export class UserService {
     city: string = '',
     state: string = '',
     country: string = '') {
-
     let q_params = new HttpParams();
     q_params = q_params.append('limit' , limit);
     q_params = q_params.append('role' , type);
     q_params = q_params.append('page' , page);
+    q_params = q_params.append('_id' , _id);
     q_params = q_params.append('name' , name);
     q_params = q_params.append('email' , email);
     q_params = q_params.append('contact' , contact);
@@ -44,6 +43,14 @@ export class UserService {
 
     return this.http.get(this.base_url + '/user/', { headers : header , params : q_params });
 
+  }
+
+
+  createUser(data: any){
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.auth.getToken());
+
+    return this.http.post(this.base_url + '/user/addMultiple' , data, { headers : header });
   }
 
 }

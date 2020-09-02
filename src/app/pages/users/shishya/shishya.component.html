@@ -12,11 +12,35 @@
           <b>Shishya  [Total : {{total}}]</b>
         </div>
         <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="text-center d-block"><b>Add Fields to the Table</b></label>
+              <select class="form-control mb-4" ngModel (ngModelChange)="addField($event)">
+                <option value="add">--Add--</option>
+                <ng-container *ngFor="let add of table_head_obj | keyvalue">
+                  <option *ngIf="!add.value" [ngValue]="add.key" >{{add.key}}</option>
+                </ng-container>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="text-center d-block"><b>Remove Fields from the Table</b></label>
+              <select class="form-control mb-4" ngModel (ngModelChange)="removeField($event)">
+                <option value="remove">--Remove--</option>
+                <ng-container *ngFor="let remove of table_head_obj | keyvalue">
+                  <option *ngIf="remove.value" [ngValue]="remove.key">{{remove.key}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+          
             <div class="responsive">
-                <table class="table table-bordered table-striped table-md">
+                <table class="table table-bordered table-striped table-md text-center">
                     <thead>
                       <tr>
-                        <th *ngFor="let th of table_head">{{th}}</th>
+                        <ng-container *ngFor="let th of table_head">
+                          <th *ngIf="table_head_obj[th]">{{th}}</th>
+                        </ng-container>
+                        
                       </tr>
                     </thead>
                     <tbody>
@@ -24,23 +48,26 @@
                       itemsPerPage: pageSize,
                       currentPage: curr_page,
                       totalItems: total}">
-                      <td >{{d.fName}}</td>
-                        <td >{{d.lName}}</td>
-                        <td >{{d.email}}</td>
-                        <td >{{d.phone}}</td>
-                        <td>{{d.rollNumber}}</td>
-                        <td>{{d.aadharNumber}}</td>
-                        <td>{{d.gender}}</td>
-                        <td>{{d.dob}}</td>
-                        <td>{{d.age}}</td>
-                        <td>{{d.address.pincode}}</td>
-                        <td>{{d.address.locality}}</td>
-                        <td>{{d.address.city}}</td>
-                        <td>{{d.address.state}}</td>
-                        <td>{{d.address.country}}</td>
-                        <td>{{d.occupation}}</td>
-                        <td>{{d.motherTongue}}</td>
-                        <td>{{d.maritalStatus}}</td>
+                        <td *ngIf="table_head_obj['View / Edit'] " (click)="showUser(d._id)" style="color:#28a745; cursor: pointer;"><i class="fa fa-eye" aria-hidden="true"></i></td>
+                        <td *ngIf="table_head_obj['First Name'] ">{{d.fName}}</td>
+                        <td *ngIf="table_head_obj['Last Name'] ">{{d.lName}}</td>
+                        <td *ngIf="table_head_obj['Status'] ">{{d.status}}</td>
+                        <td *ngIf="table_head_obj['Email'] ">{{d.email}}</td>
+                        <td *ngIf="table_head_obj['Phone'] ">{{d.phone}}</td>
+                        <td *ngIf="table_head_obj['Roll No.'] ">{{d.rollNumber}}</td>
+                        <td *ngIf="table_head_obj['Aadhaar No.'] ">{{d.aadharNumber}}</td>
+                        <td *ngIf="table_head_obj['Gender'] ">{{d.gender}}</td>
+                        <td *ngIf="table_head_obj['Date of Birth'] ">{{d.dob}}</td>
+                        <td *ngIf="table_head_obj['Age'] ">{{d.age}}</td>
+                        <td *ngIf="table_head_obj['Pincode'] ">{{d.address.pincode}}</td>
+                        <td *ngIf="table_head_obj['Locality'] ">{{d.address.locality}}</td>
+                        <td *ngIf="table_head_obj['City'] ">{{d.address.city}}</td>
+                        <td *ngIf="table_head_obj['State'] ">{{d.address.state}}</td>
+                        <td *ngIf="table_head_obj['Country'] ">{{d.address.country}}</td>
+                        <td *ngIf="table_head_obj['Occupation'] ">{{d.occupation}}</td>
+                        <td *ngIf="table_head_obj['Mother Tongue'] ">{{d.motherTongue}}</td>
+                        <td *ngIf="table_head_obj['Marital Status'] ">{{d.maritalStatus}}</td>
+                        
                       </tr>
                       <tr *ngIf="total == 0">
                         <td style="text-align: center;">No Data Available</td>                    
@@ -68,143 +95,158 @@
   </div>
 
 
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add New Guru</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
+  <form [formGroup]="createShishya">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add New Guru</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
           
-            <form [formGroup]="createSanchalak">
-              <div class="form-group center">
-                <label class="label">Fields Marked with <span style="color: red;">*</span> are Mandatory !</label>
-              </div>
-                <div class="form-group">
-                    <label for="inputFirstName" class="label">Full Name of Guru <span style="color: red;">*</span></label>
-                    <input  type="text" nbInput fullWidth  placeholder="Enter Full Name ">
+          <div class="modal-body">
+            
+              
+                <div class="form-group center">
+                  <label class="label">Fields Marked with <span style="color: red;">*</span> are Mandatory !</label>
                 </div>
-                <!-- <div class="form-group">
-                  <label for="inputFirstName" class="label">Guru Type <span style="color: red;">*</span></label>
-                  <select class="form-control" style="width: 50%;">
-                    <option selected>--Select--</option>
-                    <option value="Full Time">Full Time</option>
-                    <option value="Part Time">Part Time</option>
-                    <option value="Retainer">Retainer</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="inputFirstName" class="label">Guru Level <span style="color: red;">*</span></label>
-                  <select class="form-control" style="width: 50%">
-                    <option selected>--Select--</option>
-                    <option value="level 1">Level 1</option>
-                    <option value="level 2">Level 2</option>
-                    <option value="level 3">Level 3</option>
-                  </select>
-                </div> -->
-                
-                <div class="form-group">
-                    <label for="inputFirstName" class="label">Email <span style="color: red;">*</span></label>
-                    <input  type="text" nbInput fullWidth  placeholder="Enter Email">
-                </div>
-                
-                <div class="form-group">
-                    <label for="inputFirstName" class="label">Contact No. <span style="color: red;">*</span></label>
-                    <!-- <div class="row">
-                      <div class="col-md-8"> -->
-                        <input [disabled] = "disable_contact" [ngModelOptions]="{standalone: true}" [(ngModel)] = "contact" type="text" nbInput fullWidth  placeholder="Enter Contact No.">
-                      <!-- </div>
-                      <div class="col-md-4">
-                        <button nbButton status="primary" type="button" [disabled] = "disable_contact" (click)="onVerify()" class="mt-0"><i class="fa fa-check mr-2" aria-hidden="true"></i>Verify</button>
-                      </div>
-                    </div> -->
-                </div>
-                <!-- <div *ngIf="show_otp" class="form-group">
-                  <label *ngIf="verified.length === 0" for="inputFirstName" class="label d-block">Please enter otp sent at </label>
-                  <ng-otp-input *ngIf="verified.length === 0" class="d-inline-block" (onInputChange)="onOtpChange($event)"  [config]="{length:4}"></ng-otp-input>
-                  <h5 *ngIf="verified.length > 0" style="color: #00d68f; text-align:center;">
-                    <i class="fa fa-check mr-2" aria-hidden="true"></i>{{verified}}
-                  </h5>
-                </div>
-                <div *ngIf="contact_error.length > 0" class="alert alert-danger mt-3" style="text-align: center;">
-                  {{contact_error}}
-                </div> -->
-                
-                <div class="form-group">
-                  <label for="inputFirstName" class="label">Aadhaar Number</label>
-                  <input  type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Country Name">                
-                </div>
-                <div class="form-group">
-                  <label for="inputFirstName" class="label">Aadhaar Card Image</label>
-                  <input  class="d-block" type="file" >                
-              </div>
-                <div class="form-group">
-                    <label for="inputFirstName" class="label">Description</label>
-                    <textarea  maxlength="700" minlength="20" nbInput placeholder="Description" fullWidth></textarea>
-                </div>
-                <div class="form-group">
-                  <label for="inputFirstName" class="label">Gender</label>
-                  <nb-radio-group [(value)]="genderValue">
-                    <nb-radio
-                      [value]="'male'">
-                      Male
-                    </nb-radio>
-                    <nb-radio
-                      [value]="'female'">
-                      Female
-                    </nb-radio>
-                    <nb-radio
-                      [value]="'NA'">
-                      NA
-                    </nb-radio>
-                  </nb-radio-group>
-                </div>
-                <div class="form-group">
-                  <label for="inputFirstName" class="label">Marital Status</label>
-                  <input type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Country Name">                
-                </div>
-                <div class="form-group">
-                  <label for="inputFirstName" class="label">Mother Tongue</label>
-                  <input type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Country Name">                
-                </div>
-                <div class="form-group">
-                  <label for="inputFirstName" class="label">Occupation</label>
-                  <input type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Country Name">                
-                </div>
-                <div class="form-group">
-                  <label for="inputFirstName" class="label">Pincode</label>
-                  <input [(ngModel)]="pinCode" [ngModelOptions]="{standalone: true}" maxlength="6" (input)="pincode($event)" type="text" nbInput fullWidth  placeholder="Enter Pin Code">                
-                </div>
-                <div *ngIf="pincodeInvalid" class="form-group">
-                  <label class="label" style="color: red;">Invalid Pincode</label>
-                </div>
-                <div class="form-group">
-                    <label for="inputFirstName" class="label">Country <span style="color: red;">*</span></label>
-                    <input [(ngModel)]="country" [ngModelOptions]="{standalone: true}" type="text" nbInput fullWidth  placeholder="Enter Country Name">                
-                </div>
-                <div class="form-group">
+                  <div class="form-group">
+                      <label for="inputFirstName" class="label">First Name of Guru <span style="color: red;">*</span></label>
+                      <input formControlName="fName" type="text" nbInput fullWidth  placeholder="Enter First Name ">
+                  </div>
+                  <div class="form-group">
+                    <label for="inputFirstName" class="label">Last Name of Guru <span style="color: red;">*</span></label>
+                    <input formControlName="lName" type="text" nbInput fullWidth  placeholder="Enter Last Name ">
+                  </div>
+                  <!-- <div class="form-group">
+                    <label for="inputFirstName" class="label">Guru Type <span style="color: red;">*</span></label>
+                    <select class="form-control" style="width: 50%;">
+                      <option selected>--Select--</option>
+                      <option value="Full Time">Full Time</option>
+                      <option value="Part Time">Part Time</option>
+                      <option value="Retainer">Retainer</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputFirstName" class="label">Guru Level <span style="color: red;">*</span></label>
+                    <select class="form-control" style="width: 50%">
+                      <option selected>--Select--</option>
+                      <option value="level 1">Level 1</option>
+                      <option value="level 2">Level 2</option>
+                      <option value="level 3">Level 3</option>
+                    </select>
+                  </div> -->
+                  
+                  <div class="form-group">
+                      <label for="inputFirstName" class="label">Email <span style="color: red;">*</span></label>
+                      <input formControlName="email" type="text" nbInput fullWidth  placeholder="Enter Email">
+                  </div>
+                  
+                  <!-- <div class="form-group">
+                      <label for="inputFirstName" class="label">Contact No.<span style="color: red;">*</span></label> -->
+                      <!-- <div class="row">
+                        <div class="col-md-8"> -->
+                          <!-- <input [disabled] = "disable_contact" [ngModelOptions]="{standalone: true}" [(ngModel)] = "contact" type="text" nbInput fullWidth  placeholder="Enter Contact No."> -->
+                        <!-- </div>
+                        <div class="col-md-4">
+                          <button nbButton status="primary" type="button" [disabled] = "disable_contact" (click)="onVerify()" class="mt-0"><i class="fa fa-check mr-2" aria-hidden="true"></i>Verify</button>
+                        </div>
+                      </div> -->
+                  <!-- </div> -->
+                  <!-- <div *ngIf="show_otp" class="form-group">
+                    <label *ngIf="verified.length === 0" for="inputFirstName" class="label d-block">Please enter otp sent at </label>
+                    <ng-otp-input *ngIf="verified.length === 0" class="d-inline-block" (onInputChange)="onOtpChange($event)"  [config]="{length:4}"></ng-otp-input>
+                    <h5 *ngIf="verified.length > 0" style="color: #00d68f; text-align:center;">
+                      <i class="fa fa-check mr-2" aria-hidden="true"></i>{{verified}}
+                    </h5>
+                  </div>
+                  <div *ngIf="contact_error.length > 0" class="alert alert-danger mt-3" style="text-align: center;">
+                    {{contact_error}}
+                  </div> -->
+                  
+                  <label class="label">Date of Birth<span style="color: red;">*</span></label>
+  
+                        <input formControlName="dob" class="d-block mb-2" nbInput (mouseup)="date()"
+                               placeholder="Form Picker"
+                               [nbDatepicker]="formpicker">
+                        <nb-datepicker #formpicker></nb-datepicker>
+                      
+                      
+                  
+                  <div class="form-group">
+                    <label for="inputFirstName" class="label">Aadhaar Number <span style="color: red;">*</span></label>
+                    <input formControlName="aadhaarNo" type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Aadhaar Number">                
+                  </div>
+                  <div class="form-group">
+                    <label for="inputFirstName" class="label">Aadhaar Card Image <span style="color: red;">*</span></label>
+                    <input formControlName="aadhaarImg" class="d-block" type="file" >                
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="inputFirstName" class="label">Gender <span style="color: red;">*</span></label>
+                    <nb-radio-group [(value)]="genderValue">
+                      <nb-radio
+                        [value]="'male'">
+                        Male
+                      </nb-radio>
+                      <nb-radio
+                        [value]="'female'">
+                        Female
+                      </nb-radio>
+                      <nb-radio
+                        [value]="'NA'">
+                        NA
+                      </nb-radio>
+                    </nb-radio-group>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputFirstName" class="label">Marital Status</label>
+                    <input formControlName="maritalStatus" type="text" nbInput fullWidth placeholder="Enter Marital Status">                
+                  </div>
+                  <div class="form-group">
+                    <label for="inputFirstName" class="label">Mother Tongue</label>
+                    <input formControlName="motherTongue" type="text" nbInput fullWidth placeholder="Enter Mother Tongue">                
+                  </div>
+                  <div class="form-group">
+                    <label for="inputFirstName" class="label">Occupation</label>
+                    <input formControlName="occupation" type="text" nbInput fullWidth  placeholder="Enter Occupation">                
+                  </div>
+                  <div class="form-group">
+                    <label for="inputFirstName" class="label">Pincode <span style="color: red;">*</span></label>
+                    <input [(ngModel)]="pinCode" [ngModelOptions]="{standalone: true}" maxlength="6" (input)="pincode($event)" type="text" nbInput fullWidth  placeholder="Enter Pin Code">                
+                  </div>
+                  <div *ngIf="pincodeInvalid" class="form-group">
+                    <label class="label" style="color: red;">Invalid Pincode</label>
+                  </div>
+                  <div class="form-group">
+                    <label for="inputFirstName" class="label">Locality <span style="color: red;">*</span></label>
+                    <input  [(ngModel)]="locality" [ngModelOptions]="{standalone: true}" type="text" nbInput fullWidth  placeholder="Enter Locality">                
+                  </div>
+                  <div class="form-group">
+                    <label for="inputFirstName" class="label">City / District <span style="color: red;">*</span></label>
+                    <input   [(ngModel)]="city" [ngModelOptions]="{standalone: true}" type="text" nbInput fullWidth  placeholder="Enter City">                
+                  </div>
+                  <div class="form-group">
                     <label for="inputFirstName" class="label">State <span style="color: red;">*</span></label>
                     <input [(ngModel)]="state" [ngModelOptions]="{standalone: true}" type="text" nbInput fullWidth  placeholder="Enter State">               
-                </div>
-                <div class="form-group">
-                    <label for="inputFirstName" class="label">City / District <span style="color: red;">*</span></label>
-                    <input [(ngModel)]="city" [ngModelOptions]="{standalone: true}" type="text" nbInput fullWidth  placeholder="Enter City">                
-                </div>
-                
-            </form>
-            
+                  </div>
+                  <div class="form-group">
+                      <label for="inputFirstName" class="label">Country <span style="color: red;">*</span></label>
+                      <input [(ngModel)]="country" [ngModelOptions]="{standalone: true}" type="text" nbInput fullWidth  placeholder="Enter Country Name">                
+                  </div>
+                  
+          </div>
+          <div class="modal-footer">
+            <button id="close-btn" nbButton status="danger" data-dismiss="modal">Close</button>
+            <button [disabled]="!createShishya.valid" nbButton status="success" (click)="createUser()">Create</button>
+          </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-
       </div>
     </div>
-  </div>
+  </form>
+  
 
 
   <button id="triggerPincode" data-toggle="modal" data-target="#pincodeModal"></button>

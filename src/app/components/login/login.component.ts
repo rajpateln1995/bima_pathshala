@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
 
   login(){
+    console.log(this.login_form)
     this.loading = true;
     this.btn_valid = false;
     this.auth.login(this.login_form.value.email , this.login_form.value.password).subscribe(res => {

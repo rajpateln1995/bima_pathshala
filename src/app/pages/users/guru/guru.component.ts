@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../../services/user.service';
 import { NbDateService } from '@nebular/theme';
 import { saveAs } from 'file-saver';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,13 +16,16 @@ import { saveAs } from 'file-saver';
 export class GuruComponent implements OnInit {
 
   constructor(private http: HttpClient,
-              private user: UserService) { }
+              private user: UserService,
+              private router: Router) { }
 
   data: any;
   total: Number;
-  table_head = [
+  table_head =[
+    'View / Edit',
     'First Name',
     'Last Name',
+    'Status',
     'Email',
     'Phone',
     'Roll No.',
@@ -37,8 +41,30 @@ export class GuruComponent implements OnInit {
     'Occupation',
     'Mother Tongue',
     'Marital Status'];
-  limit: string = '6';
 
+    table_head_obj = {
+      'View / Edit' : true,
+      'First Name': true,
+      'Last Name': true,
+      'Status': true,
+      'Email': false,
+      'Phone': false,
+      'Roll No.': false,
+      'Aadhaar No.': false,
+      'Gender': false,
+      'Date of Birth': false,
+      'Age': false,
+      'Pincode': false,
+      'Locality': false,
+      'City': false,
+      'State': false,
+      'Country': false,
+      'Occupation': false,
+      'Mother Tongue': false,
+      'Marital Status': false,
+    }
+  limit: string = '6';
+  locality: string = '';
   location = new Array();
   country: String = '';
   city: String = '';
@@ -65,11 +91,15 @@ export class GuruComponent implements OnInit {
 
 
     this.createGuru = new FormGroup({
-      'name' : new FormControl(null),
-      'email' : new FormControl(null),
-      'description' : new FormControl(null),
-      'profile_picture' : new FormControl(),
-
+      'fName' : new FormControl(null, Validators.required),
+      'lName' : new FormControl(null, Validators.required),
+      'email' : new FormControl(null, Validators.required),
+      'dob' : new FormControl(null, Validators.required),
+      'aadhaarNo' : new FormControl(null, Validators.required),
+      'aadhaarImg' : new FormControl(null, Validators.required),
+      'maritalStatus' : new FormControl(null),
+      'motherTongue' : new FormControl(null),
+      'occupation' : new FormControl(null),
     });
 
 
@@ -109,6 +139,16 @@ export class GuruComponent implements OnInit {
       console.log(err);
     });
     console.log(this.filter);
+  }
+
+  addField(field){
+    console.log(field);
+    this.table_head_obj[field] = !this.table_head_obj[field];
+  }
+
+  removeField(field){
+    console.log(field);
+    this.table_head_obj[field] = !this.table_head_obj[field];
   }
 
 
@@ -262,6 +302,7 @@ export class GuruComponent implements OnInit {
                 });
               }
               if (loc_obj.length === 1){
+                this.locality = loc_obj[0].name;
                 this.city = loc_obj[0].city;
                 this.state = loc_obj[0].state;
                 this.country = loc_obj[0].country;
@@ -287,9 +328,7 @@ export class GuruComponent implements OnInit {
               this.pinCode = '';
       }
 
-
     }
-
 
   }
 
@@ -298,6 +337,7 @@ export class GuruComponent implements OnInit {
     this.state = data.state;
     this.country = data.country;
     this.city = data.city;
+    this.locality = data.name;
   }
 
   uploadCsv(event) {
@@ -306,5 +346,47 @@ export class GuruComponent implements OnInit {
       console.log("valid")
     }
   }
+
+  showUser(id){
+    this.router.navigateByUrl(`/pages/users/user-details/guru/${id}`);
+  }
+
+  createUser(){
+    const obj = {
+      'data' : [{
+        'fName': this.createGuru.value.fName,
+        'lName': this.createGuru.value.lName,
+        'email': this.createGuru.value.email,
+        'password': 'default',
+        'dob': this.createGuru.value.dob,
+        'aadharNumber': this.createGuru.value.aadhaarNo,
+        'aadhaarImg': this.createGuru.value.aadhaarImg,
+        'motherTongue': this.createGuru.value.motherTongue,
+        'maritalStatus': this.createGuru.value.maritalStatus,
+        'occupation': this.createGuru.value.occupation,
+        'gender': this.genderValue,
+        'address': {
+          'pinCode': this.pinCode,
+          'locality': this.locality,
+          'country': this.country,
+          'state': this.state,
+          'city': this.city,
+        },
+        'role': 'guru',
+      }],
+    }
+
+    console.log(obj)
+    this.user.createUser(obj).subscribe(res => {
+      console.log(res);
+      this.createGuru.reset();
+      document.getElementById('close-btn').click();
+    },
+    err => {
+      console.log(err);
+    });
+
+  }  
+  
 
 }

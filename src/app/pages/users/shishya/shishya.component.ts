@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { guru } from '../guru/guru.model';
 import { HttpClient } from '@angular/common/http';
 import { UserService } from '../../../services/user.service';
 import { saveAs } from 'file-saver';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-shishya',
@@ -13,13 +14,16 @@ import { saveAs } from 'file-saver';
 export class ShishyaComponent implements OnInit {
 
   constructor(private http: HttpClient,
-              private user: UserService) { }
+              private user: UserService,
+              private router: Router) { }
 
   data: any;
   total: Number = 0;
-  table_head = [
+  table_head =[
+    'View / Edit',
     'First Name',
     'Last Name',
+    'Status',
     'Email',
     'Phone',
     'Roll No.',
@@ -35,16 +39,40 @@ export class ShishyaComponent implements OnInit {
     'Occupation',
     'Mother Tongue',
     'Marital Status'];
+
+    table_head_obj = {
+      'View / Edit' : true,
+      'First Name': true,
+      'Last Name': true,
+      'Status': true,
+      'Email': false,
+      'Phone': false,
+      'Roll No.': false,
+      'Aadhaar No.': false,
+      'Gender': false,
+      'Date of Birth': false,
+      'Age': false,
+      'Pincode': false,
+      'Locality': false,
+      'City': false,
+      'State': false,
+      'Country': false,
+      'Occupation': false,
+      'Mother Tongue': false,
+      'Marital Status': false,
+    }
+
   limit: string = '6';
 
   pageSize: string = '5';
   curr_page: number = 1;
-  createSanchalak: FormGroup;
+  createShishya: FormGroup;
   location = new Array();
   country: String = '';
   city: String = '';
   state: String = '';
   pinCode: String = '';
+  locality: string = "";
   pincodeInvalid: boolean = false;
   genderValue = 'male';
   createGuru: FormGroup;
@@ -60,14 +88,16 @@ export class ShishyaComponent implements OnInit {
   ngOnInit(): void {
 
 
-    this.createSanchalak = new FormGroup({
-      'name' : new FormControl(null),
-      'email' : new FormControl(null),
-      'contact' : new FormControl(null,),
-      'contact_no' : new FormControl(null),
-      'country' : new FormControl(),
-      'state' : new FormControl(),
-      'city' : new FormControl(),
+    this.createShishya = new FormGroup({
+      'fName' : new FormControl(null, Validators.required),
+      'lName' : new FormControl(null, Validators.required),
+      'email' : new FormControl(null, Validators.required),
+      'dob' : new FormControl(null, Validators.required),
+      'aadhaarNo' : new FormControl(null, Validators.required),
+      'aadhaarImg' : new FormControl(null, Validators.required),
+      'maritalStatus' : new FormControl(null),
+      'motherTongue' : new FormControl(null),
+      'occupation' : new FormControl(null),
     });
 
 
@@ -91,6 +121,16 @@ export class ShishyaComponent implements OnInit {
     err => {
       console.log(err);
     });
+  }
+
+  addField(field){
+    console.log(field);
+    this.table_head_obj[field] = !this.table_head_obj[field];
+  }
+
+  removeField(field){
+    console.log(field);
+    this.table_head_obj[field] = !this.table_head_obj[field];
   }
 
   removeFilters() {
@@ -172,6 +212,7 @@ export class ShishyaComponent implements OnInit {
                 this.city = loc_obj[0].city;
                 this.state = loc_obj[0].state;
                 this.country = loc_obj[0].country;
+                this.locality = loc_obj[0].name;
               }else{
                 document.getElementById('triggerPincode').click();
                 this.location = loc_obj;
@@ -196,6 +237,24 @@ export class ShishyaComponent implements OnInit {
       }
 
     }
+
+  }
+
+
+  selectLocality(data){
+    console.log(data);
+    this.state = data.state;
+    this.country = data.country;
+    this.city = data.city;
+    this.locality = data.name
+  }
+
+  date(){
+    setTimeout(() => {
+      if (document.getElementsByClassName('cdk-overlay-container')[0]){
+        document.getElementsByClassName('cdk-overlay-container')[0].setAttribute('style', 'z-index: 1080;');
+      }
+    }, 200);
 
   }
 
@@ -249,17 +308,12 @@ export class ShishyaComponent implements OnInit {
     saveAs(blob, 'Shishya-Export.csv');
    }
 
-  selectLocality(data){
-    console.log(data);
-    this.state = data.state;
-    this.country = data.country;
-    this.city = data.city;
-  }
+
 
   downloadSampleCsv(){
     const d = this.ConvertToCSV({}, this.table_head);
     const blob = new Blob([d], { type: 'text/csv;charset=utf-8;'});
-    saveAs(blob, 'Sample-CSV-Shishya.csv');
+    saveAs(blob, 'Sample-CSV-Sishya.csv');
   }
 
 
@@ -269,5 +323,53 @@ export class ShishyaComponent implements OnInit {
       console.log("valid")
     }
   }
+
+
+  showUser(id){
+    this.router.navigateByUrl(`/pages/users/user-details/sishya/${id}`);
+  }
+
+
+
+  createUser(){
+    const obj = {
+      'data' : [{
+        'fName': this.createShishya.value.fName,
+        'lName': this.createShishya.value.lName,
+        'email': this.createShishya.value.email,
+        'password': 'default',
+        'dob': this.createShishya.value.dob,
+        'aadharNumber': this.createShishya.value.aadhaarNo,
+        'aadhaarImg': this.createShishya.value.aadhaarImg,
+        'motherTongue': this.createShishya.value.motherTongue,
+        'maritalStatus': this.createShishya.value.maritalStatus,
+        'occupation': this.createShishya.value.occupation,
+        'gender': this.genderValue,
+        'address': {
+          'pinCode': this.pinCode,
+          'locality': this.locality,
+          'country': this.country,
+          'state': this.state,
+          'city': this.city,
+        },
+        'role': 'sishya',
+      }],
+    }
+
+    console.log(obj)
+    this.user.createUser(obj).subscribe(res => {
+      console.log(res);
+      this.createShishya.reset();
+      document.getElementById('close-btn').click();
+
+
+    },
+    err => {
+      console.log(err);
+    });
+    
+
+  }  
+
 
 }

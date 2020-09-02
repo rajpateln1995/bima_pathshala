@@ -4,6 +4,7 @@ import { UsersComponent } from './users.component';
 import { SanchalakComponent } from './sanchalak/sanchalak.component';
 import { GuruComponent } from './guru/guru.component';
 import { ShishyaComponent } from './shishya/shishya.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 
 const routes: Routes = [{
@@ -21,6 +22,10 @@ const routes: Routes = [{
     {
       path: 'shishya',
       component: ShishyaComponent,
+    },
+    {
+      path: 'user-details/:role/:id',
+      component: UserDetailsComponent,
     },
   ],
 }];

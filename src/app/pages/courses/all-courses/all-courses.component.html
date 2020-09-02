@@ -1,3 +1,6 @@
+
+<button nbButton status="success" class="float" data-toggle="modal" data-target="#newCourseModal"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Add New Course</button>
+<!-- data Table -->
 <div class="row">
     <div class="col-lg-12">
       <div class="card">
@@ -6,16 +9,26 @@
         </div>
         <div class="card-body">
             <div class="responsive">
-                <table class="table table-bordered table-striped table-md">
+                <table class="table table-bordered table-striped table-md text-center">
                     <thead>
                       <tr>
                         <th *ngFor="let th of table_head">{{th}}</th>
-
                       </tr>
                     </thead>
-                    <tbody >
-                      <tr *ngIf="total == 0">
-                        <td style="text-align: center;">No Data Available</td>                    
+                    <tbody *ngIf="total === 0">
+                      <tr >
+                        <td style="text-align: center;">No Data Available</td>                
+                      </tr>
+                    </tbody>
+                    <tbody *ngIf="total !== 0">
+                      <tr *ngFor = "let d of data">
+                        <td>{{d.name}}</td>                
+                        <td>{{d.type}}</td>                
+                        <td>{{d.fee}}</td>    
+                        <td></td>            
+                        <td>{{d.duration}}</td>                
+                        <td>{{d.rating}}</td>                
+                        <td (click)="viewCourse(d.id)" style="color:#28a745; cursor: pointer;"><i class="fa fa-eye" aria-hidden="true"></i></td>                
                       </tr>
                     </tbody>
                   </table>
@@ -33,9 +46,65 @@
                     </select>
                 </div>  
             </div>
-            
         </div>
       </div>
     </div>
-    <!--/.col-->
+</div>
+
+<!-- Data Table ends -->
+
+
+<!--add new Modal -->
+<div class="modal fade" id="newCourseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create new Course</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label  class="label">Course Name <span style="color: red;">*</span></label>
+          <input type="text" nbInput fullWidth  placeholder="Enter Course Name">
+        </div>
+        <div class="form-group">
+          <label  class="label">Course Type <span style="color: red;">*</span></label>
+          <select class="form-control" [(ngModel)]="courseType">
+            <option selected>--Select--</option>
+            <option value="free">Free</option>
+            <option value="paid">Paid</option>          
+          </select>
+        </div>
+        <div *ngIf="courseType === 'paid'" class="form-group">
+          <label  class="label">Course Fee [ ₹ ] <span style="color: red;">*</span></label>
+          <input type="number" nbInput fullWidth  placeholder="Enter Course Name">
+        </div>
+        <div class="form-group">
+          <label  class="label d-block">Select Course Languages<span style="color: red;">*</span></label>
+          <div class="row">
+            <div class="form-check form-check-inline col-4">
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+              <label class="form-check-label" for="inlineCheckbox1">English</label>
+            </div>
+            <div class="form-check form-check-inline col-4">
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+              <label class="form-check-label" for="inlineCheckbox2">Hindi</label>
+            </div>
+          </div>
+        </div>
+          
+          
+        
+      </div>
+        
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-dismiss="modal" nbButton status="basic">Close</button>
+        <button nbButton status="success" >Create</button>
+      </div>
+    </div>
   </div>
+</div>
+<!--add new Modal ends-->
+

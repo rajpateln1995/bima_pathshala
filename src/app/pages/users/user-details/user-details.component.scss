@@ -1,7 +1,16 @@
+.profile-img{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
 .float{
     position: fixed;
     z-index: 10;
     right: 30px;
     bottom: 30px;
+}
+
+.btn-shadow{
     box-shadow: 3px 3px 4px #999;
 }
