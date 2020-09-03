@@ -1,11 +1,13 @@
-<ng-container *ngIf="details"   >
+<ng-container *ngIf="details">
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <b>{{role.charAt(0).toUpperCase() + role.slice(1)}} - details</b>
                 </div>
+                
                 <div class="card-body">
+                <form #f="ngForm">
                     <div class="text-center" *ngIf="details.imageUrl && details.imageUrl.length > 0">                    
                         <img class="profile-img" src="{{details.imageUrl}}">    
                         <h2 class="mt-3" style="color: #9ca6bc;">{{details.fName + ' ' + details.lName}}</h2>                
@@ -14,100 +16,138 @@
                     <h5 class="text-center mb-4">Personal Details</h5>
                     
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label text-center">First Name</label>
+                        <label class="col-md-3 col-form-label text-center">First Name<span style="color: red;"> *</span></label>
                         <div class="col-md-9">
-                          <input type="text" [disabled]="!editable" [(ngModel)]="details.fName" class="form-control">                      
+                          <input type="text" name="fName" required #fName="ngModel" [disabled]="!editable" [(ngModel)]="details.fName" class="form-control">   
+                          <p *ngIf="fName.invalid && fName.touched" class="text-center mb-3 mt-1" style="color: red;">This Field is Mandatory !</p>
+                              
                         </div>
                     </div>
+                    
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label text-center">Last Name</label>
+                        <label class="col-md-3 col-form-label text-center">Last Name<span style="color: red;"> *</span></label>
                         <div class="col-md-9">
-                          <input type="text" [disabled]="!editable" [(ngModel)]="details.lName" class="form-control">                      
+                            <input type="text" name="lName" required #lName="ngModel" [disabled]="!editable" [(ngModel)]="details.lName" class="form-control">   
+                            <p *ngIf="lName.invalid && lName.touched" class="text-center mb-3 mt-1" style="color: red;">This Field is Mandatory !</p>
+                             
                         </div>
                     </div>
+                    
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label text-center">Email</label>
+                        <label class="col-md-3 col-form-label text-center">Email<span style="color: red;"> *</span></label>
                         <div class="col-md-9">
-                          <input type="email" [disabled]="!editable" [(ngModel)]="details.email" class="form-control">                      
+                            <input type="text" name="email" required email #email="ngModel" [disabled]="!editable" [(ngModel)]="details.email" class="form-control">   
+                            <p *ngIf="email.invalid && email.touched" class="text-center mb-3 mt-1" style="color: red;">This Field is Mandatory !</p>
+                             
                         </div>
                     </div>
+                    
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label text-center">Gender</label>
+                        <label class="col-md-3 col-form-label text-center">Gender<span style="color: red;"> *</span></label>
                         <div class="col-md-9">
-                            <select [disabled]="!editable" [(ngModel)]="details.gender" class="form-control">
-                                <option>--Select--</option>
+                            <select [disabled]="!editable" name="gender" #gender="ngModel" required [(ngModel)]="details.gender" class="form-control">
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
                                 <option value="na">NA</option>
                             </select>                      
                         </div>
                     </div>
+
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label text-center">Age</label>
+                        <label class="col-md-3 col-form-label text-center">Age<span style="color: red;"> *</span></label>
                         <div class="col-md-9">
-                          <input type="text" [disabled]="!editable" [(ngModel)]="details.age" class="form-control">                      
+                            <input type="text" name="age" required #age="ngModel" [disabled]="!editable" [(ngModel)]="details.age" class="form-control">   
+                            <p *ngIf="age.invalid && age.touched" class="text-center mb-3 mt-1" style="color: red;">This Field is Mandatory !</p>
+                             
                         </div>
                     </div>
+
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label text-center">Date of Birth</label>
-                        <div class="col-md-9">
-                          <input type="date" [disabled]="!editable" [(ngModel)]="details.dob" class="form-control">                      
+                        <label class="col-md-3 col-form-label text-center">Date of Birth<span style="color: red;"> *</span></label>
+                        <div class="col-md-9">  
+                          <input type="text" name="dob" required #dob="ngModel" [disabled]="!editable" [(ngModel)]="details.dob" class="form-control">   
+                          <p *ngIf="dob.invalid && dob.touched" class="text-center mb-3 mt-1" style="color: red;">This Field is Mandatory !</p>
+                                             
                         </div>
                     </div>
+                    
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label text-center">Aadhar Number</label>
+                        <label class="col-md-3 col-form-label text-center">Aadhar Number<span style="color: red;"> *</span></label>
                         <div class="col-md-9">
-                          <input type="text" [disabled]="!editable" [(ngModel)]="details.aadharNumber" class="form-control" maxlength="12">                      
+                            <input type="text" minlength="12" maxlength="12" name="aadharNumber" required #aadharNumber="ngModel" [disabled]="!editable" [(ngModel)]="details.aadharNumber" class="form-control">   
+                            <p *ngIf="aadharNumber.invalid && aadharNumber.touched" class="text-center mb-3 mt-1" style="color: red;">Aadhar Number should be exactly of 12 Digits</p>
+                             
                         </div>
-                    </div>      
+                    </div>   
+                    
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label text-center">Mother Tongue</label>
                         <div class="col-md-9">
-                          <input type="text" [disabled]="!editable" [(ngModel)]="details.motherTongue" class="form-control" maxlength="12">                      
+                          <input type="text" name="motherTongue" [disabled]="!editable" [(ngModel)]="details.motherTongue" class="form-control">                      
                         </div>
                     </div> 
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label text-center">Marital Status</label>
                         <div class="col-md-9">
-                          <input type="text" [disabled]="!editable" [(ngModel)]="details.maritalStatus" class="form-control" maxlength="12">                      
+                          <input type="text"  name="maritalStatus" [disabled]="!editable" [(ngModel)]="details.maritalStatus" class="form-control">                      
                         </div>
                     </div> 
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label text-center">Occupation</label>
                         <div class="col-md-9">
-                          <input type="text" [disabled]="!editable" [(ngModel)]="details.occupation" class="form-control" maxlength="12">                      
+                          <input type="text" name="occupation" [disabled]="!editable" [(ngModel)]="details.occupation" class="form-control">                      
                         </div>
                     </div>  
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label text-center">Pincode</label>
+                        <label class="col-md-3 col-form-label text-center">Pincode<span style="color: red;"> *</span></label>
                         <div class="col-md-9">
-                          <input type="text" [disabled]="!editable" [(ngModel)]="details.address.pincode" class="form-control" maxlength="6">                      
+                            <input type="text" name="pincode" minlength="6" maxlength="6" required #pincode="ngModel" [disabled]="!editable" [(ngModel)]="details.address.pincode" class="form-control">   
+                            <p *ngIf="pincode.invalid && pincode.touched" class="text-center mb-3 mt-1" style="color: red;">Pincode should be exactly of 6 Digits</p>
+                             
                         </div>
                     </div> 
+                    
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label text-center">Locality</label>
+                        <label class="col-md-3 col-form-label text-center">Locality<span style="color: red;"> *</span></label>
                         <div class="col-md-9">
-                          <input type="text" [disabled]="!editable" [(ngModel)]="details.address.locality" class="form-control" >                      
+                            <input type="text" name="locality" required #locality="ngModel" [disabled]="!editable" [(ngModel)]="details.address.locality" class="form-control">   
+                            <p *ngIf="locality.invalid && locality.touched" class="text-center mb-3 mt-1" style="color: red;">This Field is Required</p>
+                             
                         </div>
                     </div> 
+                    
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label text-center">City / District</label>
+                        <label class="col-md-3 col-form-label text-center">City / District<span style="color: red;"> *</span></label>
                         <div class="col-md-9">
-                          <input type="text" [disabled]="!editable" [(ngModel)]="details.address.city" class="form-control" >                      
+                            <input type="text" name="city" required #city="ngModel" [disabled]="!editable" [(ngModel)]="details.address.city" class="form-control">   
+                            <p *ngIf="city.invalid && city.touched" class="text-center mb-3 mt-1" style="color: red;">This Field is Required</p>
+                             
                         </div>
                     </div> 
+                    
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label text-center">State</label>
+                        <label class="col-md-3 col-form-label text-center">State<span style="color: red;"> *</span></label>
                         <div class="col-md-9">
-                          <input type="text" [disabled]="!editable" [(ngModel)]="details.address.state" class="form-control" >                      
+                            <input type="text" name="state" required #state="ngModel" [disabled]="!editable" [(ngModel)]="details.address.state" class="form-control">   
+                            <p *ngIf="state.invalid && state.touched" class="text-center mb-3 mt-1" style="color: red;">This Field is Required</p>
+                             
                         </div>
                     </div> 
+                    
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label text-center">Country</label>
+                        <label class="col-md-3 col-form-label text-center">Country<span style="color: red;"> *</span></label>
                         <div class="col-md-9">
-                          <input type="text" [disabled]="!editable" [(ngModel)]="details.address.country" class="form-control" >                      
+                            <input type="text" name="country" required #country="ngModel" [disabled]="!editable" [(ngModel)]="details.address.country" class="form-control">   
+                            <p *ngIf="country.invalid && country.touched" class="text-center mb-3 mt-1" style="color: red;">This Field is Required</p>
+                             
                         </div>
                     </div> 
+                    
+                    <div class="text-center float">
+                        <button class="mr-3 btn-shadow" (click)="editable = true" nbButton status="primary">Edit</button>
+                        <button type="submit" [disabled]="!f.valid" class="btn-shadow" nbButton status="success" (click)="save()">Save</button>
+                    </div>
+                </form>
                     <ng-container *ngIf="role === 'sishya'">
                         <hr>
                         <h5 class="text-center mb-4">Course Taken</h5>  
@@ -233,9 +273,28 @@
     </div>
     
     
-    <div class="text-center float">
-        <button class="mr-3 btn-shadow" (click)="editable = true" nbButton status="primary">Edit</button>
-        <button class="btn-shadow" nbButton status="success" (click)="save()">Save</button>
-    </div>
+    
 </ng-container>
+
+
+<button style="display: none;" id="success" data-toggle="modal" data-target="#successModal"></button>
+<div class="modal" tabindex="-1" id="successModal">
+  <div style="margin-top: 20%;" class="modal-dialog">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <h5 style="color: #00d68f;" class="modal-title">Details Updated Successfully</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <div class="modal-body" style="text-align: center;">
+        <h5 style="color: #00d68f;">Details Updated Successfully <br><i class="fa fa-thumbs-up" aria-hidden="true"></i></h5>
+        <button id="close-upload" data-dismiss="modal" nbButton status="primary">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <div *ngIf="loading" id="cover-spin"></div>
