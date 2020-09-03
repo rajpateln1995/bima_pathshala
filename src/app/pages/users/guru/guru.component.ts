@@ -394,7 +394,7 @@ export class GuruComponent implements OnInit {
         'occupation': data['Occupation'],
         'gender': data['Gender'],
         'address': {
-          'pinCode': data['Pincode'],
+          'pincode': data['Pincode'],
           'locality': data['Locality'],
           'country': data['Country'],
           'state': data['State'],
@@ -406,7 +406,7 @@ export class GuruComponent implements OnInit {
       const match = String(obj.email).match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
       if (match[0] === obj.email
         && String(obj.aadharNumber).length === 12
-        && String(obj.address.pinCode).length === 6
+        && String(obj.address.pincode).length === 6
         && obj.role === 'guru' === true) {
           objArray.data.push(obj);
           console.log(objArray);
@@ -414,10 +414,15 @@ export class GuruComponent implements OnInit {
         this.rejectedfields.push(obj);
       }
     }
-    document.getElementById('close-upload').click();
-    document.getElementById('rejected').click();
-    
-    console.log(this.rejectedfields);
+
+    this.user.createMultipleUser(objArray).subscribe(res => {
+      document.getElementById('close-upload').click();
+      document.getElementById('rejected').click();
+      console.log(res);
+    },
+    err => {
+      console.log(err);
+    })
   }
 
 

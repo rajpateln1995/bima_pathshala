@@ -126,12 +126,10 @@ export class ShishyaComponent implements OnInit {
   }
 
   addField(field){
-    console.log(field);
     this.table_head_obj[field] = !this.table_head_obj[field];
   }
 
   removeField(field){
-    console.log(field);
     this.table_head_obj[field] = !this.table_head_obj[field];
   }
 

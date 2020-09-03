@@ -82,9 +82,13 @@
                 <div class="col-md-4 center">
                     <label class="label-margin">No. of Rows per page :</label>
                     <select class="form-control form-control-width" selected="10" [(ngModel)]="limit">
-                        <option value="10">10</option>
-                        <option value="11">15</option>
-                        <option value="25">25</option>
+                      <option value="10">10</option>
+                      <option value="15">15</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>    
+                      <option value="200">200</option>
+                      <option value="500">500</option>
                     </select>
                 </div>  
             </div>
@@ -100,7 +104,7 @@
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add New Guru</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Add New Shishya</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -113,35 +117,19 @@
                   <label class="label">Fields Marked with <span style="color: red;">*</span> are Mandatory !</label>
                 </div>
                   <div class="form-group">
-                      <label for="inputFirstName" class="label">First Name of Guru <span style="color: red;">*</span></label>
+                      <label for="inputFirstName" class="label">First Name of Shishya <span style="color: red;">*</span></label>
                       <input formControlName="fName" type="text" nbInput fullWidth  placeholder="Enter First Name ">
                   </div>
                   <div class="form-group">
-                    <label for="inputFirstName" class="label">Last Name of Guru <span style="color: red;">*</span></label>
+                    <label for="inputFirstName" class="label">Last Name of Shishya <span style="color: red;">*</span></label>
                     <input formControlName="lName" type="text" nbInput fullWidth  placeholder="Enter Last Name ">
                   </div>
-                  <!-- <div class="form-group">
-                    <label for="inputFirstName" class="label">Guru Type <span style="color: red;">*</span></label>
-                    <select class="form-control" style="width: 50%;">
-                      <option selected>--Select--</option>
-                      <option value="Full Time">Full Time</option>
-                      <option value="Part Time">Part Time</option>
-                      <option value="Retainer">Retainer</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="inputFirstName" class="label">Guru Level <span style="color: red;">*</span></label>
-                    <select class="form-control" style="width: 50%">
-                      <option selected>--Select--</option>
-                      <option value="level 1">Level 1</option>
-                      <option value="level 2">Level 2</option>
-                      <option value="level 3">Level 3</option>
-                    </select>
-                  </div> -->
+                
                   
                   <div class="form-group">
                       <label for="inputFirstName" class="label">Email <span style="color: red;">*</span></label>
                       <input formControlName="email" type="text" nbInput fullWidth  placeholder="Enter Email">
+                      <label *ngIf="!createShishya.get('email').valid && createShishya.get('email').touched" style="color: red;" class="label">Please Enter a Valid Email</label>
                   </div>
                   
                   <!-- <div class="form-group">
@@ -169,7 +157,7 @@
                   <label class="label">Date of Birth<span style="color: red;">*</span></label>
   
                         <input formControlName="dob" class="d-block mb-2" nbInput (mouseup)="date()"
-                               placeholder="Form Picker"
+                               placeholder="Select Date of Birth"
                                [nbDatepicker]="formpicker">
                         <nb-datepicker #formpicker></nb-datepicker>
                       

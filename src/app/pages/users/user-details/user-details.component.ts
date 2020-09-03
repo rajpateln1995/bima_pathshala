@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../../../services/user.service'
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -11,19 +11,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 
 
-export class UserDetailsComponent implements OnInit {
+export class UserDetailsComponent implements OnInit, OnDestroy {
 
   constructor(private user: UserService,
               private route: ActivatedRoute,
               private router: Router) { }
 
   userId: string = "";
-  details: any;
+  details: any ;
   editable: boolean = false;
   role: string ;
+  loading: boolean = false;
 
   ngOnInit() {
-    this.details = userModel;
+    this.loading = true;
+    console.log(this.details);
     this.role = this.route.snapshot.params['role'];
     this.userId = this.route.snapshot.params['id'];
     this.user.getUsers('', '10', '1', this.userId).subscribe(res => {
@@ -31,7 +33,7 @@ export class UserDetailsComponent implements OnInit {
       this.details = res;
       this.details = this.details.data[this.role][0];
       console.log(this.details);
-
+      this.loading = false;
     },
     err => {
       console.log(err);
@@ -54,6 +56,14 @@ export class UserDetailsComponent implements OnInit {
         "motherTongue": this.details.motherTongue,
         "maritalStatus": this.details.maritalStatus,
         "occupation": this.details.occupation,
+        "aadharNumber": this.details.aadharNumber,
+        "address": {
+          "pincode": this.details.address.pincode,
+          "locality": this.details.address.locality,
+          "city": this.details.address.city,
+          "state": this.details.address.state,
+          "country": this.details.address.country,
+        },
     }
     this.user.updateUserDetails(data).subscribe(res => {
       console.log(res);
@@ -62,6 +72,10 @@ export class UserDetailsComponent implements OnInit {
       console.log(err);
     });
     this.router.navigate(['pages/users/shishya']);
+  }
+
+  ngOnDestroy(){
+    this.save()
   }
 
 }

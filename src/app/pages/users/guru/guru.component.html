@@ -84,6 +84,10 @@
                         <option value="10">10</option>
                         <option value="15">15</option>
                         <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="500">500</option>
                     </select>
                 </div>  
             </div>
@@ -116,10 +120,12 @@
                 <div class="form-group">
                     <label for="inputFirstName" class="label">First Name of Guru <span style="color: red;">*</span></label>
                     <input formControlName="fName" type="text" nbInput fullWidth  placeholder="Enter First Name ">
+                    <label *ngIf="createGuru.get('fName').invalid && createGuru.get('fName').touched" style="color: red;" class="label">This field is Required !</label>
                 </div>
                 <div class="form-group">
                   <label for="inputFirstName" class="label">Last Name of Guru <span style="color: red;">*</span></label>
                   <input formControlName="lName" type="text" nbInput fullWidth  placeholder="Enter Last Name ">
+                  <label *ngIf="createGuru.get('lName').invalid && createGuru.get('lName').touched" style="color: red;" class="label">This field is Required !</label>
                 </div>
                 <!-- <div class="form-group">
                   <label for="inputFirstName" class="label">Guru Type <span style="color: red;">*</span></label>
@@ -143,6 +149,7 @@
                 <div class="form-group">
                     <label for="inputFirstName" class="label">Email <span style="color: red;">*</span></label>
                     <input formControlName="email" type="text" nbInput fullWidth  placeholder="Enter Email">
+                    <label *ngIf="!createGuru.get('email').valid && createGuru.get('email').touched" style="color: red;" class="label">Please Enter a Valid Email</label>
                 </div>
                 
                 <!-- <div class="form-group">
@@ -170,19 +177,21 @@
                 <label class="label">Date of Birth<span style="color: red;">*</span></label>
 
                       <input formControlName="dob" class="d-block mb-2" nbInput (mouseup)="date()"
-                             placeholder="Form Picker"
+                             placeholder="Select Date of Birth"
                              [nbDatepicker]="formpicker">
                       <nb-datepicker #formpicker></nb-datepicker>
-                    
+                      <label *ngIf="!createGuru.get('dob').valid && createGuru.get('dob').touched" style="color: red;" class="label">Please Enter a Valid Email</label>
                     
                 
                 <div class="form-group">
                   <label for="inputFirstName" class="label">Aadhaar Number <span style="color: red;">*</span></label>
-                  <input formControlName="aadhaarNo" type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Aadhaar Number">                
+                  <input formControlName="aadhaarNo" type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Aadhaar Number">  
+                  <label *ngIf="createGuru.get('aadhaarNo').invalid && createGuru.get('aadhaarNo').touched" style="color: red;" class="label">This field is Required !</label>              
                 </div>
                 <div class="form-group">
                   <label for="inputFirstName" class="label">Aadhaar Card Image <span style="color: red;">*</span></label>
-                  <input formControlName="aadhaarImg" class="d-block" type="file" >                
+                  <input formControlName="aadhaarImg" class="d-block" type="file" >    
+                  <label *ngIf="createGuru.get('aadhaarImg').invalid && createGuru.get('aadhaarImg').touched" style="color: red;" class="label">This field is Required !</label>                          
                 </div>
                 
                 <div class="form-group">
@@ -216,7 +225,8 @@
                 </div>
                 <div class="form-group">
                   <label for="inputFirstName" class="label">Pincode <span style="color: red;">*</span></label>
-                  <input [(ngModel)]="pinCode" [ngModelOptions]="{standalone: true}" maxlength="6" (input)="pincode($event)" type="text" nbInput fullWidth  placeholder="Enter Pin Code">                
+                  <input [(ngModel)]="pinCode" [ngModelOptions]="{standalone: true}" maxlength="6" (input)="pincode($event)" type="text" nbInput fullWidth  placeholder="Enter Pin Code">    
+                  
                 </div>
                 <div *ngIf="pincodeInvalid" class="form-group">
                   <label class="label" style="color: red;">Invalid Pincode</label>
@@ -242,6 +252,7 @@
         <div class="modal-footer">
           <button id="close-btn" nbButton status="danger" data-dismiss="modal">Close</button>
           <button [disabled]="!createGuru.valid" nbButton status="success" (click)="createUser()">Create</button>
+          
         </div>
       </div>
     </div>
