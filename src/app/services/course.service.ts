@@ -20,6 +20,12 @@ export class CourseService {
     return this.http.get(this.base_url + '/course', { headers: header });
   }
 
+  putCourse(data) {
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.auth.getToken());
+    return this.http.put(this.base_url + '/course',data, { headers: header });
+  }
+
   getLanguages() {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());

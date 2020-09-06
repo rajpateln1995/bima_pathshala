@@ -59,6 +59,57 @@ export class CreateCourseRouteComponent implements OnInit {
       document.getElementById('close-section').click();
     });
   }
+  coverimage;
+  uploadImage(event){
+    const data = event.target.files[0];
+    this.courses.upload(data).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress){
+        console.log(event);
+        
+      }else if (event.type === HttpEventType.Response){
+        console.log(event);
+        const data:any = event;
+        this.coverimage = data.body.data[0];
+      }
+    },
+    err => {
+      console.log(err);
+    });
+  }
+  covervideo
+  uploadVideo(event){
+      const data = event.target.files[0];
+      this.courses.upload(data).subscribe(event => {
+        if (event.type === HttpEventType.UploadProgress){
+          console.log(event);
+          
+        }else if (event.type === HttpEventType.Response){
+          console.log(event);
+          const data:any = event;
+          this.covervideo = data.body.data[0];
+        }
+      },
+      err => {
+        console.log(err);
+      });
+  }
+
+  saveCourse(){
+    const obj = {
+      title: this.details.name,
+      description : this.details.description,
+      coverImage : this.coverimage,
+      covervideo : this.covervideo
+    }
+    this.courses.putCourse(obj).subscribe(res => {
+      console.log(res);
+    },
+    err => {
+      console.log(err);
+    })
+  }
+
+
 
 
 
