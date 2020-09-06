@@ -1,0 +1,104 @@
+<div class="mr-2 ml-2 mb-2 text-right">
+    <button class="mr-2" size="small" type="button" nbButton status="success"><i
+            class="fa fa-pencil mr-1" aria-hidden="true"></i>Edit</button>
+
+    <button class="mr-2" size="small" type="button" nbButton status="danger"><i
+            class="fa fa-trash mr-1" aria-hidden="true"></i>Delete Section</button>
+
+    <button class="mr-2" size="small" data-toggle="modal" data-target="#subSectionModal"
+        type="button" nbButton status="success"><i class="fa fa-plus mr-1"
+            aria-hidden="true"></i>Add Sub-Section</button>
+</div>
+
+<hr>
+<form #section>
+    <div class="form-group row">
+        <label class="col-md-4 col-form-label text-center">Section Name<span style="color: red;">
+                *</span></label>
+        <div class="col-md-8">
+            <input type="text" name="sectionName" required #sectionName="ngModel"
+                [(ngModel)]="section.name" class="form-control"
+                placeholder="Enter Section Name [In {{language}}]">
+            <p *ngIf="sectionName.invalid && sectionName.touched" class="text-center mb-3 mt-1"
+                style="color: red;">This Field is Mandatory !</p>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-md-4 col-form-label text-center">Section Description<span
+                style="color: red;"> *</span></label>
+        <div class="col-md-8">
+            <textarea name="sectionDescription" required rows="6" class="form-control"
+                #sectionDescription="ngModel" [(ngModel)]="section.description"
+                placeholder="Enter Section Description [In {{language}}]"></textarea>
+            <p *ngIf="sectionDescription.invalid && sectionDescription.touched"
+                class="text-center mb-3 mt-1" style="color: red;">This Field is Mandatory !</p>
+        </div>
+    </div>
+</form>
+<nb-accordion>
+    <nb-accordion-item *ngFor="let data of sub" style="border: solid #5d5c5ce0 1px;" >
+        <nb-accordion-item-header>
+            {{data.tittle}}
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+            <label>Type :  </label>
+            <label>{{data.type}}</label>
+            <br>
+            
+            <a target="_blank" href="{{data.url}}">Preview</a>
+
+        </nb-accordion-item-body>
+    </nb-accordion-item>
+</nb-accordion>
+
+
+
+<div class="modal" tabindex="-1" id="subSectionModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form #subSectionModal="ngForm">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Sub-Section</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="inputFirstName" class="label">Enter Sub-Section Name <span
+                                style="color: red;">*</span></label>
+                        <input type="text" name="subSectionName" required #subSectionName="ngModel"
+                            [(ngModel)]="subSectionTittle" nbInput fullWidth placeholder="Enter Section Name ">
+                        <p *ngIf="subSectionName.invalid && subSectionName.touched" class="text-center mb-3 mt-1"
+                            style="color: red;">This Field is Mandatory !</p>
+                    </div>
+                    <label class="label">Media Type <span style="color: red;">*</span></label>
+                    <select class="form-control" name="media" required #media="ngModel" [(ngModel)]="mediaType">
+                        <option selected>--Select--</option>
+                        <option value="audio">Audio</option>
+                        <option value="video">Video</option>
+                        <option value="text">Text</option>
+                    </select>
+                    <div class="custom-file mt-4">
+                        <input (change)="uploadMedia($event)" #media="ngModel" ngModel required name="media" type="file"
+                            class="custom-file-input">
+                        <label class="custom-file-label">Select Media To Upload</label>
+                    </div>
+                    <div *ngIf="progress > 0" class="progress mt-4">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{progress}}%"
+                            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="close-sub-section" data-dismiss="modal" nbButton status="basic">Close</button>
+                    <button [disabled]="subSectionModal.invalid" (click)="createSubSection(subSectionModal)" nbButton
+                        status="success">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

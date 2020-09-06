@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'ngx-courses',
   templateUrl: './courses.component.html',

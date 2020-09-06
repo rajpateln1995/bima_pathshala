@@ -13,6 +13,7 @@ export class UserService {
   base_url = 'https://bimapath.herokuapp.com/api';
 
 
+
   getUsers(type: string = '',
     limit: string = '10',
     page: string = '1',

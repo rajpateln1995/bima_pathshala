@@ -1,0 +1,148 @@
+<div class="card">
+    <div class="card-header">
+        Edit Course
+    </div>
+    <div class="card-body">
+        <nb-route-tabset *ngIf="tabs" fullWidth [tabs]="tabs"></nb-route-tabset>
+        <!-- <ng-container *ngIf="languages">
+            <nb-tabset fullWidth>
+                <nb-tab *ngFor="let lang of languages" tabTitle="{{lang.displayName}}">
+                    <form #f="ngForm">
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-center">Course Name<span style="color: red;">
+                                    *</span></label>
+                            <div class="col-md-8">
+                                <input type="text" name="CourseName" required #CourseName="ngModel" ngModel
+                                    class="form-control" placeholder="Enter Course Name [In {{lang.displayName}}]">
+                                <p *ngIf="CourseName.invalid && CourseName.touched" class="text-center mb-3 mt-1"
+                                    style="color: red;">This Field is Mandatory !</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4 col-form-label text-center">Course Description<span
+                                    style="color: red;"> *</span></label>
+                            <div class="col-md-8">
+                                <textarea name="courseDescription" required rows="6" class="form-control"
+                                    #courseDescription="ngModel" ngModel
+                                    placeholder="Enter Course Description [In {{lang.displayName}}]"></textarea>
+                                <p *ngIf="courseDescription.invalid && courseDescription.touched"
+                                    class="text-center mb-3 mt-1" style="color: red;">This Field is Mandatory !</p>
+                            </div>
+                        </div>
+                        <button type="button" data-toggle="modal" data-target="#sectionModal" nbButton
+                            status="success"><i class="fa fa-plus" aria-hidden="true"></i> Add New Section</button>
+
+                        <hr>
+                        <nb-accordion class="mt-3">
+                            <nb-accordion-item>
+                                <nb-accordion-item-header>
+                                    Section 1
+                                </nb-accordion-item-header>
+                                <nb-accordion-item-body>
+                                    <div class="mr-2 ml-2 mb-2 text-right">
+                                        <button class="mr-2" size="small" type="button" nbButton status="success"><i class="fa fa-pencil mr-1"
+                                                aria-hidden="true"></i>Edit</button>                                    
+                                
+                                        <button class="mr-2" size="small" type="button" nbButton status="danger"><i class="fa fa-trash mr-1"
+                                                aria-hidden="true"></i>Delete Section</button>                                        
+                                    
+                                        <button class="mr-2" size="small" type="button" nbButton status="success"><i class="fa fa-plus mr-1"
+                                                aria-hidden="true"></i>Add Sub-Section</button>  
+                                    </div>          
+                                    
+                                    <hr>
+
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label text-center">Section Name<span style="color: red;">
+                                                *</span></label>
+                                        <div class="col-md-8">
+                                            <input type="text" name="sectionName" required #sectionName="ngModel" ngModel
+                                                class="form-control" placeholder="Enter Section Name [In {{lang.displayName}}]">
+                                            <p *ngIf="sectionName.invalid && sectionName.touched" class="text-center mb-3 mt-1"
+                                                style="color: red;">This Field is Mandatory !</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label text-center">Section Description<span
+                                                style="color: red;"> *</span></label>
+                                        <div class="col-md-8">
+                                            <textarea name="sectionDescription" required rows="6" class="form-control"
+                                                #sectionDescription="ngModel" ngModel
+                                                placeholder="Enter Section Description [In {{lang.displayName}}]"></textarea>
+                                            <p *ngIf="sectionDescription.invalid && sectionDescription.touched"
+                                                class="text-center mb-3 mt-1" style="color: red;">This Field is Mandatory !</p>
+                                        </div>
+                                    </div>                 
+                                    
+                                </nb-accordion-item-body>
+                            </nb-accordion-item>
+                        </nb-accordion>
+                    </form>
+                </nb-tab>
+            </nb-tabset>
+        </ng-container> -->
+
+    </div>
+</div>
+
+
+
+<!-- section modal -->
+<!-- <div class="modal" tabindex="-1" id="sectionModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create Section</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="inputFirstName" class="label">Enter Section Name <span
+                            style="color: red;">*</span></label>
+                    <input type="text" nbInput fullWidth placeholder="Enter Section Name ">
+                </div>
+                <div class="form-group">
+                    <label for="inputFirstName" class="label d-block">Enter Section Description <span
+                            style="color: red;">*</span></label>
+                    <textarea nbInput fullWidth placeholder="Enter Section Description"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="close-upload" data-dismiss="modal" nbButton status="primary">Create</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- section modal ends-->
+
+
+<!-- 
+<div class="modal" tabindex="-1" id="subSectionModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create Sub Section</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="inputFirstName" class="label">Enter Sub-Section Name <span
+                            style="color: red;">*</span></label>
+                    <input type="text" nbInput fullWidth placeholder="Enter Sub-Section Name ">
+                </div>
+                <div class="form-group">
+                    <label for="inputFirstName" class="label">Last Name of Shishya <span
+                            style="color: red;">*</span></label>
+                    <input type="text" nbInput fullWidth placeholder="Enter Section Description ">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="close-upload" data-dismiss="modal" nbButton status="primary">Create</button>
+            </div>
+        </div>
+    </div>
+</div> -->

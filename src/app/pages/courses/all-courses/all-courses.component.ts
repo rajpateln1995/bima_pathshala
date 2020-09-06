@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../../../services/course.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-all-courses',
@@ -8,7 +10,8 @@ import { CourseService } from '../../../services/course.service';
 })
 export class AllCoursesComponent implements OnInit {
 
-  constructor(private courses : CourseService) { }
+  constructor(private courses: CourseService,
+              private router: Router) { }
 
 
   table_head = [
@@ -21,20 +24,101 @@ export class AllCoursesComponent implements OnInit {
     'View / Edit',
   ];
   total: number = 0;
-  data : any ;
+  data: any ;
   courseType: string;
+  languages = [];
+  x;
+  courseTittle = "";
+  fee = 0;
 
   ngOnInit(): void {
     this.courses.getCourses().subscribe(res => {
-      console.log(res)
+      console.log(res);
       this.data = res;
       this.data = this.data.data;
       this.total = this.data.length;
+    },
+    err => {
+      console.log(err);
+    });
+
+
+
+  }
+
+  viewCourse(courseId) {
+    console.log(courseId);
+  }
+
+  createModal() {
+    this.courses.getLanguages().subscribe(res => {
+      let lang: any = res;
+      lang = lang.data;
+      for (const l of lang) {
+        this.languages.push({
+          'name':l.name,
+          'displayName' : l.displayName,
+          'value' : false
+        })
+      }
+      console.log(this.languages);
+      document.getElementById('create-modal').click();
+      
+    },
+    err => {
+      console.log(err);
+    });
+  }
+
+  finance;
+  accounting;
+  protection;
+  submit(){
+    let languages = "";
+    for (const lang of this.languages){
+      if (lang.value){
+        languages = languages + lang.name + ',';
+      }
+    }
+    let category = []
+    if (this.finance){
+      category.push('Finance')
+    }
+    if (this.accounting){
+      category.push('Accounting')
+    }
+    if (this.protection){
+      category.push('Protection')
+    }
+    let obj = {
+      'tittle' : this.courseTittle,
+      'fee' : this.fee,
+      'type' : this.courseType,
+      'languages' : languages.slice(0, (languages.length - 1)),
+      'category' : category,
+    };
+    console.log(obj)
+    this.courses.createCourse(obj).subscribe(res => {
+      console.log(res);
+      let data: any = res;
+      data = data.data;
+      let id = [];
+      for (const d of data){
+        id.push({
+          'id' : d._id,
+          'lang' : d.language,
+        })
+      }
+      localStorage.setItem('course-list', JSON.stringify({ 'data' : id }));
+      document.getElementById('close-btn').click();
+      this.router.navigateByUrl(`pages/courses/create/id/${id[0].id}`);
+
+    },
+    err => {
+      console.log(err);
     })
   }
 
-  viewCourse(courseId){
-    console.log(courseId)
-  }
+
 
 }

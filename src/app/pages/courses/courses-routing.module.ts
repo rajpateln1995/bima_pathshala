@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { CoursesComponent } from './courses.component';
 import { AllCoursesComponent } from './all-courses/all-courses.component';
 import { EditCourseComponent } from './edit-course/edit-course.component';
+import { CreateComponent } from './create/create.component';
+import { CreateCourseRouteComponent } from './create-course-route/create-course-route.component';
 
 
 const routes: Routes = [
@@ -22,6 +24,16 @@ const routes: Routes = [
       {
         path: 'edit',
         component: EditCourseComponent,
+      },
+      {
+        path: 'create',
+        component: CreateComponent,
+        children: [
+          {
+            path: 'id/:id',
+            component: CreateCourseRouteComponent,
+          }
+        ]
       },
     ]
   }
