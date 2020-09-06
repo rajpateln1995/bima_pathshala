@@ -22,12 +22,13 @@
         </div>
         <div class="form-group-row">
             <label>cover image</label>
-            <input type="file" (change)="uploadImage()">
+            <input type="file" (change)="uploadImage($event)">
             <br>
-            <label  (change)="uploadVideo()">cover video</label>
+            <label  (change)="uploadVideo($event)">cover video</label>
             <input type="file">
         </div>
         <button class="btn btn-primary" (click)="saveCourse()">Save</button>
+        <br>
         <button type="button" data-toggle="modal" data-target="#sectionModal" nbButton status="success"><i
                 class="fa fa-plus" aria-hidden="true"></i> Add New Section</button>
         <hr>
