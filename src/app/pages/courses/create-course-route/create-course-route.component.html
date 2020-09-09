@@ -1,10 +1,10 @@
 <ng-container *ngIf="details">
     <form #f="ngForm">
-        <div class="form-group row">
+        <div class="form-group row mt-4">
             <label class="col-md-4 col-form-label text-center">Course Name<span style="color: red;">
                     *</span></label>
             <div class="col-md-8">
-                <input type="text" name="courseName" required #courseName="ngModel" [(ngModel)]="details.name"
+                <input type="text" name="courseName" required #courseName="ngModel" [(ngModel)]="details.title"
                     class="form-control" placeholder="Enter Course Name [In {{details.language}}]">
                 <p *ngIf="courseName.invalid && courseName.touched" class="text-center mb-3 mt-1" style="color: red;">
                     This Field is Mandatory !</p>
@@ -15,36 +15,58 @@
                     *</span></label>
             <div class="col-md-8">
                 <textarea name="courseDescription" required rows="6" class="form-control" #courseDescription="ngModel"
-                    [(ngModel)]="details.description" placeholder="Enter Course Description [In {{details.language}}]"></textarea>
+                    [(ngModel)]="details.description"
+                    placeholder="Enter Course Description [In {{details.language}}]"></textarea>
                 <p *ngIf="courseDescription.invalid && courseDescription.touched" class="text-center mb-3 mt-1"
                     style="color: red;">This Field is Mandatory !</p>
             </div>
         </div>
-        <div class="form-group-row">
-            <label>cover image</label>
-            <input type="file" (change)="uploadImage($event)">
-            <br>
-            <label  (change)="uploadVideo($event)">cover video</label>
-            <input type="file">
+        <div class="form-group row">
+            <label class="col-md-4 col-form-label text-center">Cover Image <span style="color: red;">
+                    *</span></label>
+            <div class="col-md-8 pt-2">
+                <input type="file" accept="image/*" class="form-control-file" name="courseImage" #courseImage="ngModel" ngModel required
+                    (change)="uploadImage($event)">
+                <a target="_blank" *ngIf="details.coverImage.length > 0" href="{{details.coverImage}}">preview</a>
+            </div>
         </div>
-        <button class="btn btn-primary" (click)="saveCourse()">Save</button>
+        <p *ngIf="courseImage.invalid && courseImage.touched" class="text-center mb-3 mt-1" style="color: red;">This
+            Field is Mandatory !</p>
+        <div class="form-group row">
+            <label class="col-md-4 col-form-label text-center">Cover Video <span style="color: red;">
+                    *</span></label>
+            <div class="col-md-8 pt-2">
+                <input type="file" accept="video/*" class="form-control-file" name="courseVideo" #courseVideo="ngModel" ngModel required
+                    (change)="uploadVideo($event)">
+                <a target="_blank" *ngIf="details.coverVideo.length > 0" href="{{details.coverVideo}}">preview</a>
+            </div>
+        </div>
+        <p *ngIf="courseVideo.invalid && courseVideo.touched" class="text-center mb-3 mt-1" style="color: red;">This
+            Field is Mandatory !</p>
+        <div class="text-right">
+            <button nbButton status="primary" class="mr-2" >Edit</button>
+            <button nbButton status="success" [disabled]="f.invalid" (click)="saveCourse()">Save Course Details</button>
+        </div>
+    </form>
+        <hr>
         <br>
         <button type="button" data-toggle="modal" data-target="#sectionModal" nbButton status="success"><i
                 class="fa fa-plus" aria-hidden="true"></i> Add New Section</button>
-        <hr>
-        <p class="text-center">Sections</p>
+        <p class="text-center" style="font-size: larger;">Course Sections</p>
         <nb-accordion class="mt-3">
             <nb-accordion-item *ngFor="let section of details.sections" style="border: solid #5d5c5ce0 1px;">
                 <nb-accordion-item-header>
                     {{section.name}}
                 </nb-accordion-item-header>
                 <nb-accordion-item-body>
-                    <ngx-create-course-section-route (courseEvent)="getCourse()" [section]="section" [language]="details.language"></ngx-create-course-section-route>
-                    
+                    <ngx-create-course-section-route (courseEvent)="getCourse()" [section]="section"
+                        [language]="details.language">
+
+                    </ngx-create-course-section-route>
                 </nb-accordion-item-body>
             </nb-accordion-item>
         </nb-accordion>
-    </form>
+    
 </ng-container>
 
 
@@ -89,5 +111,3 @@
         </div>
     </div>
 </div>
-
-

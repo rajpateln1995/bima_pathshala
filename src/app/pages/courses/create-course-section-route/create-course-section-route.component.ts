@@ -24,8 +24,10 @@ export class CreateCourseSectionRouteComponent implements OnInit {
 
   mediaType;
   subSectionTittle;
+  disableBtn: boolean = true;
   createSubSection(subSectionModal){
     console.log(this.section._id)
+    
     const obj = {
       _id : this.section._id,
       data : [
@@ -35,12 +37,13 @@ export class CreateCourseSectionRouteComponent implements OnInit {
             url : this.mediaUrl,
         },
     ]};
-    console.log(obj)
+    
     this.courses.createSubSection(obj).subscribe(res => {
       console.log(res);
       this.courseEvent.next();
       document.getElementById('close-sub-section').click();
       subSectionModal.resetForm();
+      this.progress = 0;
     },
     err => {
       console.log(err);
@@ -63,7 +66,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
         console.log(event);
         const data:any = event;
         this.mediaUrl = data.body.data[0];
-        this.progress = 0;
+        this.disableBtn = false;
       }
     },
     err => {

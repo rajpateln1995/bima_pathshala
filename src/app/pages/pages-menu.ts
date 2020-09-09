@@ -33,6 +33,20 @@ export const MENU_ITEMS: NbMenuItem[] = [
       home: true,
   },
   {
+    title: 'Document / Articles',
+    icon: 'file',
+    children: [
+      {
+        title: 'Documents',
+        link: 'document/documents',
+      },
+      {
+        title: 'Articles',
+        link: 'document/articles',
+      },
+    ]
+  },
+  {
     title: 'Sessions',
     icon: 'book-open',
     link: '',

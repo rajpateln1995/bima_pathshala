@@ -28,7 +28,7 @@ export class AllCoursesComponent implements OnInit {
   courseType: string;
   languages = [];
   x;
-  courseTittle = "";
+  courseTitle = "";
   fee = 0;
 
   ngOnInit(): void {
@@ -91,7 +91,7 @@ export class AllCoursesComponent implements OnInit {
       category.push('Protection')
     }
     let obj = {
-      'tittle' : this.courseTittle,
+      'title' : this.courseTitle,
       'fee' : this.fee,
       'type' : this.courseType,
       'languages' : languages.slice(0, (languages.length - 1)),

@@ -33,7 +33,7 @@ export class CreateCourseRouteComponent implements OnInit {
     this.courses.getCourseDetails(this.id).subscribe(res => {
       console.log(res);
       const data: any = res;
-      this.details = data.data;
+      this.details = data.data.course;
     },
     err => {
       console.log(err);
@@ -99,10 +99,12 @@ export class CreateCourseRouteComponent implements OnInit {
       title: this.details.name,
       description : this.details.description,
       coverImage : this.coverimage,
-      covervideo : this.covervideo
+      coverVideo : this.covervideo,
+      _id : this.route.snapshot.params['id']
     }
     this.courses.putCourse(obj).subscribe(res => {
       console.log(res);
+      this.getCourse();
     },
     err => {
       console.log(err);
