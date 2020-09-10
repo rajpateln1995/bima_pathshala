@@ -1,42 +1,47 @@
-<!-- <button nbButton status="success" (click)="createModal()" class="float" ><i class="fa fa-plus mr-2" aria-hidden="true"></i>Add New Course</button>
-<button style="display: none;" id="create-modal" data-toggle="modal" data-target="#newCourseModal"></button> -->
+<button nbButton status="success" (click)="createDocument()" class="float"><i class="fa fa-plus mr-2"
+        aria-hidden="true"></i>Add New Document / Article</button>
+<button style="display: none;" id="create-doc-modal" data-toggle="modal" data-target="#newDocModal"></button>
 <!-- data Table -->
 <div class="row">
     <div class="col-lg-12">
-      <div class="card">
-        <div class="card-header">
-          <b>Documents  [Total : {{total}}]</b>
-        </div>
-        <div class="card-body">
-            <div class="responsive">
-                <table class="table table-bordered table-striped table-md text-center">
-                    <thead>
-                      <tr>
-                        <th *ngFor="let th of table_head">{{th}}</th>
-                      </tr>
-                    </thead>
-                    <tbody *ngIf="total === 0">
+        <div class="card">
+            <div class="card-header">
+                <b>Documents / Articles [Total : {{total}}]</b>
+            </div>
+            <div class="card-body">
+                <div class="responsive">
+                    <table class="table table-bordered table-striped table-md text-center">
+                        <thead>
+                            <tr>
+                                <th *ngFor="let th of table_head">{{th}}</th>
+                            </tr>
+                        </thead>
+                        <!-- <tbody *ngIf="total === 0">
                       <tr >
                         <td style="text-align: center;">No Data Available</td>                
                       </tr>
-                    </tbody>
-                    <tbody *ngIf="total !== 0">
-                      <tr *ngFor = "let d of Data">
-                        <td>{{d.title}}</td>                
-                        <td>{{d.language}}</td>                
-                        <td>{{d.readingTime}}</td>       
-                        <a href="{{d.video}}">
-                            <td><i class="fa fa-eye" aria-hidden="true"></i></td>      
-                        </a>      
-                        <a href="{{d.img}}">
-                            <td><i class="fa fa-eye" aria-hidden="true"></i></td>      
-                        </a>                     
-                        <td (click)="viewDocument(d.id)" style="color:#28a745; cursor: pointer;"><i class="fa fa-eye" aria-hidden="true"></i></td>                
-                      </tr>
-                    </tbody>
-                  </table>
-            </div>
-            <!-- <div *ngIf="total !== 0" class="row">
+                    </tbody> -->
+                        <!-- <tbody *ngIf="total !== 0"> -->
+                        <tbody>
+                            <tr *ngFor="let d of Data">
+                                <td>{{d.title}}</td>
+                                <td>{{d.type}}</td>
+                                <td>{{d.language}}</td>
+                                <td>{{d.readingTime}}</td>
+                                <td>
+                                    <a target="_blank" href="{{d.video}}"><i class="fa fa-eye"
+                                            aria-hidden="true"></i></a>
+                                </td>
+                                <td>
+                                    <a target="_blank" href="{{d.img}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                </td>
+                                <td (click)="viewDocument(d.id)" style="color:#28a745; cursor: pointer;"><i
+                                        class="fa fa-eye" aria-hidden="true"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- <div *ngIf="total !== 0" class="row">
                 <div class="col-md-8 center">
                   <pagination-controls id="pagination" (pageChange)="getPage($event)"></pagination-controls>
                 </div>
@@ -49,7 +54,81 @@
                     </select>
                 </div>  
             </div> -->
+            </div>
         </div>
-      </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="newDocModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create new Document / Article</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form #createDoc="ngForm">
+                    <div class="form-group">
+                        <label class="label">Document / Article Name <span style="color: red;">*</span></label>
+                        <input type="text" nbInput required name="docName" #docName="ngModel" fullWidth
+                            [(ngModel)]="docTitle" placeholder="Enter Course Name">
+                        <p *ngIf="docName.invalid && docName.touched" class="text-center" style="color:red">This field
+                            is required !</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="label">Type <span style="color: red;">*</span></label>
+                        <select class="form-control" [(ngModel)]="docType" required name="documentType"
+                            #documentType="ngModel">
+                            <option selected>--Select--</option>
+                            <option value="article">Article</option>
+                            <option value="document">Document</option>
+                        </select>
+                        <p *ngIf="documentType.invalid && documentType.touched" class="text-center" style="color:red">
+                            This field is required !</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label d-block">Document / Article Languages<span style="color: red;">*</span></label>
+                        <div class="row">
+                            <div *ngFor="let lang of languages" class="form-check form-check-inline col-3">
+                                <input name="{{lang.name}}" class="form-check-input" [(ngModel)]="lang.value" type="checkbox"
+                                    [id]="lang.name" [value]="lang.name">
+                                <label class="form-check-label" for="inlineCheckbox1">{{lang.displayName}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label d-block">Document / Article Category<span style="color: red;">*</span></label>
+                        <div class="row">
+                            <div class="form-check form-check-inline col-3">
+                                <input name="finance" class="form-check-input" [(ngModel)]="finance" type="checkbox">
+                                <label class="form-check-label" for="inlineCheckbox1">Finance</label>
+                            </div>
+                            <div class="form-check form-check-inline col-3">
+                                <input name="insurance" class="form-check-input" [(ngModel)]="insurance" type="checkbox">
+                                <label class="form-check-label" for="inlineCheckbox1">Insurance</label>
+                            </div>
+                            <div class="form-check form-check-inline col-3">
+                                <input name="protection" class="form-check-input" [(ngModel)]="protection" type="checkbox">
+                                <label class="form-check-label" for="inlineCheckbox1">Protection</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button id="close-btn" class="btn btn-secondary" data-dismiss="modal" nbButton
+                    status="basic">Close</button>
+                <button nbButton status="success" (click)="submit()">Create</button>
+            </div>
+        </div>
     </div>
 </div>

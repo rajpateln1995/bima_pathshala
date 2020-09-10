@@ -22,4 +22,12 @@ export class DocumentService {
     return this.http.get(this.base_url + '/document' , { headers : header , params: q_params });
   }
 
+
+  addMultipleDoc(data){
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.auth.getToken());
+
+    return this.http.post(this.base_url + '/document/addMultiple' , data , { headers : header} );
+  }
+
 }

@@ -35,16 +35,14 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Document / Articles',
     icon: 'file',
-    children: [
-      {
-        title: 'Documents',
-        link: 'document/documents',
-      },
-      {
-        title: 'Articles',
-        link: 'document/articles',
-      },
-    ]
+    link: 'document',
+    home: true,
+  },
+  {
+    title: 'Videos',
+    icon: 'file',
+    link: 'videos',
+    home: true,
   },
   {
     title: 'Sessions',

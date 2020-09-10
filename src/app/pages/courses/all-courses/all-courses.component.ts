@@ -28,7 +28,7 @@ export class AllCoursesComponent implements OnInit {
   courseType: string;
   languages = [];
   x;
-  courseTitle = "";
+  courseTitle = '';
   fee = 0;
 
   ngOnInit(): void {
@@ -47,67 +47,71 @@ export class AllCoursesComponent implements OnInit {
   }
 
   viewCourse(courseId) {
-    console.log(courseId);
+    this.router.navigateByUrl('pages/courses/create/id/'+courseId);
   }
 
   createModal() {
-    this.courses.getLanguages().subscribe(res => {
-      let lang: any = res;
-      lang = lang.data;
-      for (const l of lang) {
-        this.languages.push({
-          'name':l.name,
-          'displayName' : l.displayName,
-          'value' : false
-        })
-      }
-      console.log(this.languages);
+    if (this.languages.length > 0){
       document.getElementById('create-modal').click();
-      
-    },
-    err => {
-      console.log(err);
-    });
+    } else{
+      this.courses.getLanguages().subscribe(res => {
+        let lang: any = res;
+        lang = lang.data;
+        for (const l of lang) {
+          this.languages.push({
+            'name': l.name,
+            'displayName' : l.displayName,
+            'value' : false,
+          });
+        }
+        console.log(this.languages);
+        document.getElementById('create-modal').click();
+      },
+      err => {
+        console.log(err);
+      });
+    }
+
   }
 
   finance;
   accounting;
   protection;
   submit(){
-    let languages = "";
+    let languages = '';
     for (const lang of this.languages){
       if (lang.value){
         languages = languages + lang.name + ',';
       }
     }
-    let category = []
+    const category = [];
     if (this.finance){
-      category.push('Finance')
+      category.push('Finance');
     }
     if (this.accounting){
-      category.push('Accounting')
+      category.push('Accounting');
     }
     if (this.protection){
-      category.push('Protection')
+      category.push('Protection');
     }
-    let obj = {
+    const obj = {
       'title' : this.courseTitle,
       'fee' : this.fee,
       'type' : this.courseType,
       'languages' : languages.slice(0, (languages.length - 1)),
       'category' : category,
     };
-    console.log(obj)
+    console.log(obj);
     this.courses.createCourse(obj).subscribe(res => {
       console.log(res);
       let data: any = res;
       data = data.data;
-      let id = [];
+      const id = [];
       for (const d of data){
         id.push({
           'id' : d._id,
           'lang' : d.language,
-        })
+        });
       }
       localStorage.setItem('course-list', JSON.stringify({ 'data' : id }));
       document.getElementById('close-btn').click();
@@ -116,7 +120,7 @@ export class AllCoursesComponent implements OnInit {
     },
     err => {
       console.log(err);
-    })
+    });
   }
 
 

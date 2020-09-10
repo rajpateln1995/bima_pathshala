@@ -1,21 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DocumentComponent } from './document.component';
-import { DocumentsComponent } from './documents/documents.component';
-import { ArticlesComponent } from './articles/articles.component';
-import { DocumentRoutingModule } from './document-routing.module';
+
+import { VideosRoutingModule } from './videos-routing.module';
+import { VideosComponent } from './videos.component';
+import { AllVideosComponent } from './all-videos/all-videos.component';
 import { NbIconModule, NbButtonModule, NbInputModule, NbCheckboxModule, NbTabsetModule, NbCardModule, NbAccordionModule, NbRouteTabsetModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { FormsModule } from '@angular/forms';
 
 
-
-
 @NgModule({
-  declarations: [DocumentComponent, DocumentsComponent, ArticlesComponent],
+  declarations: [VideosComponent, AllVideosComponent],
   imports: [
     CommonModule,
-    DocumentRoutingModule,
+    VideosRoutingModule,
     NbIconModule,
     NbEvaIconsModule,
     NbButtonModule,
@@ -28,4 +26,4 @@ import { FormsModule } from '@angular/forms';
     NbRouteTabsetModule,
   ]
 })
-export class DocumentModule { }
+export class VideosModule { }

@@ -26,6 +26,11 @@ const routes: Routes = [{
         .then(m => m.DocumentModule),
     },
     {
+      path: 'videos',
+      loadChildren: () => import('./videos/videos.module')
+        .then(m => m.VideosModule),
+    },
+    {
       path: 'iot-dashboard',
       component: DashboardComponent,
     },

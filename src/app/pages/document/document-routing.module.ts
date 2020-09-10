@@ -14,12 +14,13 @@ const routes: Routes = [
       component: DocumentComponent,
       children: [
         {
+            path: '',
+            redirectTo: 'documents',
+            pathMatch: 'full',
+          },
+        {
           path: 'documents',
           component: DocumentsComponent,
-        },
-        {
-          path: 'articles',
-          component: ArticlesComponent,
         },
       ],
     },
