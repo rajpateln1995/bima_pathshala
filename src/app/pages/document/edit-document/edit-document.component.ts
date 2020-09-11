@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../../../services/course.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-edit-document',
@@ -9,7 +10,7 @@ import { CourseService } from '../../../services/course.service';
 export class EditDocumentComponent implements OnInit {
 
   constructor(private course: CourseService,
-    ) { }
+              private router : Router) { }
 
   languages: any;
   id: any;
