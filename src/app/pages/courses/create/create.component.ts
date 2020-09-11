@@ -46,8 +46,8 @@ export class CreateComponent implements OnInit {
       this.course.getCourseDetails(data.id).subscribe(res => {
         console.log(res);
         const temp: any = res;
-        if (temp.data.course && temp.data.course.section.length > 0 && temp.data.course.section.data.length > 0){
-          if (temp.data.course.section.assessment && temp.data.course.section.assessment !== null){
+        if (temp.data.course && temp.data.course.sections.length > 0 && temp.data.course.sections.data.length > 0){
+          if (temp.data.course.sections.assessment && temp.data.course.sections.assessment !== null){
             validate *= 1;
           } else {
             validate *= 0;
