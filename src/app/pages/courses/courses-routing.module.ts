@@ -32,11 +32,11 @@ const routes: Routes = [
           {
             path: 'id/:id',
             component: CreateCourseRouteComponent,
-          }
-        ]
+          },
+        ],
       },
-    ]
-  }
+    ],
+  },
 
 ];
 

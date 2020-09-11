@@ -7,12 +7,14 @@ import { DocumentRoutingModule } from './document-routing.module';
 import { NbIconModule, NbButtonModule, NbInputModule, NbCheckboxModule, NbTabsetModule, NbCardModule, NbAccordionModule, NbRouteTabsetModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { FormsModule } from '@angular/forms';
+import { EditDocumentComponent } from './edit-document/edit-document.component';
+import { EditDocumentRouteComponent } from './edit-document-route/edit-document-route.component';
 
 
 
 
 @NgModule({
-  declarations: [DocumentComponent, DocumentsComponent, ArticlesComponent],
+  declarations: [DocumentComponent, DocumentsComponent, ArticlesComponent, EditDocumentComponent, EditDocumentRouteComponent],
   imports: [
     CommonModule,
     DocumentRoutingModule,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DocumentService } from '../../../services/document.service';
 import { CourseService } from '../../../services/course.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-documents',
@@ -10,7 +11,8 @@ import { CourseService } from '../../../services/course.service';
 export class DocumentsComponent implements OnInit {
 
   constructor(private document: DocumentService,
-              private courses: CourseService) { }
+              private courses: CourseService,
+              private router : Router) { }
   Data: any;
   total: number = 0;
   languages = [];
@@ -98,7 +100,6 @@ export class DocumentsComponent implements OnInit {
     }
 
     const obj = {
-      title : this.docTitle,
       type : this.docType,
       languages : languages.slice(0, (languages.length - 1)),
       tags : tags,
@@ -106,7 +107,12 @@ export class DocumentsComponent implements OnInit {
     };
     this.document.addMultipleDoc(obj).subscribe(res => {
       console.log(res);
+      const temp : any = res;
+      localStorage.setItem('doc-list', JSON.stringify({'data' : temp.data[0].otherLanguages}));
+      console.log(temp.data[0].otherLanguages[0].document)
+      this.router.navigateByUrl(`pages/document/edit/id/${temp.data[0].otherLanguages[0].document}`);
       document.getElementById('close-btn').click();
+
     },
     err => {
       console.log(err);

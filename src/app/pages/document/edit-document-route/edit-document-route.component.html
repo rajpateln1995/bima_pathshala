@@ -1,0 +1,91 @@
+<ng-container *ngIf="Data">
+    <form #document="ngForm">
+        <div class="form-group row mt-4">
+            <label class="col-md-4 col-form-label text-center">Document Title<Title></Title><span style="color: red;">
+                    *</span></label>
+            <div class="col-md-8">
+                <input type="text" name="documentName" required #documentName="ngModel" [(ngModel)]="document_name"
+                    class="form-control" placeholder="Enter Document Title [In {{Data.language}}]">
+                <p *ngIf="documentName.invalid && documentName.touched" class="text-center mb-3 mt-1" style="color: red;">
+                    This Field is Mandatory !</p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-4 col-form-label text-center">Document Description<span style="color: red;">
+                    *</span></label>
+            <div class="col-md-8">
+                <textarea name="documentDescription" required rows="5" class="form-control" #documentDescription="ngModel"
+                    [(ngModel)]="document_description"
+                    placeholder="Enter Document Description [In {{Data.language}}]"></textarea>
+                <p *ngIf="documentDescription.invalid && documentDescription.touched" class="text-center mb-3 mt-1"
+                    style="color: red;">This Field is Mandatory !</p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-4 col-form-label text-center">Reading Time<span style="color: red;">
+                    *</span></label>
+            <div class="col-md-8">
+                <input type="text" name="readTime" required rows="5" class="form-control" #readTime="ngModel"
+                    [(ngModel)]="reading_time"
+                    placeholder="Enter Reading Time [In {{Data.language}}]">
+                <p *ngIf="readTime.invalid && readTime.touched" class="text-center mb-3 mt-1"
+                    style="color: red;">This Field is Mandatory !</p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-4 col-form-label text-center">Document Image<span style="color: red;">
+                    *</span></label>
+            <div class="col-md-8">
+                <input type="file" (change)="upload($event)" accept="Image/*" name="docimg" required  #docimg="ngModel"
+                    [(ngModel)]="documentImg">
+                <p *ngIf="docimg.invalid && docimg.touched" class="text-center mb-3 mt-1"
+                    style="color: red;">This Field is Mandatory !</p>
+            </div>
+        </div>
+    </form>
+    <hr>
+        <div class="text-center" style="font-size:larger;">
+            <b>Document / Article Sections</b>
+        </div>
+    <hr>
+    <div class="text-right">
+        <button size="small" (click)="createSec()" type="button" nbButton status="primary">
+            Create Section</button>
+    </div>
+    <hr>
+    <nb-accordion class="mt-3">
+        <nb-accordion-item *ngFor="let section of sections" style="border: solid #5d5c5ce0 1px;">
+            <nb-accordion-item-header>
+                {{section.title}}
+            </nb-accordion-item-header>
+            <nb-accordion-item-body>
+                <div class="form-group row mt-4">
+                    <label class="col-md-4 col-form-label text-center">Document Section Title<Title></Title><span style="color: red;">
+                            *</span></label>
+                    <div class="col-md-8">
+                        <input type="text" name="docSecName" required #docSecName="ngModel" [(ngModel)]="section.title"
+                            class="form-control" placeholder="Enter Document Section Title [In {{Data.language}}]">
+                        <p *ngIf="docSecName.invalid && docSecName.touched" class="text-center mb-3 mt-1" style="color: red;">
+                            This Field is Mandatory !</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label text-center">Document Section Description<span style="color: red;">
+                            *</span></label>
+                    <div class="col-md-8">
+                        <textarea name="docSecDescription" required rows="5" class="form-control" #docSecDescription="ngModel"
+                            [(ngModel)]="section.body"
+                            placeholder="Enter Document Section Description [In {{Data.language}}]"></textarea>
+                        <p *ngIf="docSecDescription.invalid && docSecDescription.touched" class="text-center mb-3 mt-1"
+                            style="color: red;">This Field is Mandatory !</p>
+                    </div>
+                </div>
+            </nb-accordion-item-body>
+        </nb-accordion-item>
+    </nb-accordion>
+    <div class="text-right">
+        <button class="mt-3" size="small" (click)="save()" type="button" nbButton status="primary">
+            Save</button>
+    </div>  
+
+</ng-container>

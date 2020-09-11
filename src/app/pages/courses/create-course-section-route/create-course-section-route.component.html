@@ -1,22 +1,19 @@
 <div class="mr-2 ml-2 mb-2 text-right">
-    <button class="mr-2" size="small" type="button" nbButton status="success"><i class="fa fa-pencil mr-1"
-            aria-hidden="true"></i>Edit</button>
-
-    <button class="mr-2" size="small" type="button" nbButton status="danger"><i class="fa fa-trash mr-1"
+    <button (click)="deleteSection()" class="mr-2" size="small" type="button" nbButton status="danger"><i class="fa fa-trash mr-1"
             aria-hidden="true"></i>Delete Section</button>
 
-    <button class="mr-2" size="small" data-toggle="modal" data-target="#subSectionModal" type="button" nbButton
-        status="success"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add Sub-Section</button>
+    <button  class="mr-2" size="small" data-toggle="modal" data-target="#subSectionModal" type="button" nbButton
+        status="success"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add New Sub-Section</button>
 </div>
 
 <hr>
-<form #section>
+<form #section="ngForm">
     <div class="form-group row">
         <label class="col-md-4 col-form-label text-center">Section Name<span style="color: red;">
                 *</span></label>
         <div class="col-md-8">
-            <input type="text" name="sectionName" required #sectionName="ngModel" [(ngModel)]="section.name"
-                class="form-control" placeholder="Enter Section Name [In {{language}}]">
+            <input type="text" [disabled]="section_disable" name="sectionName" required #sectionName="ngModel"
+                [(ngModel)]="section_name" class="form-control" placeholder="Enter Section Name [In {{language}}]">
             <p *ngIf="sectionName.invalid && sectionName.touched" class="text-center mb-3 mt-1" style="color: red;">This
                 Field is Mandatory !</p>
         </div>
@@ -25,11 +22,18 @@
         <label class="col-md-4 col-form-label text-center">Section Description<span style="color: red;">
                 *</span></label>
         <div class="col-md-8">
-            <textarea name="sectionDescription" required rows="6" class="form-control" #sectionDescription="ngModel"
-                [(ngModel)]="section.description" placeholder="Enter Section Description [In {{language}}]"></textarea>
+            <textarea name="sectionDescription" [disabled]="section_disable" required rows="6" class="form-control"
+                #sectionDescription="ngModel" [(ngModel)]="section_description"
+                placeholder="Enter Section Description [In {{language}}]"></textarea>
             <p *ngIf="sectionDescription.invalid && sectionDescription.touched" class="text-center mb-3 mt-1"
                 style="color: red;">This Field is Mandatory !</p>
         </div>
+    </div>
+    <div class="text-right mb-3">
+        <button class="mr-2" size="small" (click)="section_disable = false" type="button" nbButton status="success">
+            Edit</button>
+        <button class="mr-2" [disabled]="section.invalid || section_disable" size="small" (click)="saveSection()" type="button" nbButton status="success">
+            Save</button>
     </div>
 </form>
 <nb-accordion>
@@ -38,15 +42,22 @@
             {{data.tittle}}
         </nb-accordion-item-header>
         <nb-accordion-item-body>
+            <div class="text-right">
+                <button class="mr-2" nbButton size="tiny" (click)="deleteSubSection(data._id)" status="danger">Delete</button>
+                <button class="mr-2" nbButton size="tiny" status="success">Edit</button>
+            </div>
             <label>Type : </label>
             <label>{{data.type}}</label>
             <br>
 
             <a target="_blank" href="{{data.url}}">Preview</a>
-            
+
         </nb-accordion-item-body>
     </nb-accordion-item>
 </nb-accordion>
+
+<hr>
+<ngx-assessments [assessment]="assessment" [section_id]="section_id"></ngx-assessments>
 
 
 
@@ -79,7 +90,7 @@
                     </select>
                     <div class="mt-4">
                         <label class="label d-block">Select Media To Upload</label>
-                        <input (change)="uploadMedia($event)" required accept="{{mediaType}}/*" #media="ngModel" ngModel 
+                        <input (change)="uploadMedia($event)" required accept="{{mediaType}}/*" #media="ngModel" ngModel
                             name="media" type="file">
                     </div>
                     <div *ngIf="progress > 0" class="progress mt-4">
@@ -89,8 +100,8 @@
                 </div>
                 <div class="modal-footer">
                     <button id="close-sub-section" data-dismiss="modal" nbButton status="basic">Close</button>
-                    <button [disabled]="subSectionModal.invalid || disableBtn" (click)="createSubSection(subSectionModal)" nbButton
-                        status="success">Create</button>
+                    <button [disabled]="subSectionModal.invalid || disableBtn"
+                        (click)="createSubSection(subSectionModal)" nbButton status="success">Create</button>
                 </div>
             </form>
         </div>

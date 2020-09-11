@@ -23,7 +23,7 @@ export class CourseService {
   putCourse(data) {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
-    return this.http.put(this.base_url + '/course',data, { headers: header });
+    return this.http.put(this.base_url + '/course', data, { headers: header });
   }
 
   getLanguages() {
@@ -59,8 +59,8 @@ export class CourseService {
 
     return this.http.post(this.base_url + '/course/sections', data, { headers: header });
   }
-  
-  createSubSection(data){
+
+  createSubSection(data) {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
 
@@ -74,7 +74,51 @@ export class CourseService {
     let body = new FormData()
     body.append('uploads', data)
 
-    return this.http.post(this.base_url + '/upload', body, { headers: header, reportProgress: true, observe : 'events' })
+    return this.http.post(this.base_url + '/upload', body, { headers: header, reportProgress: true, observe: 'events' })
   }
 
+
+  getAllAssessments() {
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.auth.getToken());
+
+    return this.http.get(this.base_url + '/course/assessments', { headers: header })
+  }
+
+  editAssesment(data) {
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.auth.getToken());
+
+    return this.http.put(this.base_url + '/course/assessments', data, { headers: header });
+  }
+
+  addAssessment(data) {
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.auth.getToken());
+
+    return this.http.post(this.base_url + '/course/assessments', data, { headers: header });
+  }
+
+  delSubSection(subSec, sec) {
+
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.auth.getToken());
+
+    let q_params = new HttpParams();
+    q_params = q_params.append('subSection', subSec);
+    q_params = q_params.append('section', sec);
+
+    return this.http.delete(this.base_url + '/course/sections/removeSubSection', { headers: header, params: q_params });
+  }
+
+  delSection(course , sec) {
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.auth.getToken());
+
+    let q_params = new HttpParams();
+    q_params = q_params.append('c', course);
+    q_params = q_params.append('s', sec);
+
+    return this.http.delete(this.base_url + '/course/sections', { headers: header, params: q_params });
+  }
 }

@@ -21,6 +21,7 @@ export class CreateCourseRouteComponent implements OnInit {
   details: any;
   SectionName;
   SectionDescription;
+  secDisable: boolean = true;
   
   ngOnInit(): void {
 
@@ -29,7 +30,7 @@ export class CreateCourseRouteComponent implements OnInit {
   }
 
   getCourse(){
-    this.id = this.route.snapshot.params['id']; 
+    this.id = this.route.snapshot.params['id'];
     this.courses.getCourseDetails(this.id).subscribe(res => {
       console.log(res);
       const data: any = res;
@@ -59,6 +60,7 @@ export class CreateCourseRouteComponent implements OnInit {
       document.getElementById('close-section').click();
     });
   }
+  
   coverimage;
   uploadImage(event){
     const data = event.target.files[0];

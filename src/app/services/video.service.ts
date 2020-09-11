@@ -23,11 +23,28 @@ export class VideoService {
     return this.http.get(this.base_url + '/video' , { headers : header });
   }
 
+  getVideoDetails(id){
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.auth.getToken());
+
+    let q_params = new HttpParams();
+    q_params = q_params.append('_id', id);
+
+    return this.http.get(this.base_url + '/video/detail' , { headers : header , params : q_params});
+  }
+
   addMultipleVideo(data) {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
 
     return this.http.post(this.base_url + '/video/addMultiple' , data , { headers : header } )
+  }
+
+  saveVideo(data){
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.auth.getToken());
+
+    return this.http.put(this.base_url + '/video' , data , { headers : header } );
   }
 
 }

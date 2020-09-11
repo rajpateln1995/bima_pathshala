@@ -7,10 +7,12 @@ import { AllVideosComponent } from './all-videos/all-videos.component';
 import { NbIconModule, NbButtonModule, NbInputModule, NbCheckboxModule, NbTabsetModule, NbCardModule, NbAccordionModule, NbRouteTabsetModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { FormsModule } from '@angular/forms';
+import { EditVideoComponent } from './edit-video/edit-video.component';
+import { EditVideoRouteComponent } from './edit-video-route/edit-video-route.component';
 
 
 @NgModule({
-  declarations: [VideosComponent, AllVideosComponent],
+  declarations: [VideosComponent, AllVideosComponent, EditVideoComponent, EditVideoRouteComponent],
   imports: [
     CommonModule,
     VideosRoutingModule,

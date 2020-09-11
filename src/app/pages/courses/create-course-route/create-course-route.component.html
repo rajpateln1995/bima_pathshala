@@ -14,7 +14,7 @@
             <label class="col-md-4 col-form-label text-center">Course Description<span style="color: red;">
                     *</span></label>
             <div class="col-md-8">
-                <textarea name="courseDescription" required rows="6" class="form-control" #courseDescription="ngModel"
+                <textarea name="courseDescription" required rows="5" class="form-control" #courseDescription="ngModel"
                     [(ngModel)]="details.description"
                     placeholder="Enter Course Description [In {{details.language}}]"></textarea>
                 <p *ngIf="courseDescription.invalid && courseDescription.touched" class="text-center mb-3 mt-1"
@@ -25,48 +25,48 @@
             <label class="col-md-4 col-form-label text-center">Cover Image <span style="color: red;">
                     *</span></label>
             <div class="col-md-8 pt-2">
-                <input type="file" accept="image/*" class="form-control-file" name="courseImage" #courseImage="ngModel" ngModel required
-                    (change)="uploadImage($event)">
+                <input type="file" accept="image/*" class="d-block form-control-file" name="courseImage" #courseImage="ngModel"
+                    ngModel required (change)="uploadImage($event)">
                 <a target="_blank" *ngIf="details.coverImage.length > 0" href="{{details.coverImage}}">preview</a>
             </div>
         </div>
-        <p *ngIf="courseImage.invalid && courseImage.touched" class="text-center mb-3 mt-1" style="color: red;">This
+        <p *ngIf="secDisable && courseImage.invalid && courseImage.touched" class="text-center mb-3 mt-1" style="color: red;">This
             Field is Mandatory !</p>
         <div class="form-group row">
             <label class="col-md-4 col-form-label text-center">Cover Video <span style="color: red;">
                     *</span></label>
             <div class="col-md-8 pt-2">
-                <input type="file" accept="video/*" class="form-control-file" name="courseVideo" #courseVideo="ngModel" ngModel required
-                    (change)="uploadVideo($event)">
+                <input type="file" accept="video/*" class="d-block form-control-file" name="courseVideo" #courseVideo="ngModel"
+                    ngModel required (change)="uploadVideo($event)">
                 <a target="_blank" *ngIf="details.coverVideo.length > 0" href="{{details.coverVideo}}">preview</a>
             </div>
         </div>
         <p *ngIf="courseVideo.invalid && courseVideo.touched" class="text-center mb-3 mt-1" style="color: red;">This
             Field is Mandatory !</p>
         <div class="text-right">
-            <button nbButton status="primary" class="mr-2" >Edit</button>
+            <button nbButton status="primary" class="mr-2" (click)="secDisable = false">Edit</button>
             <button nbButton status="success" [disabled]="f.invalid" (click)="saveCourse()">Save Course Details</button>
         </div>
     </form>
-        <hr>
-        <br>
-        <button type="button" data-toggle="modal" data-target="#sectionModal" nbButton status="success"><i
-                class="fa fa-plus" aria-hidden="true"></i> Add New Section</button>
-        <p class="text-center" style="font-size: larger;">Course Sections</p>
-        <nb-accordion class="mt-3">
-            <nb-accordion-item *ngFor="let section of details.sections" style="border: solid #5d5c5ce0 1px;">
-                <nb-accordion-item-header>
-                    {{section.name}}
-                </nb-accordion-item-header>
-                <nb-accordion-item-body>
-                    <ngx-create-course-section-route (courseEvent)="getCourse()" [section]="section"
-                        [language]="details.language">
+    <hr>
+    <p class="text-center" style="font-size: larger;"><b>Course Sections</b></p>
+    <hr>
+    <button type="button" data-toggle="modal" data-target="#sectionModal" nbButton status="success"><i
+            class="fa fa-plus" aria-hidden="true"></i> Add New Section</button>
+    <nb-accordion class="mt-3">
+        <nb-accordion-item *ngFor="let section of details.sections" style="border: solid #5d5c5ce0 1px;">
+            <nb-accordion-item-header>
+                {{section.name}}
+            </nb-accordion-item-header>
+            <nb-accordion-item-body>
+                <ngx-create-course-section-route (courseEvent)="getCourse()" [section]="section"
+                    [language]="details.language">
 
-                    </ngx-create-course-section-route>
-                </nb-accordion-item-body>
-            </nb-accordion-item>
-        </nb-accordion>
-    
+                </ngx-create-course-section-route>
+            </nb-accordion-item-body>
+        </nb-accordion-item>
+    </nb-accordion>
+
 </ng-container>
 
 

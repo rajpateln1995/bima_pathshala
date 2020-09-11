@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { ArticlesComponent } from './articles/articles.component';
 import { DocumentComponent } from './document.component';
 import { DocumentsComponent } from './documents/documents.component';
+import { EditDocumentComponent } from './edit-document/edit-document.component';
+import { EditDocumentRouteComponent } from './edit-document-route/edit-document-route.component';
 
 
 
@@ -22,8 +24,19 @@ const routes: Routes = [
           path: 'documents',
           component: DocumentsComponent,
         },
+        {
+          path: 'edit',
+          component: EditDocumentComponent,
+          children: [
+            {
+              path: 'id/:id',
+              component: EditDocumentRouteComponent,
+            }
+          ]
+        },
       ],
     },
+    
 
   ];
 
