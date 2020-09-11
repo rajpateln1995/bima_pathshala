@@ -6,7 +6,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
@@ -20,19 +20,21 @@ import {
   NbSidebarModule,
   NbToastrModule,
   NbWindowModule,
-  NbButtonModule, 
+  NbButtonModule,
   NbInputModule,
   NbLayoutModule,
   NbSpinnerModule,
 } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { LoaderComponent } from './components/loader/loader.component';
+import { LoaderInterceptorService } from './services/loader-interceptor.service';
 
 
 
 
 @NgModule({
-  declarations: [AppComponent , LoginComponent],
+  declarations: [AppComponent , LoginComponent, LoaderComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -55,6 +57,14 @@ import { LoginComponent } from './components/login/login.component';
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptorService,
+      multi: true,
+    },
+
   ],
   bootstrap: [AppComponent],
 })
