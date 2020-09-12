@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { CourseService } from '../../../services/course.service';
 
 @Component({
@@ -9,8 +9,6 @@ import { CourseService } from '../../../services/course.service';
 export class AssessmentsComponent implements OnInit {
 
   constructor(private course: CourseService) { }
-
-
 
   @Input() assessment: any;
   @Input() section_id: any;
@@ -98,7 +96,13 @@ export class AssessmentsComponent implements OnInit {
     },
     err => {
       console.log(err);
-    })
+    });
   }
+
+  // tslint:disable-next-line: use-lifecycle-interface
+  ngOnDestroy() {
+    this.save();
+  }
+
 
 }

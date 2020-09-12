@@ -38,5 +38,9 @@ export class EditVideoComponent implements OnInit {
 
   tabs: any[] ;
 
+  deleteVideo(){
+    
+  }
+
 
 }

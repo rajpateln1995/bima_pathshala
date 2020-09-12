@@ -6,12 +6,12 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'ngx-create-course-section-route',
   templateUrl: './create-course-section-route.component.html',
-  styleUrls: ['./create-course-section-route.component.scss']
+  styleUrls: ['./create-course-section-route.component.scss'],
 })
 export class CreateCourseSectionRouteComponent implements OnInit {
 
-  constructor(private courses : CourseService,
-              private route : ActivatedRoute) { }
+  constructor(private courses: CourseService,
+              private route: ActivatedRoute) { }
   @Input() section: any;
   @Input() language: any;
   @Output() courseEvent = new EventEmitter();
@@ -38,8 +38,8 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   subSectionTittle;
   disableBtn: boolean = true;
   createSubSection(subSectionModal){
-    console.log(this.section._id)
-    
+    console.log(this.section._id);
+
     const obj = {
       _id : this.section._id,
       data : [
@@ -49,7 +49,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
             url : this.mediaUrl,
         },
     ]};
-    
+
     this.courses.createSubSection(obj).subscribe(res => {
       console.log(res);
       this.courseEvent.next();
@@ -59,8 +59,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     },
     err => {
       console.log(err);
-    })
-     
+    });
 
   }
 
@@ -76,7 +75,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
         this.progress = (event.loaded / event.total) * 100;
       }else if (event.type === HttpEventType.Response){
         console.log(event);
-        const data:any = event;
+        const data: any = event;
         this.mediaUrl = data.body.data[0];
         this.disableBtn = false;
       }
@@ -91,8 +90,8 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     const obj = {
       _id : this.section._id,
       name : this.section_name,
-      description : this.section_description
-    }
+      description : this.section_description,
+    };
     this.courses.createSubSection(obj).subscribe(res => {
       console.log(res);
     },
@@ -105,12 +104,12 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     console.log(this.section._id);
     this.courses.delSubSection(subSecId , this.section._id).subscribe(res => {
       console.log(res);
-      const temp : any = res;
+      const temp: any = res;
       this.sub = temp.data.data;
     },
     err => {
       console.log(err);
-    })
+    });
   }
 
   deleteSection(){
@@ -120,7 +119,11 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     },
     err => {
       console.log(err);
-    })
+    });
+  }
+
+  ngOnDestroy(){
+    this.saveSection();
   }
 
 }

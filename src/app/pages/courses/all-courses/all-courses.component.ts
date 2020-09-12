@@ -47,7 +47,25 @@ export class AllCoursesComponent implements OnInit {
   }
 
   viewCourse(courseId) {
-    this.router.navigateByUrl('pages/courses/create/id/'+courseId);
+    console.log(courseId)
+    let obj;
+    this.courses.getCourseDetails(courseId).subscribe(res => {
+      console.log(res);
+      const temp: any = res;
+      obj = temp.data.course.otherLanguages;
+      const data = [];
+      for (const x of obj){
+        data.push({
+          id : x.course,
+          lang : x.language});
+      }
+      localStorage.setItem('course-list', JSON.stringify({data : data}));
+      this.router.navigateByUrl('pages/courses/create/id/' + courseId);
+    },
+    err => {
+      console.log(err);
+    });
+
   }
 
   createModal() {

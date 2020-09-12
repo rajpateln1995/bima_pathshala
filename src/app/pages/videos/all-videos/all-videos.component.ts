@@ -71,6 +71,16 @@ export class AllVideosComponent implements OnInit {
 
   viewVideo(id){
     console.log(id);
+    this.video.getVideoDetails(id).subscribe(res => {
+      console.log(res);
+      const temp : any = res;
+      const obj = temp.data.video.otherLanguages;
+      localStorage.setItem('video-list',JSON.stringify({data : obj}));
+      this.router.navigateByUrl(`pages/videos/edit/id/${id}`);
+    },
+    err => {
+      console.log(err);
+    })
   } 
 
 

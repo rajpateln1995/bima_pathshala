@@ -19,7 +19,7 @@ const routes: Routes = [
             path: '',
             redirectTo: 'documents',
             pathMatch: 'full',
-          },
+        },
         {
           path: 'documents',
           component: DocumentsComponent,

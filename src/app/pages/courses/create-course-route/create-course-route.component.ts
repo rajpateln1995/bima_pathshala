@@ -113,6 +113,10 @@ export class CreateCourseRouteComponent implements OnInit {
     })
   }
 
+  ngOnDestroy(){
+    this.saveCourse();
+  }
+
 
 
 

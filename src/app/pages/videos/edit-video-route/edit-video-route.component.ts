@@ -81,4 +81,8 @@ export class EditVideoRouteComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.save();
+  }
+
 }

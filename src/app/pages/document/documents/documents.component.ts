@@ -12,7 +12,7 @@ export class DocumentsComponent implements OnInit {
 
   constructor(private document: DocumentService,
               private courses: CourseService,
-              private router : Router) { }
+              private router: Router) { }
   Data: any;
   total: number = 0;
   languages = [];
@@ -28,8 +28,6 @@ export class DocumentsComponent implements OnInit {
 
   ngOnInit() {
     this.getDocuments();
-
-
   }
 
   getLanguages(){
@@ -60,8 +58,8 @@ export class DocumentsComponent implements OnInit {
     this.document.getDocAndArticle('document').subscribe(res => {
       console.log(res);
       const temp: any = res;
-      this.total = temp.total;
       this.Data = temp.data;
+      this.total = this.Data.length;
       console.log(this.Data);
     },
     err => {
@@ -89,13 +87,13 @@ export class DocumentsComponent implements OnInit {
       }
     }
     const tags = [];
-    if (this.finance){
+    if (this.finance) {
       tags.push('Finance');
     }
-    if (this.insurance){
+    if (this.insurance) {
       tags.push('Insurance');
     }
-    if (this.protection){
+    if (this.protection) {
       tags.push('Protection');
     }
 
@@ -107,9 +105,9 @@ export class DocumentsComponent implements OnInit {
     };
     this.document.addMultipleDoc(obj).subscribe(res => {
       console.log(res);
-      const temp : any = res;
+      const temp: any = res;
       localStorage.setItem('doc-list', JSON.stringify({'data' : temp.data[0].otherLanguages}));
-      console.log(temp.data[0].otherLanguages[0].document)
+      console.log(temp.data[0].otherLanguages[0].document);
       this.router.navigateByUrl(`pages/document/edit/id/${temp.data[0].otherLanguages[0].document}`);
       document.getElementById('close-btn').click();
 
@@ -122,6 +120,18 @@ export class DocumentsComponent implements OnInit {
 
   }
 
+  viewDocument(id){
+      this.document.getDocAndArticle('' , id).subscribe(res => {
+        console.log(res);
+        const temp : any = res;
+        const obj = temp.data[0].otherLanguages;
+        localStorage.setItem('doc-list' , JSON.stringify({ data : obj }));
+        this.router.navigateByUrl(`pages/document/edit/id/${id}`);
+      },
+      err => {
+        console.log(err);
+      })
+  }
 
 
 }

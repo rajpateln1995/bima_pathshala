@@ -89,4 +89,8 @@ export class EditDocumentRouteComponent implements OnInit {
 
   }
 
+  ngOnDestroy() {
+    this.save();
+  }
+
 }
