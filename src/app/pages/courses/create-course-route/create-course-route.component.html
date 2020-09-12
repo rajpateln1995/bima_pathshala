@@ -4,7 +4,7 @@
             <label class="col-md-4 col-form-label text-center">Course Name<span style="color: red;">
                     *</span></label>
             <div class="col-md-8">
-                <input type="text" [disabled]="disable" name="courseName" required #courseName="ngModel" [(ngModel)]="details.title"
+                <input type="text" [disabled]="disable" name="courseName" required #courseName="ngModel" [(ngModel)]="details.name"
                     class="form-control" placeholder="Enter Course Name [In {{details.language}}]">
                 <p *ngIf="courseName.invalid && courseName.touched" class="text-center mb-3 mt-1" style="color: red;">
                     This Field is Mandatory !</p>
