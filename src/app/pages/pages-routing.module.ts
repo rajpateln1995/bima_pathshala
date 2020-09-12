@@ -31,6 +31,16 @@ const routes: Routes = [{
         .then(m => m.VideosModule),
     },
     {
+      path: 'sessions',
+      loadChildren: () => import('./sessions/sessions.module')
+        .then(m => m.SessionsModule),
+    },
+    {
+      path: 'expense-manager',
+      loadChildren: () => import('./expense-manager/expense-manager.module')
+        .then(m => m.ExpenseManagerModule),
+    },
+    {
       path: 'iot-dashboard',
       component: DashboardComponent,
     },

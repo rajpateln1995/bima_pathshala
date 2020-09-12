@@ -21,7 +21,8 @@ export class CreateCourseRouteComponent implements OnInit {
   details: any;
   SectionName;
   SectionDescription;
-  secDisable: boolean = true;
+  
+  disable:boolean = true;
   
   ngOnInit(): void {
 

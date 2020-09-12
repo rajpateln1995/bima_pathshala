@@ -4,7 +4,7 @@
             <label class="col-md-4 col-form-label text-center">Course Name<span style="color: red;">
                     *</span></label>
             <div class="col-md-8">
-                <input type="text" name="courseName" required #courseName="ngModel" [(ngModel)]="details.title"
+                <input type="text" [disabled]="disable" name="courseName" required #courseName="ngModel" [(ngModel)]="details.title"
                     class="form-control" placeholder="Enter Course Name [In {{details.language}}]">
                 <p *ngIf="courseName.invalid && courseName.touched" class="text-center mb-3 mt-1" style="color: red;">
                     This Field is Mandatory !</p>
@@ -14,7 +14,7 @@
             <label class="col-md-4 col-form-label text-center">Course Description<span style="color: red;">
                     *</span></label>
             <div class="col-md-8">
-                <textarea name="courseDescription" required rows="5" class="form-control" #courseDescription="ngModel"
+                <textarea [disabled]="disable" name="courseDescription" required rows="5" class="form-control" #courseDescription="ngModel"
                     [(ngModel)]="details.description"
                     placeholder="Enter Course Description [In {{details.language}}]"></textarea>
                 <p *ngIf="courseDescription.invalid && courseDescription.touched" class="text-center mb-3 mt-1"
@@ -25,9 +25,9 @@
             <label class="col-md-4 col-form-label text-center">Cover Image <span style="color: red;">
                     *</span></label>
             <div class="col-md-8 pt-2">
-                <input type="file" accept="image/*" class="d-block form-control-file" name="courseImage" #courseImage="ngModel"
-                    ngModel required (change)="uploadImage($event)">
-                <a target="_blank" *ngIf="details.coverImage.length > 0" href="{{details.coverImage}}">preview</a>
+                <input [disabled]="disable" type="file" accept="image/*" class="d-block form-control-file" name="courseImage" #courseImage="ngModel"
+                    ngModel [required]="!(details.coverImage && details.coverImage.length > 0 && details.coverImage !== 'NA')" (change)="uploadImage($event)">
+                <a target="_blank" *ngIf="details.coverImage.length > 0 && details.coverImage !== 'NA'" href="{{details.coverImage}}">preview</a>
             </div>
         </div>
         <p *ngIf="secDisable && courseImage.invalid && courseImage.touched" class="text-center mb-3 mt-1" style="color: red;">This
@@ -36,16 +36,16 @@
             <label class="col-md-4 col-form-label text-center">Cover Video <span style="color: red;">
                     *</span></label>
             <div class="col-md-8 pt-2">
-                <input type="file" accept="video/*" class="d-block form-control-file" name="courseVideo" #courseVideo="ngModel"
-                    ngModel required (change)="uploadVideo($event)">
-                <a target="_blank" *ngIf="details.coverVideo.length > 0" href="{{details.coverVideo}}">preview</a>
+                <input [disabled]="disable" type="file" accept="video/*" class="d-block form-control-file" name="courseVideo" #courseVideo="ngModel"
+                    ngModel [required]="!(details.coverVideo && details.coverVideo.length > 0 && details.couverVideo !== 'NA')" (change)="uploadVideo($event)">
+                <a target="_blank" *ngIf="details.coverVideo.length > 0 && details.coverVideo !== 'NA'" href="{{details.coverVideo}}">preview</a>
             </div>
         </div>
         <p *ngIf="courseVideo.invalid && courseVideo.touched" class="text-center mb-3 mt-1" style="color: red;">This
             Field is Mandatory !</p>
         <div class="text-right">
-            <button nbButton status="primary" class="mr-2" (click)="secDisable = false">Edit</button>
-            <button nbButton status="success" [disabled]="f.invalid" (click)="saveCourse()">Save Course Details</button>
+            <button nbButton status="primary" class="mr-2" (click)="disable = false">Edit</button>
+            <button nbButton status="success" [disabled]="f.invalid || disable" (click)="saveCourse()">Save Course Details</button>
         </div>
     </form>
     <hr>

@@ -47,13 +47,13 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'Sessions',
     icon: 'book-open',
-    link: '',
+    link: 'sessions',
     home: true,
   },
   {
     title: 'Expense Manager',
     icon: 'credit-card',
-    link: '',
+    link: 'expense-manager',
     home: true,
   },
   {

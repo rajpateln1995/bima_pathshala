@@ -26,7 +26,7 @@
             <div class="col-md-6">
               <label class="text-center d-block"><b>Add Fields to the Table</b></label>
               <select class="form-control mb-4" ngModel (ngModelChange)="addField($event)">
-                <option value="add">--Add--</option>
+                <option>--Add--</option>
                 <ng-container *ngFor="let add of table_head_obj | keyvalue">
                   <option *ngIf="!add.value" [ngValue]="add.key" >{{add.key}}</option>
                 </ng-container>
@@ -35,7 +35,7 @@
             <div class="col-md-6">
               <label class="text-center d-block"><b>Remove Fields from the Table</b></label>
               <select class="form-control mb-4" ngModel (ngModelChange)="removeField($event)">
-                <option value="remove">--Remove--</option>
+                <option>--Remove--</option>
                 <ng-container *ngFor="let remove of table_head_obj | keyvalue">
                   <option *ngIf="remove.value" [ngValue]="remove.key">{{remove.key}}</option>
                 </ng-container>

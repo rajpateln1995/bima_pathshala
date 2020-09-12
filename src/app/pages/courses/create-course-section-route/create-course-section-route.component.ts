@@ -35,20 +35,20 @@ export class CreateCourseSectionRouteComponent implements OnInit {
 
 
   mediaType;
-  subSectionTittle;
+  subSectionTitle;
   disableBtn: boolean = true;
-  createSubSection(subSectionModal){
+  createSubSection(subSectionModal) {
     console.log(this.section._id);
+    this.sub.push({
+      title: this.subSectionTitle,
+      type : this.mediaType,
+      url : this.mediaUrl,
+    });
 
     const obj = {
       _id : this.section._id,
-      data : [
-        {
-            tittle: this.subSectionTittle,
-            type : this.mediaType,
-            url : this.mediaUrl,
-        },
-    ]};
+      data : this.sub,
+    };
 
     this.courses.createSubSection(obj).subscribe(res => {
       console.log(res);
@@ -124,6 +124,39 @@ export class CreateCourseSectionRouteComponent implements OnInit {
 
   ngOnDestroy(){
     this.saveSection();
+  }
+
+  editMediaType;
+  editSubSectionTitle;
+  subSecIndex;
+  editSubSection(title , type , i){
+    this.editMediaType = type;
+    this.editSubSectionTitle = title;
+    this.subSecIndex = i;
+    document.getElementById('toogle-edit-modal').click();
+  }
+
+  saveSubSectionChanges(form){
+    this.sub[this.subSecIndex].type = this.editMediaType;
+    this.sub[this.subSecIndex].title = this.editSubSectionTitle;
+    this.sub[this.subSecIndex].url = this.mediaUrl;
+
+    const obj = {
+      _id : this.section._id,
+      data : this.sub,
+    };
+
+    this.courses.createSubSection(obj).subscribe(res => {
+      console.log(res);
+      
+      document.getElementById('close-sub-section').click();
+      form.resetForm();
+      this.progress = 0;
+    },
+    err => {
+      console.log(err);
+    });
+    
   }
 
 }

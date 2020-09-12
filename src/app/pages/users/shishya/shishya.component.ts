@@ -113,11 +113,11 @@ export class ShishyaComponent implements OnInit {
     });
 
 
-    this.user.getUsers('sishya', this.limit, '1').subscribe(res => {
+    this.user.getUsers('shishya', this.limit, '1').subscribe(res => {
       console.log(res);
       this.data = res;
       this.total = this.data.total;
-      this.data = this.data.data.sishya;
+      this.data = this.data.data.shishya;
       
     },
     err => {
@@ -175,11 +175,11 @@ export class ShishyaComponent implements OnInit {
 
   getPage(page) {
     console.log(page);
-    this.user.getUsers('sishya', this.limit, page).subscribe(res => {
+    this.user.getUsers('shishya', this.limit, page).subscribe(res => {
       console.log(res);
       this.data = res;
       this.total = this.data.total;
-      this.data = this.data.data.sishya;      
+      this.data = this.data.data.shishya;      
       this.curr_page = page;
     },
     err => {
@@ -290,14 +290,14 @@ export class ShishyaComponent implements OnInit {
           'state': data['State'],
           'city': data['City / District'],
         },
-        'role': 'sishya',
+        'role': 'shishya',
       };
       
       const match = String(obj.email).match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
       if (match[0] === obj.email
         && String(obj.aadharNumber).length === 12
         && String(obj.address.pinCode).length === 6
-        && obj.role === 'sishya' === true) {
+        && obj.role === 'shishya' === true) {
           objArray.data.push(obj);
           console.log(objArray);
       }else{
@@ -391,12 +391,12 @@ export class ShishyaComponent implements OnInit {
   downloadSampleCsv(){
     const d = this.ConvertToCSV({}, this.csvHeader);
     const blob = new Blob([d], { type: 'text/csv;charset=utf-8;'});
-    saveAs(blob, 'Sample-CSV-Sishya.csv');
+    saveAs(blob, 'Sample-CSV-Shishya.csv');
   }
 
 
   showUser(id){
-    this.router.navigateByUrl(`/pages/users/user-details/sishya/${id}`);
+    this.router.navigateByUrl(`/pages/users/user-details/shishya/${id}`);
   }
 
 
@@ -422,7 +422,7 @@ export class ShishyaComponent implements OnInit {
           'state': this.state,
           'city': this.city,
         },
-        'role': 'sishya',
+        'role': 'shishya',
       }],
     }
 

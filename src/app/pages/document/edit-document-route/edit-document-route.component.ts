@@ -63,12 +63,15 @@ export class EditDocumentRouteComponent implements OnInit {
     });
   }
 
-  createSec(){
+  secModalTitle;
+  secModalDescription;
+  createSec(sectionForm){
     const obj = {
-      title: '',
-      body: '',
+      title: this.secModalTitle,
+      body: this.secModalDescription,
     }
     this.sections.push(obj);
+    sectionForm.resetForm();
   }
 
   save(){
