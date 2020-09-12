@@ -99,7 +99,7 @@ export class CreateCourseRouteComponent implements OnInit {
 
   saveCourse(){
     const obj = {
-      title: this.details.name,
+      title: this.details.title,
       description : this.details.description,
       coverImage : this.coverimage,
       coverVideo : this.covervideo,

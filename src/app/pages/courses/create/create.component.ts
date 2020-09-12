@@ -70,7 +70,7 @@ export class CreateComponent implements OnInit {
           console.log(res);
         }, err =>{
           console.log(err);
-        })
+        });
       }
     }
   }

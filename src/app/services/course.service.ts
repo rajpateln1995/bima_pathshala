@@ -17,7 +17,13 @@ export class CourseService {
   getCourses() {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
-    return this.http.get(this.base_url + '/course', { headers: header });
+
+    let q_params = new HttpParams();
+    q_params = q_params.append('status', '0');
+    q_params = q_params.append('page', '1');
+    q_params = q_params.append('limit', '10');
+
+    return this.http.get(this.base_url + '/course/all', { headers: header , params : q_params});
   }
 
   putCourse(data) {
