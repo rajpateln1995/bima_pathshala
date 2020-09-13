@@ -81,10 +81,7 @@
                 </div>
                 <div class="col-md-4 center">
                     <label class="label-margin">No. of Rows per page :</label>
-                    <select class="form-control form-control-width" selected="10" [(ngModel)]="limit">
-                      <option value="10">10</option>
-                      <option value="15">15</option>
-                      <option value="25">25</option>
+                    <select class="form-control form-control-width" selected="50" [(ngModel)]="limit">
                       <option value="50">50</option>
                       <option value="100">100</option>    
                       <option value="200">200</option>
@@ -131,6 +128,11 @@
                       <input formControlName="email" type="text" nbInput fullWidth  placeholder="Enter Email">
                       <label *ngIf="!createShishya.get('email').valid && createShishya.get('email').touched" style="color: red;" class="label">Please Enter a Valid Email</label>
                   </div>
+                  <div class="form-group">
+                    <label for="inputFirstName" class="label">Contact No. <span style="color: red;">*</span></label>
+                    <input formControlName="phone" type="text" nbInput fullWidth minlength="10" placeholder="Enter Contact No.">
+                    <label *ngIf="!createShishya.get('phone').valid && createShishya.get('phone').touched" style="color: red;" class="label">Please Enter a Valid Phone No.</label>
+                  </div>
                   
                   <!-- <div class="form-group">
                       <label for="inputFirstName" class="label">Contact No.<span style="color: red;">*</span></label> -->
@@ -169,8 +171,14 @@
                   </div>
                   <div class="form-group">
                     <label for="inputFirstName" class="label">Aadhaar Card Image <span style="color: red;">*</span></label>
-                    <input formControlName="aadhaarImg" class="d-block" type="file" >                
+                    <input (change)="uploadImage($event)" formControlName="aadhaarImg" class="d-block" type="file" >        
+                    <div *ngIf="progressImg > 0" class="progress mt-4">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: {{progressImg}}%"
+                          aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>        
                   </div>
+                  
+
                   
                   <div class="form-group">
                     <label for="inputFirstName" class="label">Gender <span style="color: red;">*</span></label>

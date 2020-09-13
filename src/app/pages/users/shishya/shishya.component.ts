@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { UserService } from '../../../services/user.service';
 import { saveAs } from 'file-saver';
 import { Router } from '@angular/router';
 import { Papa } from 'ngx-papaparse';
+import { CourseService } from '../../../services/course.service';
 
 @Component({
   selector: 'ngx-shishya',
@@ -16,7 +17,8 @@ export class ShishyaComponent implements OnInit {
   constructor(private http: HttpClient,
               private user: UserService,
               private router: Router,
-              private papa: Papa) { }
+              private papa: Papa,
+              private courses :CourseService) { }
 
   data: any;
   total: Number = 0;
@@ -63,7 +65,7 @@ export class ShishyaComponent implements OnInit {
       'Marital Status': false,
     }
 
-  limit: string = '10';
+  limit: string = '50';
 
   pageSize: string = '';
   curr_page: number = 1;
@@ -93,6 +95,7 @@ export class ShishyaComponent implements OnInit {
       'fName' : new FormControl(null, Validators.required),
       'lName' : new FormControl(null, Validators.required),
       'email' : new FormControl(null, Validators.required),
+      'phone' : new FormControl(null, Validators.required),
       'dob' : new FormControl(null, Validators.required),
       'aadhaarNo' : new FormControl(null, Validators.required),
       'aadhaarImg' : new FormControl(null, Validators.required),
@@ -179,7 +182,7 @@ export class ShishyaComponent implements OnInit {
       console.log(res);
       this.data = res;
       this.total = this.data.total;
-      this.data = this.data.data.shishya;      
+      this.data = this.data.data.shishya;
       this.curr_page = page;
     },
     err => {
@@ -399,7 +402,25 @@ export class ShishyaComponent implements OnInit {
     this.router.navigateByUrl(`/pages/users/user-details/shishya/${id}`);
   }
 
+  aadhaarImg;
+  progressImg = 0;
+  uploadImage(event){
+    const data = event.target.files[0];
+    this.courses.upload(data).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress){
+        console.log(event);
+        this.progressImg = (event.loaded / event.total) * 100;
 
+      }else if (event.type === HttpEventType.Response){
+        console.log(event);
+        const data: any = event;
+        this.aadhaarImg = data.body.data[0];
+      }
+    },
+    err => {
+      console.log(err);
+    });
+  }
 
   createUser(){
     const obj = {
@@ -407,10 +428,11 @@ export class ShishyaComponent implements OnInit {
         'fName': this.createShishya.value.fName,
         'lName': this.createShishya.value.lName,
         'email': this.createShishya.value.email,
+        'phone': this.createShishya.value.phone,
         'password': 'default',
         'dob': this.createShishya.value.dob,
         'aadharNumber': this.createShishya.value.aadhaarNo,
-        'aadhaarImg': this.createShishya.value.aadhaarImg,
+        // 'aadhaarImg': this.aadhaarImg,
         'motherTongue': this.createShishya.value.motherTongue,
         'maritalStatus': this.createShishya.value.maritalStatus,
         'occupation': this.createShishya.value.occupation,

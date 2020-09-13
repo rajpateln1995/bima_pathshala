@@ -11,6 +11,7 @@ import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import {
   NbChatModule,
@@ -46,6 +47,7 @@ import { LoaderInterceptorService } from './services/loader-interceptor.service'
     NbSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),

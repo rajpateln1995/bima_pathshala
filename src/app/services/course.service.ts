@@ -14,14 +14,14 @@ export class CourseService {
   base_url = 'https://bimapath.herokuapp.com/api';
 
   id: any;
-  getCourses() {
+  getCourses(status = '' , page = '' , limit = '') {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
 
     let q_params = new HttpParams();
-    q_params = q_params.append('status', '0');
-    q_params = q_params.append('page', '1');
-    q_params = q_params.append('limit', '10');
+    q_params = q_params.append('status', status);
+    q_params = q_params.append('page', page);
+    q_params = q_params.append('limit', limit);
 
     return this.http.get(this.base_url + '/course/all', { headers: header , params : q_params});
   }
@@ -77,10 +77,10 @@ export class CourseService {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
 
-    let body = new FormData()
-    body.append('uploads', data)
+    const body = new FormData();
+    body.append('uploads', data);
 
-    return this.http.post(this.base_url + '/upload', body, { headers: header, reportProgress: true, observe: 'events' })
+    return this.http.post(this.base_url + '/upload', body, { headers: header, reportProgress: true, observe: 'events' });
   }
 
 
@@ -88,7 +88,7 @@ export class CourseService {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
 
-    return this.http.get(this.base_url + '/course/assessments', { headers: header })
+    return this.http.get(this.base_url + '/course/assessments', { headers: header });
   }
 
   editAssesment(data) {

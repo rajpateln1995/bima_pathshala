@@ -12,6 +12,7 @@ import { CreateComponent } from './create/create.component';
 import { CreateCourseRouteComponent } from './create-course-route/create-course-route.component';
 import { CreateCourseSectionRouteComponent } from './create-course-section-route/create-course-section-route.component';
 import { AssessmentsComponent } from './assessments/assessments.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -32,6 +33,7 @@ import { AssessmentsComponent } from './assessments/assessments.component';
     NbCardModule,
     NbAccordionModule,
     NbRouteTabsetModule,
+    NgxPaginationModule,
   ],
 })
 export class CoursesModule { }

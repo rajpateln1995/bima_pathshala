@@ -152,7 +152,7 @@
                             style="color: red;">This Field is Mandatory !</p>
                     <div class="mt-4">
                         <label class="label d-block">Select Media To Upload</label>
-                        <input (change)="uploadMedia($event)" required accept="{{mediaType}}/*" #media="ngModel" ngModel
+                        <input (change)="uploadMedia($event)" accept="{{mediaType}}/*" #media="ngModel" ngModel
                             name="media" type="file">
                     </div>
                     <div *ngIf="progress > 0" class="progress mt-4">

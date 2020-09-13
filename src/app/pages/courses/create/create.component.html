@@ -1,18 +1,20 @@
 <div class="card">
     <div class="card-header">
         <b>Edit Course</b>
-        <div style="float: right;">
-            <button size="small" (click)="markComplete()" type="button" nbButton status="primary">Mark as Complete</button>
-        </div>
+        <!-- <div style="float: right;">
+            <button size="small" (click)="markComplete()" type="button" nbButton status="primary">Mark as
+                Complete</button>
+        </div> -->
     </div>
     <div class="card-body">
+        <button class="mr-2" size="small" (click)="changeStatus('1')" type="button" nbButton status="primary">Mark as
+            Complete</button>
+        <button class="mr-2" size="small" (click)="changeStatus('2')" type="button" nbButton status="success">Live</button>
+        <button class="mr-2" size="small" (click)="changeStatus('3')" type="button" nbButton status="warning">Disabled</button>
+        <button size="small" (click)="changeStatus('4')" type="button" nbButton status="danger">Delete</button>
+        <hr>
         <nb-route-tabset *ngIf="tabs" fullWidth [tabs]="tabs"></nb-route-tabset>
-  
+
 
     </div>
 </div>
-
-
-
-
-

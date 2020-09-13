@@ -28,7 +28,12 @@
                 <input [disabled]="disable" type="file" accept="image/*" class="d-block form-control-file" name="courseImage" #courseImage="ngModel"
                     ngModel [required]="!(details.coverImage && details.coverImage.length > 0 && details.coverImage !== 'NA')" (change)="uploadImage($event)">
                 <a target="_blank" *ngIf="details.coverImage.length > 0 && details.coverImage !== 'NA'" href="{{details.coverImage}}">preview</a>
+                <div *ngIf="progressImg > 0" class="progress mt-4">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{progressImg}}%"
+                        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
             </div>
+
         </div>
         <p *ngIf="secDisable && courseImage.invalid && courseImage.touched" class="text-center mb-3 mt-1" style="color: red;">This
             Field is Mandatory !</p>
@@ -39,6 +44,10 @@
                 <input [disabled]="disable" type="file" accept="video/*" class="d-block form-control-file" name="courseVideo" #courseVideo="ngModel"
                     ngModel [required]="!(details.coverVideo && details.coverVideo.length > 0 && details.couverVideo !== 'NA')" (change)="uploadVideo($event)">
                 <a target="_blank" *ngIf="details.coverVideo.length > 0 && details.coverVideo !== 'NA'" href="{{details.coverVideo}}">preview</a>
+                <div *ngIf="progressVideo > 0" class="progress mt-4">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{progressVideo}}%"
+                        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
             </div>
         </div>
         <p *ngIf="courseVideo.invalid && courseVideo.touched" class="text-center mb-3 mt-1" style="color: red;">This

@@ -30,20 +30,34 @@ export class AllCoursesComponent implements OnInit {
   x;
   courseTitle = '';
   fee = 0;
+  limit: string = '50';
+  curr_page:string = '1';
 
   ngOnInit(): void {
-    this.courses.getCourses().subscribe(res => {
+    this.courses.getCourses('0', '1' , this.limit).subscribe(res => {
       console.log(res);
       this.data = res;
+      this.total = this.data.total;
       this.data = this.data.data;
-      this.total = this.data.length;
+      
     },
     err => {
       console.log(err);
     });
 
+  }
 
-
+  getPage(page){
+    this.courses.getCourses('0', page , this.limit).subscribe(res => {
+      console.log(res);
+      this.data = res;
+      this.total = this.data.total;
+      this.data = this.data.data;
+      this.curr_page = page;
+    },
+    err => {
+      console.log(err);
+    });
   }
 
   viewCourse(courseId) {
@@ -113,7 +127,6 @@ export class AllCoursesComponent implements OnInit {
       category.push('Protection');
     }
     const obj = {
-      'title' : this.courseTitle,
       'fee' : this.fee,
       'type' : this.courseType,
       'languages' : languages.slice(0, (languages.length - 1)),

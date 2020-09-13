@@ -21,9 +21,9 @@ export class CreateCourseRouteComponent implements OnInit {
   details: any;
   SectionName;
   SectionDescription;
-  
-  disable:boolean = true;
-  
+
+  disable: boolean = true;
+
   ngOnInit(): void {
 
     this.getCourse();
@@ -52,7 +52,7 @@ export class CreateCourseRouteComponent implements OnInit {
     console.log(obj);
     this.courses.createSection(obj).subscribe(res => {
       console.log(res);
-      
+
       document.getElementById('close-section').click();
       form.resetForm();
       this.getCourse();
@@ -61,17 +61,19 @@ export class CreateCourseRouteComponent implements OnInit {
       document.getElementById('close-section').click();
     });
   }
-  
+
   coverimage;
+  progressImg = 0;
   uploadImage(event){
     const data = event.target.files[0];
     this.courses.upload(data).subscribe(event => {
       if (event.type === HttpEventType.UploadProgress){
         console.log(event);
-        
+        this.progressImg = (event.loaded / event.total) * 100;
+
       }else if (event.type === HttpEventType.Response){
         console.log(event);
-        const data:any = event;
+        const data: any = event;
         this.coverimage = data.body.data[0];
       }
     },
@@ -79,16 +81,18 @@ export class CreateCourseRouteComponent implements OnInit {
       console.log(err);
     });
   }
-  covervideo
+  covervideo;
+  progressVideo = 0;
   uploadVideo(event){
       const data = event.target.files[0];
       this.courses.upload(data).subscribe(event => {
         if (event.type === HttpEventType.UploadProgress){
           console.log(event);
-          
+          this.progressVideo = (event.loaded / event.total) * 100;
+
         }else if (event.type === HttpEventType.Response){
           console.log(event);
-          const data:any = event;
+          const data: any = event;
           this.covervideo = data.body.data[0];
         }
       },
@@ -103,15 +107,15 @@ export class CreateCourseRouteComponent implements OnInit {
       description : this.details.description,
       coverImage : this.coverimage,
       coverVideo : this.covervideo,
-      _id : this.route.snapshot.params['id']
-    }
+      _id : this.route.snapshot.params['id'],
+    };
     this.courses.putCourse(obj).subscribe(res => {
       console.log(res);
       this.getCourse();
     },
     err => {
       console.log(err);
-    })
+    });
   }
 
   ngOnDestroy(){

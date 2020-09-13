@@ -65,18 +65,35 @@ export class CreateComponent implements OnInit {
         const obj = {
           _id : data.id,
           status : true,
-        }
+        };
         this.course.putCourse(obj).subscribe(res => {
           console.log(res);
-        }, err =>{
+        }, err => {
           console.log(err);
         });
       }
     }else{
       // modal
     }
-  }
 
+
+
+  }
+  changeStatus(status) {
+
+    for (const data of this.id.data){
+      const obj = {
+        _id : data.id,
+        status : status,
+      };
+    this.course.putCourse(obj).subscribe(res => {
+      console.log(res);
+    }, err => {
+      console.log(err);
+    });
+
+  }
+}
 
 
 

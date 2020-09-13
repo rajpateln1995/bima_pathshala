@@ -88,6 +88,7 @@ export class AssessmentsComponent implements OnInit {
   save() {
     console.log(this.data);
     const obj = {
+      time : this.data.time,
       questions : this.data.questions,
       _id : this.data._id,
     }
