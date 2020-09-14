@@ -94,7 +94,7 @@ export class ShishyaComponent implements OnInit {
     this.createShishya = new FormGroup({
       'fName' : new FormControl(null, Validators.required),
       'lName' : new FormControl(null, Validators.required),
-      'email' : new FormControl(null, Validators.required),
+      'email' : new FormControl(null, [Validators.required, Validators.email]),
       'phone' : new FormControl(null, Validators.required),
       'dob' : new FormControl(null, Validators.required),
       'aadhaarNo' : new FormControl(null, Validators.required),
@@ -279,6 +279,7 @@ export class ShishyaComponent implements OnInit {
         'fName': data['First Name'],
         'lName': data['Last Name'],
         'email': data['Email'],
+        'phone': data['Phone'],
         'password': 'default',
         'dob': data['Date of Birth'],
         'aadharNumber': data['Aadhaar Number'],
@@ -294,8 +295,9 @@ export class ShishyaComponent implements OnInit {
           'city': data['City / District'],
         },
         'role': 'shishya',
+        'status': '0',
       };
-      
+
       const match = String(obj.email).match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
       if (match[0] === obj.email
         && String(obj.aadharNumber).length === 12
@@ -379,6 +381,7 @@ export class ShishyaComponent implements OnInit {
     'First Name',
        'Last Name',
        'Email',
+       'Phone',
        'Date of Birth',
        'Aadhaar Number',
        'Gender',
@@ -445,6 +448,7 @@ export class ShishyaComponent implements OnInit {
           'city': this.city,
         },
         'role': 'shishya',
+        'status': '1',
       }],
     }
 

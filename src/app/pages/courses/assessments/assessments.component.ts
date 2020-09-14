@@ -50,6 +50,7 @@ export class AssessmentsComponent implements OnInit {
     const obj = {
       time : 0,
       type : 'mcq',
+      certificateThreshold : 0,
       questions: [{
         question : '',
         options : [],
@@ -89,6 +90,7 @@ export class AssessmentsComponent implements OnInit {
     console.log(this.data);
     const obj = {
       time : this.data.time,
+      certificateThreshold : this.data.certificateThreshold,
       questions : this.data.questions,
       _id : this.data._id,
     }

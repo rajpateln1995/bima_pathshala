@@ -9,6 +9,8 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { FormsModule } from '@angular/forms';
 import { EditDocumentComponent } from './edit-document/edit-document.component';
 import { EditDocumentRouteComponent } from './edit-document-route/edit-document-route.component';
+import { CKEditorModule } from 'ng2-ckeditor';
+
 
 
 
@@ -28,6 +30,7 @@ import { EditDocumentRouteComponent } from './edit-document-route/edit-document-
     NbCardModule,
     NbAccordionModule,
     NbRouteTabsetModule,
+    CKEditorModule,
   ]
 })
 export class DocumentModule { }

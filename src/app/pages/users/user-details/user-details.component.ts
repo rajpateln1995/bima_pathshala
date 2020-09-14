@@ -27,6 +27,8 @@ export class UserDetailsComponent implements OnInit {
   role: string;
   loading: boolean = false;
   editForm: FormGroup;
+  myGuru;
+  myShishya;
 
   ngOnInit() {
     this.loading = true;
@@ -38,8 +40,17 @@ export class UserDetailsComponent implements OnInit {
       this.details = res;
       this.details = this.details.data[this.role][0];
       console.log(this.details);
-      this.editForm.value.fname =this.details.fname
+      this.editForm.value.fname =this.details.fname;
       this.loading = false;
+      this.myGuru = this.details.myGurus;
+      this.myShishya = this.details.myShishyas;
+      if(this.role === 'guru') {
+        this.getShishyas();
+      }else{
+        this.getGurus();
+      }
+      
+      
     },
     err => {
       console.log(err);
@@ -76,7 +87,25 @@ export class UserDetailsComponent implements OnInit {
 
   });
 
+ 
   }
+
+  getShishyas() {
+    for (const id of this.myGuru){
+      this.user.userDetails(id).subscribe(res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      });
+    }
+  }
+
+  getGurus(){
+    
+  }
+
+
   save(){
     this.loading = true;
     const data = {

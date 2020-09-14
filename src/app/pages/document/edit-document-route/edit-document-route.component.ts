@@ -3,6 +3,8 @@ import { DocumentService } from '../../../services/document.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpEventType } from '@angular/common/http';
 import { CourseService } from '../../../services/course.service';
+import '../../editors/ckeditor/ckeditor.loader';
+import 'ckeditor';
 
 @Component({
   selector: 'ngx-edit-document-route',
@@ -23,7 +25,7 @@ export class EditDocumentRouteComponent implements OnInit {
   Data;
   reading_time;
   documentImg;
-  sections;
+  htmlText;
 
   ngOnInit(): void {
     this.getDocument();
@@ -37,7 +39,7 @@ export class EditDocumentRouteComponent implements OnInit {
       this.document_name = this.Data.title;
       this.document_description = this.Data.description;
       this.reading_time = this.Data.readingTime;
-      this.sections = this.Data.data;
+      this.htmlText = this.Data.data[0].body;
     });
   }
 
@@ -63,24 +65,19 @@ export class EditDocumentRouteComponent implements OnInit {
     });
   }
 
-  secModalTitle;
-  secModalDescription;
-  createSec(sectionForm){
-    const obj = {
-      title: this.secModalTitle,
-      body: this.secModalDescription,
-    }
-    this.sections.push(obj);
-    sectionForm.resetForm();
-  }
+
 
   save(){
     const obj = {
       title : this.document_name,
       description : this.document_description,
       img : this.mediaUrl,
-      data : this.sections,
       _id : this.Data._id,
+      data : [
+        {
+          body : this.htmlText,
+        }
+      ]
     }
 
     this.document.saveDocument(obj).subscribe(res => {

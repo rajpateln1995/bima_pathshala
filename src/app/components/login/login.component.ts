@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               private spinner$: NbSpinnerService) { }
 
 
-  loading: boolean = false;
+
 
 
 
@@ -32,13 +32,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.loading = false;
+    
   }
 
 
   login(){
     console.log(this.login_form)
-    this.loading = true;
     this.btn_valid = false;
     this.auth.login(this.login_form.value.email , this.login_form.value.password).subscribe(res => {
       console.log('asfasf');

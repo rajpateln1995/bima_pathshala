@@ -96,6 +96,7 @@ export class GuruComponent implements OnInit {
       'fName' : new FormControl(null, Validators.required),
       'lName' : new FormControl(null, Validators.required),
       'email' : new FormControl(null, [Validators.required, Validators.email]),
+      'phone' : new FormControl(null, Validators.required),
       'dob' : new FormControl(null, Validators.required),
       'aadhaarNo' : new FormControl(null, Validators.required),
       'aadhaarImg' : new FormControl(null, Validators.required),
@@ -255,6 +256,7 @@ export class GuruComponent implements OnInit {
     'First Name',
        'Last Name',
        'Email',
+       'Phone',
        'Date of Birth',
        'Aadhaar Number',
        'Gender',
@@ -386,6 +388,7 @@ export class GuruComponent implements OnInit {
         'fName': data['First Name'],
         'lName': data['Last Name'],
         'email': data['Email'],
+        'phone': data['Phone'],
         'password': 'default',
         'dob': data['Date of Birth'],
         'aadharNumber': data['Aadhaar Number'],
@@ -401,6 +404,7 @@ export class GuruComponent implements OnInit {
           'city': data['City / District'],
         },
         'role': 'guru',
+        'status': '0',
       };
       
       const match = String(obj.email).match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
@@ -436,6 +440,7 @@ export class GuruComponent implements OnInit {
         'fName': this.createGuru.value.fName,
         'lName': this.createGuru.value.lName,
         'email': this.createGuru.value.email,
+        'phone': this.createGuru.value.phone,
         'password': 'default',
         'dob': this.createGuru.value.dob,
         'aadharNumber': this.createGuru.value.aadhaarNo,
@@ -445,13 +450,14 @@ export class GuruComponent implements OnInit {
         'occupation': this.createGuru.value.occupation,
         'gender': this.genderValue,
         'address': {
-          'pinCode': this.pinCode,
+          'pincode': this.pinCode,
           'locality': this.locality,
           'country': this.country,
           'state': this.state,
           'city': this.city,
         },
         'role': 'guru',
+        'status': '0',
       }],
     };
 

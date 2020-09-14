@@ -29,10 +29,6 @@
                                 <td>{{d.language}}</td>
                                 <td>{{d.readingTime}}</td>
                                 <td>
-                                    <a target="_blank" href="{{d.video}}"><i class="fa fa-eye"
-                                            aria-hidden="true"></i></a>
-                                </td>
-                                <td>
                                     <a target="_blank" href="{{d.img}}"><i class="fa fa-eye" aria-hidden="true"></i></a>
                                 </td>
                                 <td (click)="viewDocument(d.id)" style="color:#28a745; cursor: pointer;"><i
@@ -76,26 +72,28 @@
             <div class="modal-body">
                 <form #createDoc="ngForm">
                     <div class="form-group">
-                        <label class="label">Type <span style="color: red;">*</span></label>
-                        <select class="form-control" [(ngModel)]="docType" required name="documentType"
+                        <label class="label">Type <span style="color: red;"></span></label>
+                        <select class="form-control" [(ngModel)]="docType" name="documentType"
                             #documentType="ngModel">
-                            <option selected>--Select--</option>
+                            <option value="NA" selected>--Select--</option>
                             <option value="article">Article</option>
                             <option value="document">Document</option>
                         </select>
-                        <p *ngIf="documentType.invalid && documentType.touched" class="text-center" style="color:red">
-                            This field is required !</p>
+                        <!-- <p *ngIf="documentType.invalid && documentType.touched" class="text-center" style="color:red">
+                            This field is required !</p> -->
                     </div>
 
                     <div class="form-group">
                         <label class="label d-block">Document / Article Languages<span style="color: red;">*</span></label>
                         <div class="row">
-                            <div *ngFor="let lang of languages" class="form-check form-check-inline col-3">
+                            <div *ngFor="let lang of languages" class="form-check form-check-inline col-3 text-center">
                                 <input name="{{lang.name}}" class="form-check-input" [(ngModel)]="lang.value" type="checkbox"
                                     [id]="lang.name" [value]="lang.name">
                                 <label class="form-check-label" for="inlineCheckbox1">{{lang.displayName}}</label>
                             </div>
                         </div>
+                        <p *ngIf="showErr" class="text-center" style="color:red">
+                            Select Atleast One</p>
                     </div>
                     <div class="form-group">
                         <label class="label d-block">Document / Article Category<span style="color: red;">*</span></label>

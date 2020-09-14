@@ -105,7 +105,7 @@
                                 style="color: red;">*</span></label>
                         <textarea nbInput name="sectionDescription" required #sectionDescription="ngModel"
                             [(ngModel)]="SectionDescription" fullWidth
-                            placeholder="Enter Section Description"></textarea>
+                            placeholder="Enter Section Description" rows="5"></textarea>
                         <p *ngIf="sectionDescription.invalid && sectionDescription.touched"
                             class="text-center mb-3 mt-1" style="color: red;">This Field is Mandatory !</p>
                     </div>
@@ -120,3 +120,5 @@
         </div>
     </div>
 </div>
+
+

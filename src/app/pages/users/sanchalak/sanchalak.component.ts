@@ -105,6 +105,7 @@ export class SanchalakComponent implements OnInit {
       'fName' : new FormControl(null, Validators.required),
       'lName' : new FormControl(null, Validators.required),
       'email' : new FormControl(null, [Validators.required, Validators.email]),
+      'phone' : new FormControl(null, Validators.required),
       'dob' : new FormControl(null, Validators.required),
       'aadhaarNo' : new FormControl(null, Validators.required),
       'aadhaarImg' : new FormControl(null, Validators.required),
@@ -163,7 +164,7 @@ export class SanchalakComponent implements OnInit {
 
   date(){
     setTimeout(() => {
-      if (document.getElementsByClassName('cdk-overlay-container')[0]){
+      if (document.getElementsByClassName('cdk-overlay-container')[0]) {
         document.getElementsByClassName('cdk-overlay-container')[0].setAttribute('style', 'z-index: 1080;');
       }
     }, 200);
@@ -339,6 +340,7 @@ export class SanchalakComponent implements OnInit {
         'fName': this.createSanchalak.value.fName,
         'lName': this.createSanchalak.value.lName,
         'email': this.createSanchalak.value.email,
+        'phone': this.createSanchalak.value.phone,
         'password': 'default',
         'dob': this.createSanchalak.value.dob,
         'aadharNumber': this.createSanchalak.value.aadhaarNo,
@@ -348,13 +350,14 @@ export class SanchalakComponent implements OnInit {
         'occupation': this.createSanchalak.value.occupation,
         'gender': this.genderValue,
         'address': {
-          'pinCode': this.pinCode,
+          'pincode': this.pinCode,
           'locality': this.locality,
           'country': this.country,
           'state': this.state,
           'city': this.city,
         },
         'role': 'sanchalak',
+        'status': '0',
       }],
     }
 
@@ -368,6 +371,6 @@ export class SanchalakComponent implements OnInit {
       console.log(err);
     });
 
-  }  
+  }
 
 }

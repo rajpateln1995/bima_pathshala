@@ -12,7 +12,7 @@ export class DocumentService {
 
   base_url = 'https://bimapath.herokuapp.com/api';
 
-  getDocAndArticle(type="" , _id = ''){
+  getDocAndArticle(type='' , _id = ''){
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
 

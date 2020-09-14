@@ -21,6 +21,12 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   section_name;
   section_description;
   section_disable = true;
+  subSecId;
+  subSecTarget;
+  editSubSecId;
+  editSubSecTarget;
+  deleteTarget;
+  deleteId;
   ngOnInit(): void {
     this.section_name = this.section.name;
     this.section_description = this.section.description;
@@ -29,6 +35,12 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     console.log(this.sub);
     this.assessment = this.section.assessment;
     this.section_id = this.section._id;
+    this.subSecId = `subSec${this.section_id}`;
+    this.subSecTarget = `#subSec${this.section_id}`;
+    this.editSubSecId = `editSubSec${this.section_id}`;
+    this.editSubSecTarget = `#editSubSec${this.section_id}`;
+    this.deleteId =  `deleteConfirmModal${this.section_id}`;
+    this.deleteTarget = `#deleteConfirmModal${this.section_id}`;
   }
 
 
@@ -53,9 +65,11 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     this.courses.createSubSection(obj).subscribe(res => {
       console.log(res);
       this.courseEvent.next();
-      document.getElementById('close-sub-section').click();
+      const str = `close-sub-section${this.section_id}`;
+      document.getElementById(str).click();
       subSectionModal.resetForm();
       this.progress = 0;
+      
     },
     err => {
       console.log(err);
@@ -113,6 +127,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   }
 
   deleteSection(){
+    document.getElementById('close-delete').click();
     this.courses.delSection(this.route.snapshot.params['id'], this.section._id).subscribe(res => {
       console.log(res);
       this.courseEvent.next();
@@ -148,8 +163,8 @@ export class CreateCourseSectionRouteComponent implements OnInit {
 
     this.courses.createSubSection(obj).subscribe(res => {
       console.log(res);
-      
-      document.getElementById('close-sub-section').click();
+      const str = `close-sub-section${this.section_id}`;
+      document.getElementById(str).click();
       form.resetForm();
       this.progress = 0;
     },

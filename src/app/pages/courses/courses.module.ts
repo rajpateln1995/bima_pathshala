@@ -18,6 +18,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
+
 @NgModule({
   declarations: [CoursesComponent, AllCoursesComponent, EditCourseComponent, CreateComponent, CreateCourseRouteComponent, CreateCourseSectionRouteComponent, AssessmentsComponent],
   imports: [

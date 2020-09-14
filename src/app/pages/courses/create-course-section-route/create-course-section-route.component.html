@@ -1,5 +1,5 @@
 <div class="mr-2 ml-2 mb-2 text-right">
-    <button (click)="deleteSection()" size="small" type="button" nbButton status="danger"><i class="fa fa-trash mr-1"
+    <button data-toggle="modal" attr.data-target="{{deleteTarget}}"  size="small" type="button" nbButton status="danger"><i class="fa fa-trash mr-1"
             aria-hidden="true"></i>Delete Section</button>
 
 
@@ -38,11 +38,11 @@
 
 <hr>
     <div class="text-center" style="font-size:larger;">
-        <b>Section Media</b>
+        <b>Sub Sections</b>
     </div>
 <hr>
 <div class="text-right mb-2">
-    <button id="new-sub-sec" class="mr-2" size="small" data-toggle="modal" data-target="#subSectionModal" type="button" nbButton
+    <button class="mr-2" size="small" data-toggle="modal" attr.data-target="{{subSecTarget}}" type="button" nbButton
     status="success"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add New Sub-Section</button>
 </div>
 <nb-accordion>
@@ -58,9 +58,8 @@
             <label>Type : </label>
             <label>{{data.type}}</label>
             <br>
-
+            
             <a target="_blank" href="{{data.url}}">Preview</a>
-
         </nb-accordion-item-body>
     </nb-accordion-item>
 </nb-accordion>
@@ -70,10 +69,10 @@
 
 
 
-<div class="modal" tabindex="-1" id="subSectionModal">
+<div class="modal" tabindex="-1" [id]="subSecId">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form #subSectionModal="ngForm">
+            <form #subSecModal="ngForm">
                 <div class="modal-header">
                     <h5 class="modal-title">Create Sub-Section</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -110,9 +109,9 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button id="close-sub-section" data-dismiss="modal" nbButton status="basic">Close</button>
-                    <button [disabled]="subSectionModal.invalid || disableBtn"
-                        (click)="createSubSection(subSectionModal)" nbButton status="success">Create</button>
+                    <button id="{{'close-sub-section' + section_id}}" data-dismiss="modal" nbButton status="basic">Close</button>
+                    <button [disabled]="subSecModal.invalid || disableBtn"
+                        (click)="createSubSection(subSecModal)" nbButton status="success">Create</button>
                 </div>
             </form>
         </div>
@@ -164,6 +163,26 @@
                     <button id="close-edit-sub-section" data-dismiss="modal" nbButton status="basic">Close</button>
                     <button [disabled]="editSubSectionModal.invalid || disableBtn"
                         (click)="saveSubSectionChanges(editSubSectionModal)" nbButton status="success">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<button style="display: none;" data-toggle="modal" data-target="#deleteConfirmModal" id="delete-modal" ></button>
+<div class="modal" tabindex="-1" id="{{deleteId}}">
+    <div style="margin-top: 20%;" class="modal-dialog">
+        <div class="modal-content">
+            <form #sectionModal="ngForm">
+                <div class="modal-body text-center">
+                    <h5 style="color:red">Are you sure you want to delete ?</h5>
+                </div>
+                <div class="modal-footer">
+                    <button id="close-delete" data-dismiss="modal" nbButton status="basic">NO</button>
+                    <button (click)="deleteSection()" nbButton
+                        status="danger">YES</button>
                 </div>
             </form>
         </div>

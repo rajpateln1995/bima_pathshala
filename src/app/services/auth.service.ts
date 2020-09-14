@@ -40,13 +40,20 @@ export class AuthService {
       'email' : email,
       'password' : password,
     }).pipe(tap(res => {
+      console.log(res);
       const data: any = res;
-      const Obj = {
-        'email' : data.data.email,
-        'token' : data.data.auth.token,
-        'expDate' : data.data.auth.expires,
-      };
-      localStorage.setItem('Token', JSON.stringify(Obj));
+      if(data.data[0] !== null) {
+        const Obj = {
+          'email' : data.data.email,
+          'fName' : data.data.fName,
+          'lName' : data.data.lName,
+          'imageUrl' : data.data.imageUrl,
+          'token' : data.data.auth.token,
+          'expDate' : data.data.auth.expires,
+        };
+        localStorage.setItem('Token', JSON.stringify(Obj));
+      }
+      
     }));
   }
 

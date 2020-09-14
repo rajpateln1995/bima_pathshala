@@ -23,26 +23,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   userPictureOnly: boolean = false;
   user: any;
+  userName = "";
+  profileImg = "";
 
 
-  themes = [
-    {
-      value: 'default',
-      name: 'Light',
-    },
-    {
-      value: 'dark',
-      name: 'Dark',
-    },
-    {
-      value: 'cosmic',
-      name: 'Cosmic',
-    },
-    {
-      value: 'corporate',
-      name: 'Corporate',
-    },
-  ];
+
 
   currentTheme = 'default';
 
@@ -58,6 +43,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+    const temp: any = JSON.parse(localStorage.getItem('Token'));
+    this.userName = temp.fName + ' ' + temp.lName;
+    this.profileImg = temp.imageUrl;
+    
+
     this.currentTheme = this.themeService.currentTheme;
 
     this.userService.getUsers()

@@ -28,12 +28,15 @@ padding-left: 20px;" (click)="toogleMenu = !toogleMenu">
     </nb-action> -->
 
   <!-- </nb-actions> -->
-  <div class="profile_image">
-    <img width = "40px" height="40px" style="border-radius: 50%;" src="assets/images/kate.png">
-  </div>
-  <div class="ml-1">
-    User Name
-  </div>
+  <ng-container *ngIf="userName.length > 0 && profileImg.length > 0">
+    <div class="profile_image">
+      <img width = "40px" height="40px" style="border-radius: 50%;" src="{{profileImg}}">
+    </div>
+    <div class="ml-3">
+      {{userName}}
+    </div>
+  </ng-container>
+
   
 </div>
 <div *ngIf="toogleMenu" class="dropdown">

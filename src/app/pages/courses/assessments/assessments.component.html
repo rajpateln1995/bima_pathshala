@@ -18,7 +18,7 @@
         </div>
         <div class="form-group">
             <label class="d-block mt-1"><b>Enter Minimum Score For Assessment [In Percentage] :</b></label>
-            <input style="width: 55%" [disabled]="disable" [(ngModel)]="data.time" type="number"
+            <input style="width: 55%" [disabled]="disable" [(ngModel)]="data.certificateThreshold" type="number"
                 placeholder="Enter Score In Percentage" class="form-control form-control-sm">
         </div>
         <div class="mt-5" *ngFor="let question of data.questions ; let i = index ; trackBy:trackByFn">

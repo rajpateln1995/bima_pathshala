@@ -41,6 +41,15 @@
                              
                         </div>
                     </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label text-center">Phone<span style="color: red;"> *</span></label>
+                        <div class="col-md-9">
+                            <input type="number" name="phone" required #phone="ngModel" [disabled]="!editable" [(ngModel)]="details.phone" class="form-control">   
+                            <p *ngIf="phone.invalid && phone.touched" class="text-center mb-3 mt-1" style="color: red;">This Field is Mandatory !</p>
+                             
+                        </div>
+                    </div>
                     
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label text-center">Gender<span style="color: red;"> *</span></label>
@@ -148,7 +157,7 @@
                         <button type="submit" [disabled]="!f.valid" class="btn-shadow" nbButton status="success" (click)="save()">Save</button>
                     </div>
                 </form>
-                    <ng-container *ngIf="role === 'sishya'">
+                    <!-- <ng-container *ngIf="role === 'sishya'">
                         <hr>
                         <h5 class="text-center mb-4">Course Taken</h5>  
                         
@@ -181,7 +190,7 @@
                                 </li>
                             </ul>
                         
-                    </ng-container>
+                    </ng-container> -->
                     <ng-container>
                         <hr>
                         <h5 class="text-center mb-4">Session Details</h5>                    
@@ -237,15 +246,91 @@
                                 </li>
                             </ul>
                     </ng-container>
-                    <ng-container *ngIf="role === 'sishya'" >
+                    <ng-container *ngIf="role === 'shishya'" >
                         <hr>
                         <h5 class="text-center mb-4">My Guru</h5> 
+                        <ul class="list-group">
+                            <li class="list-group-item mb-0">
+                                <div class="row">
+                                    <div class="col-md-3 text-center">
+                                        <b>Name</b>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <b>Number</b>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <b>Email</b>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <b>View / Edit</b>
+                                    </div>
+                                </div>
+                            </li>
+                            <ng-container *ngFor="">
+                                <li class="list-group-item mb-0">
+                                    <div class="row">
+                                        <div class="col-md-3 text-center">
+                                            <b>Name</b>
+                                        </div>
+                                        <div class="col-md-3 text-center">
+                                            <b>Number</b>
+                                        </div>
+                                        <div class="col-md-3 text-center">
+                                            <b>Email</b>
+                                        </div>
+                                        <div class="col-md-3 text-center">
+                                            <b>View / Edit</b>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ng-container>
+                            
+                        </ul>
                         
                     </ng-container>
                     <ng-container *ngIf="role === 'guru'" >
                         <hr>
                         <h5 class="text-center mb-4">My Shishya</h5> 
+                        <ul class="list-group">
+                            <li class="list-group-item mb-0">
+                                <div class="row">
+                                    <div class="col-md-3 text-center">
+                                        <b>Name</b>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <b>Number</b>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <b>Email</b>
+                                    </div>
+                                    <div class="col-md-3 text-center">
+                                        <b>View / Edit</b>
+                                    </div>
+                                </div>
+                            </li>
+                            <ng-container *ngFor="">
+                                <li class="list-group-item mb-0">
+                                    <div class="row">
+                                        <div class="col-md-3 text-center">
+                                            <b>Name</b>
+                                        </div>
+                                        <div class="col-md-3 text-center">
+                                            <b>Number</b>
+                                        </div>
+                                        <div class="col-md-3 text-center">
+                                            <b>Email</b>
+                                        </div>
+                                        <div class="col-md-3 text-center">
+                                            <b>View / Edit</b>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ng-container>
+                            
+                        </ul>
+                        
                     </ng-container>
+                    
                     <ng-container *ngIf="role === 'sishya'" >
                         <hr>
                         <h5 class="text-center mb-4">Payments</h5>  

@@ -41,40 +41,7 @@ export class CreateComponent implements OnInit {
 
 
   markComplete(){
-    let validate = 1;
-    for (const data of this.id.data){
-      this.course.getCourseDetails(data.id).subscribe(res => {
-        console.log(res);
-        const temp: any = res;
-        if (temp.data.course && temp.data.course.sections.length > 0 && temp.data.course.sections.data.length > 0){
-          if (temp.data.course.sections.assessment && temp.data.course.sections.assessment !== null){
-            validate *= 1;
-          } else {
-            validate *= 0;
-          }
-        }else {
-          validate *= 0;
-        }
-      }, err => {
-        console.log(err);
-      });
-    }
-    console.log(validate);
-    if (validate === 1){
-      for (const data of this.id.data){
-        const obj = {
-          _id : data.id,
-          status : true,
-        };
-        this.course.putCourse(obj).subscribe(res => {
-          console.log(res);
-        }, err => {
-          console.log(err);
-        });
-      }
-    }else{
-      // modal
-    }
+    
 
 
 
@@ -93,6 +60,56 @@ export class CreateComponent implements OnInit {
     });
 
   }
+}
+
+live(){
+    let validate = this.check();
+    console.log(validate);
+    if (validate){
+      for (const data of this.id.data){
+        const obj = {
+          _id : data.id,
+          status : true,
+        };
+        this.course.putCourse(obj).subscribe(res => {
+          console.log(res);
+        }, err => {
+          console.log(err);
+        });
+      }
+      alert("Course Validated ! Your Course is live Now")
+    }else{
+      alert("Course invalid ! Make sure your course has atleast one section and subsection.")
+    }
+}
+check(){
+  let validate = false;
+  let len = this.id.data.length - 1;
+    for (const data of this.id.data){
+      this.course.getCourseDetails(data.id).subscribe(res => {
+        console.log(res);
+        const temp: any = res;
+        if (temp.data.course && temp.data.course.sections.length > 0){
+          if(temp.data.course.sections.data && temp.data.course.sections.data.length > 0){
+            if (temp.data.course.sections[0].assessment && temp.data.course.sections[0].assessment !== null){
+              validate = true;
+            } else {
+              return false;
+            }
+          }
+        }else {
+          return false;
+        }
+      }, err => {
+        console.log(err);
+      });
+      len--;
+      if(len === 0){
+        if (validate){
+          return true;
+        }
+      }
+    }
 }
 
 

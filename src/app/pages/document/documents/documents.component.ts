@@ -21,7 +21,6 @@ export class DocumentsComponent implements OnInit {
     'Type',
     'Language',
     'Reading Time',
-    'Video',
     'Image',
     'View / Edit',
   ];
@@ -55,7 +54,7 @@ export class DocumentsComponent implements OnInit {
   }
 
   getDocuments(){
-    this.document.getDocAndArticle('document').subscribe(res => {
+    this.document.getDocAndArticle().subscribe(res => {
       console.log(res);
       const temp: any = res;
       this.Data = temp.data;
@@ -79,13 +78,9 @@ export class DocumentsComponent implements OnInit {
   finance;
   insurance;
   protection;
+  showErr = false;
   submit(){
-    let languages = '';
-    for (const lang of this.languages){
-      if (lang.value){
-        languages = languages + lang.name + ',';
-      }
-    }
+
     const tags = [];
     if (this.finance) {
       tags.push('Finance');
@@ -97,40 +92,50 @@ export class DocumentsComponent implements OnInit {
       tags.push('Protection');
     }
 
-    const obj = {
-      type : this.docType,
-      languages : languages.slice(0, (languages.length - 1)),
-      tags : tags,
+    let languages = '';
+    for (const lang of this.languages){
+      if (lang.value){
+        languages = languages + lang.name + ',';
+      }
+    }
 
-    };
-    this.document.addMultipleDoc(obj).subscribe(res => {
-      console.log(res);
-      const temp: any = res;
-      localStorage.setItem('doc-list', JSON.stringify({'data' : temp.data[0].otherLanguages}));
-      console.log(temp.data[0].otherLanguages[0].document);
-      this.router.navigateByUrl(`pages/document/edit/id/${temp.data[0].otherLanguages[0].document}`);
-      document.getElementById('close-btn').click();
+    if (languages === ''){
+      this.showErr = true;
+    }else {
+      this.showErr = false;
+      const obj = {
+        type : this.docType,
+        languages : languages.slice(0, (languages.length - 1)),
+        tags : tags,
+      };
+      this.document.addMultipleDoc(obj).subscribe(res => {
+        console.log(res);
+        const temp: any = res;
+        localStorage.setItem('doc-list', JSON.stringify({'data' : temp.data[0].otherLanguages}));
+        console.log(temp.data[0].otherLanguages[0].document);
+        this.router.navigateByUrl(`pages/document/edit/id/${temp.data[0].otherLanguages[0].document}`);
+        document.getElementById('close-btn').click();
 
-    },
-    err => {
-      console.log(err);
-      document.getElementById('close-btn').click();
-    });
-
+      },
+      err => {
+        console.log(err);
+        document.getElementById('close-btn').click();
+      });
+    }
 
   }
 
   viewDocument(id){
       this.document.getDocAndArticle('' , id).subscribe(res => {
         console.log(res);
-        const temp : any = res;
+        const temp: any = res;
         const obj = temp.data[0].otherLanguages;
         localStorage.setItem('doc-list' , JSON.stringify({ data : obj }));
         this.router.navigateByUrl(`pages/document/edit/id/${id}`);
       },
       err => {
         console.log(err);
-      })
+      });
   }
 
 
