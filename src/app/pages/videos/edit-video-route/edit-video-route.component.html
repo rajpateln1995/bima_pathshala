@@ -32,6 +32,17 @@
         </div>
         <p *ngIf="video.invalid && video.touched" class="text-center mb-3 mt-1" style="color: red;">This
             Field is Mandatory !</p>
+        <div class="form-group row">
+            <label class="col-md-4 col-form-label text-center">Select Thumbnail Image <span style="color: red;">
+                    *</span></label>
+            <div class="col-md-8 pt-2">
+                <input type="file" accept="image/*" class="d-block form-control-file" name="thumbnail" #thumbnail="ngModel"
+                    ngModel required (change)="uploadThumb($event)">
+                <a target="_blank" *ngIf="Data.videoUrl.length > 0" href="{{Data.videoUrl}}">preview</a>
+            </div>
+        </div>
+        <p *ngIf="thumbnail.invalid && thumbnail.touched" class="text-center mb-3 mt-1" style="color: red;">This
+            Field is Mandatory !</p>
 
         <div class="text-right">
             

@@ -266,27 +266,36 @@
                                     </div>
                                 </div>
                             </li>
-                            <ng-container *ngFor="">
+                            <ng-container *ngIf="gurusArray.length > 0">
+                                <ng-container *ngFor="let data of gurusArray">
+                                    <li class="list-group-item mb-0">
+                                        <div class="row">
+                                            <div class="col-md-3 text-center">
+                                                {{data.name}}
+                                            </div>
+                                            <div class="col-md-3 text-center">
+                                                {{data.phone}}
+                                            </div>
+                                            <div class="col-md-3 text-center">
+                                                {{data.email}}
+                                            </div>
+                                            <div (click)="showUser('guru', data._id)" class="col-md-3 text-center">
+                                                <i style="color: #28a745;" class="fa fa-eye" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngIf="gurusArray.length === 0">
                                 <li class="list-group-item mb-0">
-                                    <div class="row">
-                                        <div class="col-md-3 text-center">
-                                            <b>Name</b>
-                                        </div>
-                                        <div class="col-md-3 text-center">
-                                            <b>Number</b>
-                                        </div>
-                                        <div class="col-md-3 text-center">
-                                            <b>Email</b>
-                                        </div>
-                                        <div class="col-md-3 text-center">
-                                            <b>View / Edit</b>
-                                        </div>
+                                    <div class="text-center">
+                                        No Data Available
                                     </div>
                                 </li>
                             </ng-container>
                             
-                        </ul>
-                        
+                            
+                        </ul>                        
                     </ng-container>
                     <ng-container *ngIf="role === 'guru'" >
                         <hr>
@@ -308,21 +317,31 @@
                                     </div>
                                 </div>
                             </li>
-                            <ng-container *ngFor="">
+                            <ng-container *ngIf="shishyasArray.length > 0">
+                                <ng-container *ngFor="let data of shishyasArray">
+                                    <li class="list-group-item mb-0">
+                                        <div class="row">
+                                            <div class="col-md-3 text-center">
+                                                {{data.name}}
+                                            </div>
+                                            <div class="col-md-3 text-center">
+                                                {{data.phone}}
+                                            </div>
+                                            <div class="col-md-3 text-center">
+                                                {{data.email}}
+                                            </div>
+                                            <div (click)="showUser('shishya' , data._id)" class="col-md-3 text-center">
+                                                <i style="color: #28a745;" class="fa fa-eye" aria-hidden="true"></i>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ng-container>
+                            </ng-container>
+                            
+                            <ng-container *ngIf="shishyasArray.length === 0">
                                 <li class="list-group-item mb-0">
-                                    <div class="row">
-                                        <div class="col-md-3 text-center">
-                                            <b>Name</b>
-                                        </div>
-                                        <div class="col-md-3 text-center">
-                                            <b>Number</b>
-                                        </div>
-                                        <div class="col-md-3 text-center">
-                                            <b>Email</b>
-                                        </div>
-                                        <div class="col-md-3 text-center">
-                                            <b>View / Edit</b>
-                                        </div>
+                                    <div class="text-center">
+                                        No Data Available
                                     </div>
                                 </li>
                             </ng-container>

@@ -6,24 +6,23 @@
             <div class="content-holder">
                 <h2 class="colorWhite">Bima Paathshala</h2>
                 <p class="colorWhite">Admin Dashboard</p>
-                <button (click)="signup()" class="button-2">Sign Up</button>
+                <button (click)='login()' class="button-2">Log In</button>
             </div>
         </div>
     
         <!--Forms-->
         <div class="box-2">
             <div class="login-form-container">
-                <h1>Admin Login</h1>
-                <form [formGroup]="login_form" >
+                <h1>Admin Sign Up</h1>
+                <form [formGroup]="signup_form" >
                     <div>
                         <input formControlName="email"  type="email" placeholder="Email" class="input-field  mb-4 mt-1">
                     
                     <input formControlName="password" type="password" placeholder="Password" class="input-field  mb-4 mt-1">
                     
                     </div>
-                    <span class="d-block" *ngIf="!login_form.get('email').valid && login_form.get('email').touched" style="color: red;">Invalid Email</span>
-                    <span class="d-block" *ngIf="showMsg" style="color: red;">Login Failed !</span>
-                    <button [disabled] = "!login_form.valid" class="login-button mt-1" (click)="login()" type="button">Login</button>
+                    <span class="d-block" *ngIf="!signup_form.get('email').valid && signup_form.get('email').touched" style="color: red;">Invalid Email</span>
+                    <button [disabled] = "!signup_form.valid" class="login-button mt-1" (click)="signup()" type="button">Sign Up</button>
                 </form>
             </div>
     

@@ -109,7 +109,7 @@ export class AllCoursesComponent implements OnInit {
   finance;
   accounting;
   protection;
-  submit(){
+  submit() {
     let languages = '';
     for (const lang of this.languages){
       if (lang.value){

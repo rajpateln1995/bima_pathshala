@@ -32,7 +32,7 @@ export class UserService {
     q_params = q_params.append('_id' , _id);
     q_params = q_params.append('name' , name);
     q_params = q_params.append('email' , email);
-    q_params = q_params.append('contact' , contact);
+    q_params = q_params.append('number' , contact);
     q_params = q_params.append('pincode' , pincode);
     q_params = q_params.append('city' , city);
     q_params = q_params.append('state' , state);

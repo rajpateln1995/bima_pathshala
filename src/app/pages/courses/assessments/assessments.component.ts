@@ -14,11 +14,7 @@ export class AssessmentsComponent implements OnInit {
   @Input() section_id: any;
 
   data: any;
-  question = {
-    options : [],
-    question : '',
-    answer : '',
-  };
+  
   disable: boolean = true;
 
   ngOnInit(): void {
@@ -34,6 +30,9 @@ export class AssessmentsComponent implements OnInit {
   trackByFn(index: any, item: any) {
     return index;
  }
+ trackbyq(index: any, item: any) {
+  return index;
+}
 
   // getAllQuestions(){
   //   this.course.getAllAssessments().subscribe(res => {
@@ -79,7 +78,12 @@ export class AssessmentsComponent implements OnInit {
   }
 
   addQuestion() {
-    this.data.questions.push(this.question);
+    const question = {
+      options : [],
+      question : '',
+      answer : '',
+    };
+    this.data.questions.push(question);
   }
 
   deleteQuestion(i){

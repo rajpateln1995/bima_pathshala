@@ -16,7 +16,11 @@ export class UserDetailsComponent implements OnInit {
 
   constructor(private user: UserService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router)
+    {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    }
+
 
   userId: string = '';
   details: any = null;
@@ -29,6 +33,8 @@ export class UserDetailsComponent implements OnInit {
   editForm: FormGroup;
   myGuru;
   myShishya;
+  gurusArray = [];
+  shishyasArray = [];
 
   ngOnInit() {
     this.loading = true;
@@ -40,17 +46,17 @@ export class UserDetailsComponent implements OnInit {
       this.details = res;
       this.details = this.details.data[this.role][0];
       console.log(this.details);
-      this.editForm.value.fname =this.details.fname;
+      this.editForm.value.fname = this.details.fname;
       this.loading = false;
       this.myGuru = this.details.myGurus;
       this.myShishya = this.details.myShishyas;
-      if(this.role === 'guru') {
+      if (this.role === 'guru') {
         this.getShishyas();
       }else{
         this.getGurus();
       }
-      
-      
+
+
     },
     err => {
       console.log(err);
@@ -87,13 +93,26 @@ export class UserDetailsComponent implements OnInit {
 
   });
 
- 
+
+  }
+
+  showUser(role , id){
+    this.router.navigateByUrl(`/pages/users/user-details/${role}/${id}`);
   }
 
   getShishyas() {
-    for (const id of this.myGuru){
-      this.user.userDetails(id).subscribe(res => {
+    for (const id of this.myShishya){
+      this.user.getUsers('', '10', '1', id).subscribe(res => {
         console.log(res);
+        const temp: any = res;
+        const obj = {
+          _id : temp.data.shishya[0]._id,
+          name : temp.data.shishya[0].fName + ' ' + temp.data.shishya[0].lName,
+          phone : temp.data.shishya[0].phone,
+          email : temp.data.shishya[0].email,
+        };
+        this.shishyasArray.push(obj);
+        console.log(this.shishyasArray);
       },
       err => {
         console.log(err);
@@ -102,7 +121,23 @@ export class UserDetailsComponent implements OnInit {
   }
 
   getGurus(){
-    
+    for (const id of this.myGuru) {
+      this.user.getUsers('', '10', '1', id).subscribe(res => {
+        console.log(res);
+        const temp: any = res;
+        const obj = {
+          _id : temp.data.guru[0]._id,
+          name : `${temp.data.guru[0].fName} ${temp.data.guru[0].lName}`,
+          phone : temp.data.guru[0].phone,
+          email : temp.data.guru[0].email,
+        };
+        this.gurusArray.push(obj);
+        console.log(this.gurusArray);
+      },
+      err => {
+        console.log(err);
+      });
+    }
   }
 
 
@@ -113,6 +148,7 @@ export class UserDetailsComponent implements OnInit {
       'status': 1,
       '_id': this.userId,
       'dob': this.details.dob,
+      'phone': this.details.phone,
       'email': this.details.email,
       'gender': this.details.gender,
       'fName': this.details.fName,
@@ -140,8 +176,6 @@ export class UserDetailsComponent implements OnInit {
       this.loading = false;
     });
 
-    
-    // this.router.navigate(['pages/users/shishya']);
   }
 
 

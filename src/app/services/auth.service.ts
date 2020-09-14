@@ -66,6 +66,9 @@ export class AuthService {
       const data: any = res;
       const Obj = {
         'email' : data.data.email,
+        'fName' : data.data.fName,
+        'lName' : data.data.lName,
+        'imageUrl' : data.data.imageUrl,
         'token' : data.data.auth.token,
         'expDate' : data.data.auth.expires,
       };

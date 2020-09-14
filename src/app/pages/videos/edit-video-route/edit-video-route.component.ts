@@ -63,6 +63,29 @@ export class EditVideoRouteComponent implements OnInit {
     });
   }
 
+  thumbUrl;
+  progressThumb;
+  uploadThumb(event){
+    const data = event.target.files[0];
+    this.courses.upload(data).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress){
+        console.log(event);
+        this.progressThumb = (event.loaded / event.total) * 100;
+      }else if (event.type === HttpEventType.Response){
+        console.log(event);
+        const data: any = event;
+        this.thumbUrl = data.body.data[0];
+        this.disableBtn = false;
+      }
+    },
+    err => {
+      console.log(err);
+    });
+  }
+    
+
+  
+
 
   save(){
     console.log(this.mediaUrl);
@@ -71,6 +94,7 @@ export class EditVideoRouteComponent implements OnInit {
       description : this.video_description,
       videoUrl : this.mediaUrl,
       _id : this.Data._id,
+      thumb : this.thumbUrl,
     };
     this.video.saveVideo(obj).subscribe(res => {
       console.log(res);

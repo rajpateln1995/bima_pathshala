@@ -4,8 +4,9 @@
             <label class="col-md-4 col-form-label text-center">Course Name<span style="color: red;">
                     *</span></label>
             <div class="col-md-8">
-                <input type="text" [disabled]="disable" name="courseName" required #courseName="ngModel" [(ngModel)]="details.name"
-                    class="form-control" placeholder="Enter Course Name [In {{details.language}}]">
+                <input type="text" [disabled]="disable" name="courseName" required #courseName="ngModel"
+                    [(ngModel)]="details.name" class="form-control"
+                    placeholder="Enter Course Name [In {{details.language}}]">
                 <p *ngIf="courseName.invalid && courseName.touched" class="text-center mb-3 mt-1" style="color: red;">
                     This Field is Mandatory !</p>
             </div>
@@ -14,8 +15,8 @@
             <label class="col-md-4 col-form-label text-center">Course Description<span style="color: red;">
                     *</span></label>
             <div class="col-md-8">
-                <textarea [disabled]="disable" name="courseDescription" required rows="5" class="form-control" #courseDescription="ngModel"
-                    [(ngModel)]="details.description"
+                <textarea [disabled]="disable" name="courseDescription" required rows="5" class="form-control"
+                    #courseDescription="ngModel" [(ngModel)]="details.description"
                     placeholder="Enter Course Description [In {{details.language}}]"></textarea>
                 <p *ngIf="courseDescription.invalid && courseDescription.touched" class="text-center mb-3 mt-1"
                     style="color: red;">This Field is Mandatory !</p>
@@ -25,9 +26,12 @@
             <label class="col-md-4 col-form-label text-center">Cover Image <span style="color: red;">
                     *</span></label>
             <div class="col-md-8 pt-2">
-                <input [disabled]="disable" type="file" accept="image/*" class="d-block form-control-file" name="courseImage" #courseImage="ngModel"
-                    ngModel [required]="!(details.coverImage && details.coverImage.length > 0 && details.coverImage !== 'NA')" (change)="uploadImage($event)">
-                <a target="_blank" *ngIf="details.coverImage.length > 0 && details.coverImage !== 'NA'" href="{{details.coverImage}}">preview</a>
+                <input [disabled]="disable" type="file" accept="image/*" class="d-block form-control-file"
+                    name="courseImage" #courseImage="ngModel" ngModel
+                    [required]="!(details.coverImage && details.coverImage.length > 0 && details.coverImage !== 'NA')"
+                    (change)="uploadImage($event)">
+                <a target="_blank" *ngIf="details.coverImage.length > 0 && details.coverImage !== 'NA'"
+                    href="{{details.coverImage}}">preview</a>
                 <div *ngIf="progressImg > 0" class="progress mt-4">
                     <div class="progress-bar bg-success" role="progressbar" style="width: {{progressImg}}%"
                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
@@ -35,15 +39,18 @@
             </div>
 
         </div>
-        <p *ngIf="secDisable && courseImage.invalid && courseImage.touched" class="text-center mb-3 mt-1" style="color: red;">This
+        <p *ngIf="courseImage.invalid && courseImage.touched" class="text-center mb-3 mt-1" style="color: red;">This
             Field is Mandatory !</p>
         <div class="form-group row">
             <label class="col-md-4 col-form-label text-center">Cover Video <span style="color: red;">
                     *</span></label>
             <div class="col-md-8 pt-2">
-                <input [disabled]="disable" type="file" accept="video/*" class="d-block form-control-file" name="courseVideo" #courseVideo="ngModel"
-                    ngModel [required]="!(details.coverVideo && details.coverVideo.length > 0 && details.couverVideo !== 'NA')" (change)="uploadVideo($event)">
-                <a target="_blank" *ngIf="details.coverVideo.length > 0 && details.coverVideo !== 'NA'" href="{{details.coverVideo}}">preview</a>
+                <input [disabled]="disable" type="file" accept="video/*" class="d-block form-control-file"
+                    name="courseVideo" #courseVideo="ngModel" ngModel
+                    [required]="!(details.coverVideo && details.coverVideo.length > 0 && details.couverVideo !== 'NA')"
+                    (change)="uploadVideo($event)">
+                <a target="_blank" *ngIf="details.coverVideo.length > 0 && details.coverVideo !== 'NA'"
+                    href="{{details.coverVideo}}">preview</a>
                 <div *ngIf="progressVideo > 0" class="progress mt-4">
                     <div class="progress-bar bg-success" role="progressbar" style="width: {{progressVideo}}%"
                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
@@ -54,7 +61,8 @@
             Field is Mandatory !</p>
         <div class="text-right">
             <button nbButton status="primary" class="mr-2" (click)="disable = false">Edit</button>
-            <button nbButton status="success" [disabled]="f.invalid || disable" (click)="saveCourse()">Save Course Details</button>
+            <button nbButton status="success" [disabled]="f.invalid || disable" (click)="saveCourse()">Save Course
+                Details</button>
         </div>
     </form>
     <hr>
@@ -104,8 +112,8 @@
                         <label for="inputFirstName" class="label d-block">Enter Section Description <span
                                 style="color: red;">*</span></label>
                         <textarea nbInput name="sectionDescription" required #sectionDescription="ngModel"
-                            [(ngModel)]="SectionDescription" fullWidth
-                            placeholder="Enter Section Description" rows="5"></textarea>
+                            [(ngModel)]="SectionDescription" fullWidth placeholder="Enter Section Description"
+                            rows="5"></textarea>
                         <p *ngIf="sectionDescription.invalid && sectionDescription.touched"
                             class="text-center mb-3 mt-1" style="color: red;">This Field is Mandatory !</p>
                     </div>
@@ -120,5 +128,3 @@
         </div>
     </div>
 </div>
-
-

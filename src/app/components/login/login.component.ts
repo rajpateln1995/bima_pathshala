@@ -3,6 +3,7 @@ import { AuthService } from '../../services/auth.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NbSpinnerService } from '@nebular/theme';
+import { LoaderService } from '../../services/loader.service';
 
 @Component({
   selector: 'ngx-login',
@@ -13,7 +14,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(private auth: AuthService,
               private router: Router,
-              private spinner$: NbSpinnerService) { }
+              private spinner$: NbSpinnerService,
+              private loader : LoaderService) { }
 
 
 
@@ -22,6 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   btn_valid: boolean = false;
   login_form: FormGroup;
+  showMsg;
 
   ngOnInit(): void {
     this.spinner$.load();
@@ -45,12 +48,19 @@ export class LoginComponent implements OnInit, OnDestroy {
       const r = res;
       if (r['success'] === 1) {
         this.router.navigateByUrl('/pages/users/sanchalak');
+      }else{
+        this.loader.hide();
+        this.showMsg = true
       }
       
     },
     err => {
       console.log(err);
     });
+  }
+
+  signup(){
+    this.router.navigateByUrl('/auth/signup');
   }
 
 }

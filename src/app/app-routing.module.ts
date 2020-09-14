@@ -11,6 +11,7 @@ import {
 } from '@nebular/auth';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './services/auth.guard';
+import { SignupComponent } from './components/signup/signup.component';
 
 export const routes: Routes = [
   {
@@ -37,8 +38,8 @@ export const routes: Routes = [
         component: LoginComponent,
       },
       {
-        path: 'register',
-        component: NbRegisterComponent,
+        path: 'signup',
+        component: SignupComponent,
       },
       {
         path: 'logout',

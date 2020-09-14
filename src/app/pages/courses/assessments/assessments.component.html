@@ -21,7 +21,7 @@
             <input style="width: 55%" [disabled]="disable" [(ngModel)]="data.certificateThreshold" type="number"
                 placeholder="Enter Score In Percentage" class="form-control form-control-sm">
         </div>
-        <div class="mt-5" *ngFor="let question of data.questions ; let i = index ; trackBy:trackByFn">
+        <div class="mt-5" *ngFor="let question of data.questions ; let i = index ; trackBy:trackbyq">
             <div class="form-group">
                 <label for="exampleFormControlTextarea1"><b>Question {{i + 1}}:</b></label>
                 <div style="float: right;">

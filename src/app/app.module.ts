@@ -30,12 +30,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { LoaderInterceptorService } from './services/loader-interceptor.service';
+import { SignupComponent } from './components/signup/signup.component';
 
 
 
 
 @NgModule({
-  declarations: [AppComponent , LoginComponent, LoaderComponent],
+  declarations: [AppComponent , LoginComponent, LoaderComponent, SignupComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

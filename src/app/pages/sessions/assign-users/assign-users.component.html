@@ -1,0 +1,67 @@
+<hr>
+<p class="text-center" style="font-size: larger;"><b>Assign Guru / Shishya</b></p>
+<hr>
+
+<div class="input-group">
+    <input type="text" id="input1-group2" [(ngModel)]="searchField" name="input1-group2" class="form-control"
+        placeholder="Search By Name or Phone No.">
+    <span class="input-group-prepend" (click)="getUsers()">
+        <button type="button" class="btn btn-primary" ><i class="fa fa-search"></i> Search</button>
+    </span>
+</div>
+
+
+
+
+
+<button  id="select-user" data-toggle="modal" data-target="#userModal"></button>
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Select User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div *ngIf="guru || shishya"  class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>
+                            <p class="text-center" style="font-size: larger;"><b>Guru</b></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <p class="text-center" style="font-size: larger;"><b>Shishya</b></p>
+                        </div>
+                    </div>
+
+                    <ng-container *ngIf="guru">
+                        <div class="col-md-6 locModal" *ngFor="let g of guru">
+                            <div data-dismiss="modal">
+                                <span><img style="border-radius: 50%;" width="40px" height="40px" src="{{g.imageUrl}}"></span>
+                                <p>{{g.fName + ' ' + g.lName}}</p>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="shishya">
+                        <div class="col-md-6 locModal" *ngFor="let s of shishya">
+                            <div data-dismiss="modal">
+                                <span><img style="border-radius: 50%;" width="40px" height="40px" src="{{s.imageUrl}}"></span>
+                                <p>{{s.fName + ' ' + s.lName}}</p>
+                            </div>
+                        </div>
+                    </ng-container>
+                    
+                </div>
+                <div class="locModal" *ngFor="let user of users">
+                    <div data-dismiss="modal">
+                        <!-- <p (click)="selectLocality(loc)">{{loc.name}}</p> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
