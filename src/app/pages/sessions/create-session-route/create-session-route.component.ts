@@ -27,8 +27,6 @@ export class CreateSessionRouteComponent implements OnInit {
   curriculum = [];
 
   ngOnInit(): void {
-
-    console.log(this.route.snapshot.params['id']);
     this.getDetails();
   }
 
@@ -39,7 +37,6 @@ export class CreateSessionRouteComponent implements OnInit {
       this.details = res;
       this.details = this.details.data;
       this.curriculum = this.details.curriculum;
-
     },
     err => {
       console.log(err);

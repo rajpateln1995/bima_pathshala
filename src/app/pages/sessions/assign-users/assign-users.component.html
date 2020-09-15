@@ -20,7 +20,7 @@
         <div style="width: 130%;" class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Select User</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button id='close-user' type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -39,10 +39,10 @@
 
                     <ng-container *ngIf="guru">
                         <div class="col-6">
-                            <div class="locModal" *ngFor="let g of guru">
-                                <div data-dismiss="modal">
+                            <div class="locModal" (click)="assignGuru(g)" *ngFor="let g of guru">
+                                <div>
                                     <img style="border-radius: 50%;" width="40px" height="40px" src="{{g.imageUrl}}">
-                                    <p class="text-center" (click)="assignGuru(g)">{{g.fName + ' ' + g.lName}}</p>
+                                    <p class="text-center">{{g.fName + ' ' + g.lName}}</p>
                                 </div>
                             </div>
                         </div>
@@ -50,10 +50,10 @@
                     </ng-container>
                     <ng-container *ngIf="shishya">
                         <div class="col-6">
-                            <div class="locModal" *ngFor="let s of shishya">
-                                <div data-dismiss="modal">
+                            <div class="locModal" (click)="assignShishya(s)" *ngFor="let s of shishya">
+                                <div>
                                     <img style="border-radius: 50%;" width="40px" height="40px" src="{{s.imageUrl}}">
-                                    <p class="text-center" (click)="assignShishya(s)">{{s.fName + ' ' + s.lName}}</p>
+                                    <p class="text-center">{{s.fName + ' ' + s.lName}}</p>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                     <img class="ml-1" style="border-radius: 50%;" width="40px" height="40px" src="{{guru.img}}">
                     <p class="text-center">{{guru.name}}</p>
                     <button class="mr-2" nbButton status="danger" size="tiny"
-                       (click)="removeGuru()" style="float: right; margin-top: 13px;">Remove</button>
+                       (click)="removeGuru(g)" style="float: right; margin-top: 13px;">Remove</button>
                 </div>
             </div>
             <div class="col-6">
@@ -90,10 +90,12 @@
                     <img class="ml-1" style="border-radius: 50%;" width="40px" height="40px" src="{{shishya.img}}">
                     <p class="text-center">{{shishya.name}}</p>
                     <button class="mr-2" nbButton status="danger" size="tiny"
-                       (click)="removeShishya()" style="float: right; margin-top: 13px;">Remove</button>
+                       (click)="removeShishya(s)" style="float: right; margin-top: 13px;">Remove</button>
                 </div>
             </div>
         </div>
+        <button class="mr-2" nbButton status="success" size="large"
+                       (click)="addUsers()" >add</button>
     </div>
 
 </div>

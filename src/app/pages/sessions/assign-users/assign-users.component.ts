@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 
@@ -11,7 +11,9 @@ export class AssignUsersComponent implements OnInit {
 
   constructor(private user : UserService,
               private route : ActivatedRoute) { }
-
+  
+  @Input() attendees;
+  @Input() gurus;
   searchField = "";
   guru;
   shishya;
@@ -20,6 +22,28 @@ export class AssignUsersComponent implements OnInit {
   shishyaArray = [];
 
   ngOnInit(): void {
+
+    console.log(this.gurus);
+    console.log(this.attendees);
+    for (const g of this.gurus){
+          const obj = {
+            img : g.imageUrl,
+            id : g._id,
+            name : g.fName + ' ' + g.lName,
+          };
+          this.guruArray.push(obj);
+    }
+
+    for (const s of this.attendees){
+      const obj = {
+        img : s.imageUrl,
+        id : s._id,
+        name : s.fName + ' ' + s.lName,
+      };
+      this.shishyaArray.push(obj);
+    }
+
+
   }
 
 
@@ -31,8 +55,7 @@ export class AssignUsersComponent implements OnInit {
         const temp: any = res;
         this.guru = temp.data.guru;
         this.shishya = temp.data.shishya;
-        console.log(this.guru);
-        console.log(this.shishya);
+        
         
       },
       err => {
@@ -44,8 +67,7 @@ export class AssignUsersComponent implements OnInit {
           const temp: any = res;
           this.guru = temp.data.guru;
           this.shishya = temp.data.shishya;
-          console.log(this.guru);
-          console.log(this.shishya);
+          
           
         },
         err => {
@@ -64,17 +86,16 @@ export class AssignUsersComponent implements OnInit {
     };
 
     this.guruArray.push(obj);
+    console.log(this.guruArray);
+
+    document.getElementById('close-user').click();
 
 
-    // this.user.mapGuruShishya(obj).subscribe(res => {
-    //   console.log(res);
-    // },
-    // err => {
-    //   console.log(err);
-    // });
+
   }
 
   assignShishya(s : any){
+
 
     const obj = {
       img : s.imageUrl,
@@ -83,10 +104,53 @@ export class AssignUsersComponent implements OnInit {
     };
 
     this.shishyaArray.push(obj);
+    console.log(this.shishyaArray);
+
+    document.getElementById('close-user').click();
+
+  }
+
+  removeShishya(i){
+    this.shishyaArray.splice(i, 1);
+  }
+
+  removeGuru(i){
+    this.guruArray.splice(i, 1);
+  }
+
+  addUsers(){
+    let g = "";
+    let s = "";
+    for (const guru of this.guruArray){
+      g = g + guru.id + ',';
+    }
+  
+    g = g.slice(0, (g.length - 1) );
+    
+
+    for (const shishya of this.shishyaArray){
+      s = s + shishya.id + ',';
+    }
+    s = s.slice(0, (s.length - 1) );
+
+    const obj = {
+      guru : g,
+      shishya : s,
+      session : this.route.snapshot.params['id'],
+      add : true,
+    }
+    console.log(obj)
+      this.user.mapGuruShishya(obj).subscribe(res => {
+        console.log(res);
+      },
+      err => {
+        console.log(err);
+      });
 
   }
 
 
 
-
 }
+
+

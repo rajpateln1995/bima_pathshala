@@ -26,7 +26,7 @@ export class UserDetailsComponent implements OnInit {
   details: any = null;
   certificates: any;
   courses: any;
-  sessions: any;
+  sessions: [];
   editable: boolean = false;
   role: string;
   loading: boolean = false;
@@ -35,6 +35,7 @@ export class UserDetailsComponent implements OnInit {
   myShishya;
   gurusArray = [];
   shishyasArray = [];
+  
 
   ngOnInit() {
     this.loading = true;
@@ -67,7 +68,7 @@ export class UserDetailsComponent implements OnInit {
       const data: any = res;
       this.certificates = data.data.certificates;
       this.courses = data.data.courses;
-      this.sessions = data.data.certificates;
+      this.sessions = data.data.session;
 
     },
     err => {
@@ -176,6 +177,10 @@ export class UserDetailsComponent implements OnInit {
       this.loading = false;
     });
 
+  }
+
+  viewSession(id){
+    this.router.navigateByUrl( `pages/sessions/create/id/${id}`);
   }
 
 
