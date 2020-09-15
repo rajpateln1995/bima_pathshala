@@ -33,7 +33,7 @@ export class AllExpenseComponent implements OnInit {
     this.expenses.getAllExpense().subscribe((res: any) => {
       console.log(res);
       this.Data = res.data;
-      this.total = this.Data.total;
+      this.total = this.Data.length;
     },
     err =>{
       console.log(err);

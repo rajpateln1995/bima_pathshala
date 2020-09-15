@@ -1,13 +1,17 @@
 <div class="card">
     <div class="card-header">
         <b>Edit Video</b>
-        <div style="float: right;">
-            <button size="small" type="button" (click)="deleteVideo()" nbButton status="danger">Delete Video</button>
-        </div>
     </div>
     <div class="card-body">
-        <nb-route-tabset *ngIf="tabs" fullWidth [tabs]="tabs"></nb-route-tabset>
-  
+        
+        <button class="mr-2" size="small" (click)="changeStatus('2', 'success')" type="button" nbButton status="success">Live</button>
+        <button class="mr-2" size="small" (click)="changeStatus('3' , 'warning')" type="button" nbButton status="warning">Disable</button>
+        <button size="small" (click)="changeStatus('4' , 'danger')" type="button" nbButton status="danger">Delete</button>
+        <hr>
+        <p class="text-center">Current Status: {{status[s]}}</p>
+        <hr>
 
+        <nb-route-tabset *ngIf="tabs" fullWidth [tabs]="tabs"></nb-route-tabset>
+       
     </div>
 </div>

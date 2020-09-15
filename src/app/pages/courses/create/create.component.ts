@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../../../services/course.service';
 import { ActivatedRoute } from '@angular/router';
+import { NbComponentStatus, NbToastrService } from '@nebular/theme';
 
 
 @Component({
@@ -11,11 +12,13 @@ import { ActivatedRoute } from '@angular/router';
 export class CreateComponent implements OnInit {
 
   constructor(private course: CourseService,
-             ) { }
+             private route: ActivatedRoute,
+             private toaster : NbToastrService) { }
 
   languages: any;
   id: any;
   x = 'asd';
+  s;
 
   tempLang = {
     'HI' : 'HINDI',
@@ -23,6 +26,7 @@ export class CreateComponent implements OnInit {
     'MH' : 'MARATHI',
   };
   ngOnInit(): void {
+    this.s = window.location.href.slice(-1);
 
     this.id = JSON.parse(localStorage.getItem('course-list'));
     const tabs = [];
@@ -46,8 +50,9 @@ export class CreateComponent implements OnInit {
 
 
   }
-  changeStatus(status) {
-
+  changeStatus(status, type: NbComponentStatus) {
+    this.s = status;
+    this.toaster.show(`Course Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
     for (const data of this.id.data){
       const obj = {
         _id : data.id,
@@ -110,7 +115,15 @@ check(){
         }
       }
     }
-}
+  }
+
+  status = [
+    'Not Verified',
+    'Verified',
+    'Live',
+    'Disabled',
+    'Deleted',
+  ]
 
 
 

@@ -2,6 +2,7 @@ import { Component, OnInit, ɵConsole } from '@angular/core';
 import { CourseService } from '../../../services/course.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpEventType } from '@angular/common/http';
+import { NbToastrService } from '@nebular/theme';
 // import { CreateCourseSectionRouteComponent } from '../create-course-section-route/create-course-section-route.component';
 
 @Component({
@@ -13,7 +14,8 @@ export class CreateCourseRouteComponent implements OnInit {
 
   constructor(private courses: CourseService,
               private route: ActivatedRoute,
-              private router: Router)
+              private router: Router,
+              private toaster: NbToastrService)
 {
   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 }
@@ -43,6 +45,7 @@ export class CreateCourseRouteComponent implements OnInit {
   }
 
   createSection(form){
+    this.toaster.show('Section Created Successfully !', 'Section Created' , { status : 'success' });
     console.log(this.route.snapshot.params['id']);
     const obj = {
       'name' : this.SectionName,
@@ -52,7 +55,7 @@ export class CreateCourseRouteComponent implements OnInit {
     console.log(obj);
     this.courses.createSection(obj).subscribe(res => {
       console.log(res);
-
+      this.toaster.show('Section Created Successfully !', 'Section Created' , { status : 'success' });
       document.getElementById('close-section').click();
       form.resetForm();
       this.getCourse();
@@ -75,10 +78,14 @@ export class CreateCourseRouteComponent implements OnInit {
         console.log(event);
         const data: any = event;
         this.coverimage = data.body.data[0];
+        this.toaster.show('Image Uploaded Successfully !', 'Image Uploaded' , { status : 'success' });
       }
     },
     err => {
       console.log(err);
+      this.progressImg = 0;
+      this.toaster.show('Something Went Wrong !', 'Upload Failed' , { status : 'warning' });
+
     });
   }
   covervideo;
@@ -98,10 +105,13 @@ export class CreateCourseRouteComponent implements OnInit {
       },
       err => {
         console.log(err);
+        this.progressVideo = 0;
+        this.toaster.show('Something Went Wrong !', 'Upload Failed' , { status : 'warning' });
       });
   }
 
   saveCourse(){
+    
     const obj = {
       name : this.details.name,
       description : this.details.description,
@@ -112,6 +122,7 @@ export class CreateCourseRouteComponent implements OnInit {
     this.courses.putCourse(obj).subscribe(res => {
       console.log(res);
       this.getCourse();
+      this.toaster.show('Details Saved Successfully !', 'Saved Successfully' , { status : 'success' });
     },
     err => {
       console.log(err);

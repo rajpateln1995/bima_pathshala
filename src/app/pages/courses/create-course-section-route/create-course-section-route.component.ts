@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CourseService } from '../../../services/course.service';
 import { HttpEventType } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-create-course-section-route',
@@ -11,7 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 export class CreateCourseSectionRouteComponent implements OnInit {
 
   constructor(private courses: CourseService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private toaster : NbToastrService) { }
   @Input() section: any;
   @Input() language: any;
   @Output() courseEvent = new EventEmitter();
@@ -30,7 +32,6 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   ngOnInit(): void {
     this.section_name = this.section.name;
     this.section_description = this.section.description;
-    console.log(this.section.name);
     this.sub = this.section.data;
     console.log(this.sub);
     this.assessment = this.section.assessment;
@@ -50,7 +51,6 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   subSectionTitle;
   disableBtn: boolean = true;
   createSubSection(subSectionModal) {
-    console.log(this.section._id);
     this.sub.push({
       title: this.subSectionTitle,
       type : this.mediaType,
@@ -62,17 +62,19 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       data : this.sub,
     };
 
-    this.courses.createSubSection(obj).subscribe(res => {
+    this.courses.createSubSection(obj).subscribe((res : any) => {
       console.log(res);
-      this.courseEvent.next();
+      this.sub = res.data.data;
       const str = `close-sub-section${this.section_id}`;
       document.getElementById(str).click();
       subSectionModal.resetForm();
       this.progress = 0;
-      
+      this.toaster.show('Sub Section Created Successfully !', 'Sub Section Created' , { status : 'success' });
     },
     err => {
       console.log(err);
+      subSectionModal.resetForm();
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'warning' });
     });
 
   }
@@ -85,13 +87,13 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     const data = event.target.files[0];
     this.courses.upload(data).subscribe(event => {
       if (event.type === HttpEventType.UploadProgress){
-        console.log(event);
         this.progress = (event.loaded / event.total) * 100;
       }else if (event.type === HttpEventType.Response){
         console.log(event);
         const data: any = event;
         this.mediaUrl = data.body.data[0];
         this.disableBtn = false;
+        this.toaster.show(' Media Uploaded Successfull !', 'Uploaded Successfully' , { status : 'success' });
       }
     },
     err => {
@@ -123,6 +125,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     },
     err => {
       console.log(err);
+      this.toaster.show('Sub Section Deleted Successfully', 'Sub Section Deleted' , { status : 'danger' });
     });
   }
 
@@ -131,6 +134,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     this.courses.delSection(this.route.snapshot.params['id'], this.section._id).subscribe(res => {
       console.log(res);
       this.courseEvent.next();
+      this.toaster.show('Section Deleted Successfully !', 'Section Deleted' , { status : 'danger' });
     },
     err => {
       console.log(err);

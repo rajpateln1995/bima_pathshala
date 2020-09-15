@@ -60,7 +60,7 @@ export class AllCoursesComponent implements OnInit {
     });
   }
 
-  viewCourse(courseId) {
+  viewCourse(courseId, status) {
     console.log(courseId)
     let obj;
     this.courses.getCourseDetails(courseId).subscribe(res => {
@@ -74,7 +74,7 @@ export class AllCoursesComponent implements OnInit {
           lang : x.language});
       }
       localStorage.setItem('course-list', JSON.stringify({data : data}));
-      this.router.navigateByUrl('pages/courses/create/id/' + courseId);
+      this.router.navigateByUrl('pages/courses/create/id/' + courseId + '/' + status);
     },
     err => {
       console.log(err);
@@ -146,7 +146,7 @@ export class AllCoursesComponent implements OnInit {
       }
       localStorage.setItem('course-list', JSON.stringify({ 'data' : id }));
       document.getElementById('close-btn').click();
-      this.router.navigateByUrl(`pages/courses/create/id/${id[0].id}`);
+      this.router.navigateByUrl(`pages/courses/create/id/${id[0].id}/0`);
 
     },
     err => {

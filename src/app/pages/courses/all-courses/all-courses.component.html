@@ -27,7 +27,7 @@
                         <td></td>            
                         <td>{{d.duration}}</td>                
                         <td>{{d.rating}}</td>                
-                        <td (click)="viewCourse(d.id)" style="color:#28a745; cursor: pointer;"><i class="fa fa-eye" aria-hidden="true"></i></td>                
+                        <td (click)="viewCourse(d.id, d.status)" style="color:#28a745; cursor: pointer;"><i class="fa fa-eye" aria-hidden="true"></i></td>                
                       </tr>
                       <tr *ngIf="total === 0">
                         <td style="text-align: center;">No Data Available</td>                    

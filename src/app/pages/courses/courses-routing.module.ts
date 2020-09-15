@@ -30,7 +30,7 @@ const routes: Routes = [
         component: CreateComponent,
         children: [
           {
-            path: 'id/:id',
+            path: 'id/:id/:status',
             component: CreateCourseRouteComponent,
           },
         ],

@@ -69,14 +69,14 @@ export class AllVideosComponent implements OnInit {
 
   }
 
-  viewVideo(id){
+  viewVideo(id, status){
     console.log(id);
     this.video.getVideoDetails(id).subscribe(res => {
       console.log(res);
       const temp : any = res;
       const obj = temp.data.video.otherLanguages;
       localStorage.setItem('video-list',JSON.stringify({data : obj}));
-      this.router.navigateByUrl(`pages/videos/edit/id/${id}`);
+      this.router.navigateByUrl(`pages/videos/edit/id/${id}/${status}`);
     },
     err => {
       console.log(err);
@@ -131,9 +131,8 @@ export class AllVideosComponent implements OnInit {
       console.log(res);
       const temp : any = res;
       localStorage.setItem('video-list', JSON.stringify({data : temp.data[0].otherLanguages}));
-      this.router.navigateByUrl(`pages/videos/edit/id/${temp.data[0].otherLanguages[0].video}`)
+      this.router.navigateByUrl(`pages/videos/edit/id/${temp.data[0].otherLanguages[0].video}/0`)
       document.getElementById('close-btn').click();
-      this.getAllVideos();
     },
     err => {
       console.log(err);

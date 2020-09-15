@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { NbToastrService, NbComponentStatus } from '@nebular/theme';
+import { VideoService } from '../../../services/video.service';
 
 @Component({
   selector: 'ngx-edit-video',
@@ -7,13 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditVideoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route : ActivatedRoute,
+              private video : VideoService,
+              private toaster : NbToastrService) { }
 
   
 
   
   languages: any;
   id: any;
+  s;
   
   tempLang = {
     'HI' : 'HINDI',
@@ -22,6 +28,7 @@ export class EditVideoComponent implements OnInit {
   };
 
   ngOnInit(): void {
+    this.s = window.location.href.slice(-1);
 
     this.id = JSON.parse(localStorage.getItem('video-list'));
     const tabs = [];
@@ -38,9 +45,33 @@ export class EditVideoComponent implements OnInit {
 
   tabs: any[] ;
 
-  deleteVideo(){
-    
+  // changeStatus(status, type: NbComponentStatus) {
+  //   this.s = status;
+  //   this.toaster.show(`Course Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
+  //   for (const data of this.id.data){
+
+  changeStatus(status ,type : NbComponentStatus){
+    this.s = status;
+    this.toaster.show(`Video Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
+    const obj = {
+      _id : this.route.firstChild.snapshot.params['id'],
+      status : status,
+    }
+    this.video.saveVideo(obj).subscribe(res => {
+      console.log(res);
+    },err => {
+      console.log(err);
+    })
+
   }
+
+  status = [
+    'Not Completed',
+    'Verified',
+    'Live',
+    'Disabled',
+    'Deleted',
+  ]
 
 
 }

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
 import { AllCoursesComponent } from './all-courses/all-courses.component';
-import { NbIconModule, NbButtonModule, NbInputModule, NbCardModule, NbCheckboxModule, NbTabsetModule, NbAccordionModule, NbRouteTabsetModule } from '@nebular/theme';
+import { NbIconModule, NbButtonModule, NbInputModule, NbCardModule, NbCheckboxModule, NbTabsetModule, NbAccordionModule, NbRouteTabsetModule, NbToastrModule } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { FormsModule } from '@angular/forms';
 import { EditCourseComponent } from './edit-course/edit-course.component';

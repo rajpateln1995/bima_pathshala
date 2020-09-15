@@ -25,7 +25,7 @@ const routes: Routes = [
         component: EditVideoComponent,
         children: [
           {
-            path: 'id/:id',
+            path: 'id/:id/:status',
             component: EditVideoRouteComponent,
           }
         ]
