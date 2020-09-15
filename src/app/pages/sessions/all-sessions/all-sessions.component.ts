@@ -25,6 +25,7 @@ export class AllSessionsComponent implements OnInit {
     'Duration',
     'Date',
     'Language',
+    'Status',
     'Cover Image',
     'Cover Video',
     'View / Edit',
@@ -35,6 +36,14 @@ export class AllSessionsComponent implements OnInit {
   protection;
   languages = [];
   sessionType;
+
+  status = [
+    'Not Completed',
+    'Verified',
+    'Live',
+    'Disabled',
+    'Deleted',
+  ]
 
   getSessions(){
     this.session.getAllSessions().subscribe(res => {

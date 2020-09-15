@@ -26,6 +26,12 @@ export class AllExpenseComponent implements OnInit {
     'Bill Image',
     'View / Edit',
   ];
+  status = [
+    '',
+    'Pending',
+    'Approaved',
+    'Sent Back',
+  ];
 
 
   getExpenses(){

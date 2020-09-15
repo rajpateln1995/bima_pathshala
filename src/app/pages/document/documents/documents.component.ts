@@ -21,9 +21,19 @@ export class DocumentsComponent implements OnInit {
     'Type',
     'Language',
     'Reading Time',
+    'Status',
     'Image',
     'View / Edit',
   ];
+
+  status = [
+    'Not Completed',
+    'Verified',
+    'Live',
+    'Disabled',
+    'Deleted',
+  ];
+  
 
   ngOnInit() {
     this.getDocuments();

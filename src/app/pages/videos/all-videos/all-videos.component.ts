@@ -21,6 +21,7 @@ export class AllVideosComponent implements OnInit {
     'Type',
     'Length',
     'Language',
+    'Status',
     'Preview',
     'Edit'
   ];
@@ -139,5 +140,13 @@ export class AllVideosComponent implements OnInit {
     });
 
   }
+
+  status = [
+    'Not Completed',
+    'Verified',
+    'Live',
+    'Disabled',
+    'Deleted',
+  ]
 
 }

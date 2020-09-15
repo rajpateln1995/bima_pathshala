@@ -23,6 +23,14 @@ export class AllCoursesComponent implements OnInit {
     'Rating',
     'View / Edit',
   ];
+
+  status = [
+    'Not Completed',
+    'Verified',
+    'Live',
+    'Disabled',
+    'Deleted',
+  ];
   total: number = 0;
   data: any ;
   courseType: string;
