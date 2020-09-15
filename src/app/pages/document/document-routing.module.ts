@@ -29,7 +29,7 @@ const routes: Routes = [
           component: EditDocumentComponent,
           children: [
             {
-              path: 'id/:id',
+              path: 'id/:id/:status',
               component: EditDocumentRouteComponent,
             }
           ]

@@ -113,7 +113,7 @@ export class DocumentsComponent implements OnInit {
         const temp: any = res;
         localStorage.setItem('doc-list', JSON.stringify({'data' : temp.data[0].otherLanguages}));
         console.log(temp.data[0].otherLanguages[0].document);
-        this.router.navigateByUrl(`pages/document/edit/id/${temp.data[0].otherLanguages[0].document}`);
+        this.router.navigateByUrl(`pages/document/edit/id/${temp.data[0].otherLanguages[0].document}/0`);
         document.getElementById('close-btn').click();
 
       },
@@ -125,13 +125,13 @@ export class DocumentsComponent implements OnInit {
 
   }
 
-  viewDocument(id){
+  viewDocument(id, status){
       this.document.getDocAndArticle('' , id).subscribe(res => {
         console.log(res);
         const temp: any = res;
         const obj = temp.data[0].otherLanguages;
         localStorage.setItem('doc-list' , JSON.stringify({ data : obj }));
-        this.router.navigateByUrl(`pages/document/edit/id/${id}`);
+        this.router.navigateByUrl(`pages/document/edit/id/${id}/${status}`);
       },
       err => {
         console.log(err);
