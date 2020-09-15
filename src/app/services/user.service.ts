@@ -79,4 +79,13 @@ export class UserService {
     return this.http.get(this.base_url + '/main/userDetails/', { headers: header  , params : q_params})
   }
 
+
+  mapGuruShishya(data){
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.auth.getToken());
+
+    return this.http.post(this.base_url + '/user/guruShishyaSessionManager', data , {headers  : header})
+
+  }
+
 }

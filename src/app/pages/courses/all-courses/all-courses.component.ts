@@ -34,7 +34,7 @@ export class AllCoursesComponent implements OnInit {
   curr_page:string = '1';
 
   ngOnInit(): void {
-    this.courses.getCourses('0', '1' , this.limit).subscribe(res => {
+    this.courses.getCourses('', '1' , this.limit, 'true').subscribe(res => {
       console.log(res);
       this.data = res;
       this.total = this.data.total;

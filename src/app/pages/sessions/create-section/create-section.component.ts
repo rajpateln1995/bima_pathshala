@@ -1,5 +1,6 @@
 import { HttpEventType } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { CourseService } from '../../../services/course.service';
 
 @Component({
@@ -17,13 +18,18 @@ export class CreateSectionComponent implements OnInit {
 
   subSecId;
   subSecTarget;
+  deleteId;
+  deleteTarget;
 
-  constructor(private courses : CourseService) { }
+  constructor(private courses : CourseService,
+              private route : ActivatedRoute) { }
 
   ngOnInit(): void {
     console.log(this.curriculum);
     this.subSecId = `subSec${this.curriculum._id}`;
     this.subSecTarget = `#subSec${this.curriculum._id}`;
+    this.deleteId =  `deleteConfirmModal${this.curriculum._id}`;
+    this.deleteTarget = `#deleteConfirmModal${this.curriculum._id}`;
   }
 
 
@@ -100,6 +106,19 @@ export class CreateSectionComponent implements OnInit {
     });
   }
 
-  
+
+  deleteSection(){
+    document.getElementById('close-delete').click();
+    console.log(this.route.snapshot.params['id'])
+    this.courses.delSection(this.route.snapshot.params['id'], this.curriculum._id).subscribe(res => {
+      console.log(res);
+      
+    },
+    err => {
+      console.log(err);
+    });
+  }
+
+
 
 }

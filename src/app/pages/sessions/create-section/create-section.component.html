@@ -1,7 +1,10 @@
 <ng-container *ngIf="curriculum">
     <div class="text-right mb-3">
-        <button class="mr-2" nbButton size="medium" status="primary" (click)="section_disable = false">Edit</button>
-        <button nbButton size="medium" status="success" (click)="saveSection()">save</button>
+        <button class="mr-2" nbButton size="small" status="primary" (click)="section_disable = false">Edit</button>
+        <button class="mr-2" data-toggle="modal" attr.data-target="{{deleteTarget}}" size="small" type="button" nbButton
+            status="danger"><i class="fa fa-trash mr-1" aria-hidden="true"></i>Delete Section</button>
+        <button nbButton size="small" status="success" (click)="saveSection()">save</button>
+
     </div>
     <div class="form-group row">
         <label class="col-md-4 col-form-label text-center">Section Name<span style="color: red;">
@@ -97,6 +100,25 @@
                         status="basic">Close</button>
                     <button [disabled]="subSecModal.invalid || disableBtn" (click)="createSubSection(subSecModal)"
                         nbButton status="success">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<button style="display: none;" data-toggle="modal" data-target="#deleteConfirmModal" id="delete-modal"></button>
+<div class="modal" tabindex="-1" id="{{deleteId}}">
+    <div style="margin-top: 20%;" class="modal-dialog">
+        <div class="modal-content">
+            <form #sectionModal="ngForm">
+                <div class="modal-body text-center">
+                    <h5 style="color:red">Are you sure you want to delete ?</h5>
+                </div>
+                <div class="modal-footer">
+                    <button id="close-delete" data-dismiss="modal" nbButton status="basic">NO</button>
+                    <button (click)="deleteSection()" nbButton status="danger">YES</button>
                 </div>
             </form>
         </div>

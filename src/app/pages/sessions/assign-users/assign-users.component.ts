@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -8,12 +9,15 @@ import { UserService } from '../../../services/user.service';
 })
 export class AssignUsersComponent implements OnInit {
 
-  constructor(private user : UserService) { }
+  constructor(private user : UserService,
+              private route : ActivatedRoute) { }
 
   searchField = "";
   guru;
   shishya;
-  users
+  users;
+  guruArray = [];
+  shishyaArray = [];
 
   ngOnInit(): void {
   }
@@ -49,5 +53,40 @@ export class AssignUsersComponent implements OnInit {
         });
     }
   }
+
+
+  assignGuru(g : any){
+    
+    const obj = {
+      img : g.imageUrl,
+      id : g._id,
+      name : g.fName + ' ' + g.lName,
+    };
+
+    this.guruArray.push(obj);
+
+
+    // this.user.mapGuruShishya(obj).subscribe(res => {
+    //   console.log(res);
+    // },
+    // err => {
+    //   console.log(err);
+    // });
+  }
+
+  assignShishya(s : any){
+
+    const obj = {
+      img : s.imageUrl,
+      id : s._id,
+      name : s.fName + ' ' + s.lName,
+    };
+
+    this.shishyaArray.push(obj);
+
+  }
+
+
+
 
 }

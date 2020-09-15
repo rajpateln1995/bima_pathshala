@@ -14,7 +14,7 @@ export class CourseService {
   base_url = 'https://bimapath.herokuapp.com/api';
 
   id: any;
-  getCourses(status = '' , page = '' , limit = '') {
+  getCourses(status = '' , page = '' , limit = '', all='false' ) {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
 
@@ -22,6 +22,7 @@ export class CourseService {
     q_params = q_params.append('status', status);
     q_params = q_params.append('page', page);
     q_params = q_params.append('limit', limit);
+    q_params = q_params.append('all', all);
 
     return this.http.get(this.base_url + '/course/all', { headers: header , params : q_params});
   }
