@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { SessionsService } from '../../../services/sessions.service';
 
 @Component({
   selector: 'ngx-user-details',
@@ -16,7 +17,8 @@ export class UserDetailsComponent implements OnInit {
 
   constructor(private user: UserService,
               private route: ActivatedRoute,
-              private router: Router)
+              private router: Router,
+              private session : SessionsService)
     {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     }
@@ -179,12 +181,31 @@ export class UserDetailsComponent implements OnInit {
 
   }
 
-  viewSession(id){
-    this.router.navigateByUrl( `pages/sessions/create/id/${id}`);
-  }
-
+  viewSession(sesionId, status){
+    let obj;
+    this.session.getSessionDetails(sesionId).subscribe(res => {
+      console.log(res);
+      const temp: any = res;
+      obj = temp.data.otherLanguages;
+      const data = [];
+      for (const x of obj){
+        data.push({
+          id : x.session,
+          lang : x.language});
+      }
+      localStorage.setItem('session-list', JSON.stringify({data : data}));
+      this.router.navigateByUrl('pages/sessions/create/id/' + sesionId + '/' + status);
+    },
+    err => {
+      console.log(err);
+    });
 
 }
+
+}
+
+
+
 
 
 export class Address {

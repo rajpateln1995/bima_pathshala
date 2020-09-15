@@ -119,8 +119,8 @@
 </div>
 
 
-<button style="display: none;" data-toggle="modal" data-target="#editSubSectionModal" id="toogle-edit-modal" ></button>
-<div class="modal" tabindex="-1" id="editSubSectionModal">
+<button style="display: none;" data-toggle="modal" attr.data-target="{{editSubSecTarget}}" id="toogle-edit-modal" ></button>
+<div class="modal" tabindex="-1" id="{{editSubSecId}}">
     <div class="modal-dialog">
         <div class="modal-content">
             <form #editSubSectionModal="ngForm">
@@ -161,7 +161,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="close-edit-sub-section" data-dismiss="modal" nbButton status="basic">Close</button>
-                    <button [disabled]="editSubSectionModal.invalid || disableBtn"
+                    <button data-dismiss="modal" [disabled]="editSubSectionModal.invalid"
                         (click)="saveSubSectionChanges(editSubSectionModal)" nbButton status="success">Create</button>
                 </div>
             </form>

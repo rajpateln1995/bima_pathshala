@@ -37,7 +37,7 @@ export class CreateComponent implements OnInit {
   console.log(id);
   tabs.push({
   title : this.tempLang[id.lang],
-  route : [`id/${id.id}`],
+  route : [`id/${id.id}/${this.s}`],
   });
   }
   this.tabs = tabs;

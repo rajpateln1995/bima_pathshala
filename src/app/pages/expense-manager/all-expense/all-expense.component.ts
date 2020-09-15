@@ -29,7 +29,7 @@ export class AllExpenseComponent implements OnInit {
   status = [
     '',
     'Pending',
-    'Approaved',
+    'Approved',
     'Sent Back',
   ];
 

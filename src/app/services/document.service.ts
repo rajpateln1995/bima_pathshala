@@ -12,15 +12,18 @@ export class DocumentService {
 
   base_url = 'https://bimapath.herokuapp.com/api';
 
-  getDocAndArticle(type='' , _id = ''){
+  getDocAndArticle(type='' , _id = '' , page='1' , limit='50' , all='false'){
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
 
     let q_params = new HttpParams();
     q_params = q_params.append('type', type);
     q_params = q_params.append('_id', _id);
+    q_params = q_params.append('page', page);
+    q_params = q_params.append('limit', limit);
+    q_params = q_params.append('all', all);
 
-    return this.http.get(this.base_url + '/document' , { headers : header , params: q_params });
+    return this.http.get(this.base_url + '/document/all' , { headers : header , params: q_params });
   }
 
 

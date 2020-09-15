@@ -61,7 +61,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       _id : this.section._id,
       data : this.sub,
     };
-
+    this.disableBtn = true;
     this.courses.createSubSection(obj).subscribe((res : any) => {
       console.log(res);
       this.sub = res.data.data;

@@ -37,7 +37,7 @@ export class EditVideoComponent implements OnInit {
       console.log(id);
       tabs.push({
         title : this.tempLang[id.language],
-        route : [`id/${id.video}`],
+        route : [`id/${id.video}/${this.s}`],
       });
     }
     this.tabs = tabs;

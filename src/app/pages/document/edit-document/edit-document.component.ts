@@ -37,7 +37,7 @@ export class EditDocumentComponent implements OnInit {
     console.log(id);
     tabs.push({
     title : this.tempLang[id.language],
-    route : [`id/${id.document}`],
+    route : [`id/${id.document}/${this.s}`],
     });
     }
     this.tabs = tabs;

@@ -64,7 +64,7 @@ export class DocumentsComponent implements OnInit {
   }
 
   getDocuments(){
-    this.document.getDocAndArticle().subscribe(res => {
+    this.document.getDocAndArticle('', '', '1' , '10000' , 'true').subscribe(res => {
       console.log(res);
       const temp: any = res;
       this.Data = temp.data;
