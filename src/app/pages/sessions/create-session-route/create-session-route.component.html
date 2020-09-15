@@ -267,7 +267,7 @@
                 {{c.name}}
             </nb-accordion-item-header>
             <nb-accordion-item-body>
-                <ngx-create-section [curriculum]="c">
+                <ngx-create-section [curriculum]="c" (courseEvent)="getDetails()">
 
                 </ngx-create-section>
             </nb-accordion-item-body>

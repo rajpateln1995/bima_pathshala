@@ -129,13 +129,14 @@ export class CourseService {
     return this.http.delete(this.base_url + '/course/sections/removeSubSection', { headers: header, params: q_params });
   }
 
-  delSection(course , sec) {
+  delSection(course , sec , session='') {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
 
     let q_params = new HttpParams();
     q_params = q_params.append('c', course);
     q_params = q_params.append('s', sec);
+    q_params = q_params.append('session', session);
 
     return this.http.delete(this.base_url + '/course/sections', { headers: header, params: q_params });
   }

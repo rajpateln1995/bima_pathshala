@@ -1,5 +1,5 @@
 import { HttpEventType } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CourseService } from '../../../services/course.service';
 
@@ -11,6 +11,7 @@ import { CourseService } from '../../../services/course.service';
 export class CreateSectionComponent implements OnInit {
 
   @Input() curriculum ;
+  @Output() courseEvent = new EventEmitter();
   
   section_disable = true;
   subSectionTitle;
@@ -100,6 +101,7 @@ export class CreateSectionComponent implements OnInit {
       console.log(res);
       const temp: any = res;
       this.curriculum.data = temp.data.data;
+      
     },
     err => {
       console.log(err);
@@ -110,9 +112,9 @@ export class CreateSectionComponent implements OnInit {
   deleteSection(){
     document.getElementById('close-delete').click();
     console.log(this.route.snapshot.params['id'])
-    this.courses.delSection(this.route.snapshot.params['id'], this.curriculum._id).subscribe(res => {
+    this.courses.delSection('', this.curriculum._id, this.route.snapshot.params['id']).subscribe(res => {
       console.log(res);
-      
+      this.courseEvent.next();
     },
     err => {
       console.log(err);

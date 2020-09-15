@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { SessionsService } from '../../../services/sessions.service';
 import { UserService } from '../../../services/user.service';
 
 @Component({
@@ -10,7 +11,8 @@ import { UserService } from '../../../services/user.service';
 export class AssignUsersComponent implements OnInit {
 
   constructor(private user : UserService,
-              private route : ActivatedRoute) { }
+              private route : ActivatedRoute,
+              private session : SessionsService) { }
   
   @Input() attendees;
   @Input() gurus;
@@ -55,8 +57,7 @@ export class AssignUsersComponent implements OnInit {
         const temp: any = res;
         this.guru = temp.data.guru;
         this.shishya = temp.data.shishya;
-        
-        
+
       },
       err => {
         console.log(err);
@@ -90,8 +91,6 @@ export class AssignUsersComponent implements OnInit {
 
     document.getElementById('close-user').click();
 
-
-
   }
 
   assignShishya(s : any){
@@ -112,41 +111,93 @@ export class AssignUsersComponent implements OnInit {
 
   removeShishya(i){
     this.shishyaArray.splice(i, 1);
+    let idArr = [];
+    for (const shishya of this.shishyaArray){
+      idArr.push(shishya.id);
+    }
+    const obj = {
+      _id : this.route.snapshot.params['id'],
+      attendees : idArr,
+    };
+    console.log(obj);
+    this.session.saveSession(obj).subscribe(res => {
+      console.log(res);
+    },
+    err => {
+      console.log(err);
+    });
   }
 
   removeGuru(i){
     this.guruArray.splice(i, 1);
+    let idArr = [];
+    for (const guru of this.guruArray){
+      idArr.push(guru.id);
+    }
+    const obj = {
+      _id : this.route.snapshot.params['id'],
+      guru : idArr,
+    };
+    console.log(obj);
+    this.session.saveSession(obj).subscribe(res => {
+      console.log(res);
+    },
+    err => {
+      console.log(err);
+    });
+    
   }
 
   addUsers(){
-    let g = "";
-    let s = "";
-    for (const guru of this.guruArray){
-      g = g + guru.id + ',';
-    }
-  
-    g = g.slice(0, (g.length - 1) );
-    
+    if(this.guruArray.length === 1 && this.shishyaArray.length === 0){
+      this.addsingle();
+    }else{
 
-    for (const shishya of this.shishyaArray){
-      s = s + shishya.id + ',';
-    }
-    s = s.slice(0, (s.length - 1) );
+      let g = "";
+      let s = "";
+      for (const guru of this.guruArray){
+        g = g + guru.id + ',';
+      }
 
+      g = g.slice(0, (g.length - 1) );
+
+      for (const shishya of this.shishyaArray){
+        s = s + shishya.id + ',';
+      }
+      s = s.slice(0, (s.length - 1) );
+
+      const obj = {
+        guru : g,
+        shishya : s,
+        session : this.route.snapshot.params['id'],
+        add : true,
+      }
+      console.log(obj)
+        this.user.mapGuruShishya(obj).subscribe(res => {
+          console.log(res);
+        },
+        err => {
+          console.log(err);
+        });
+
+    }
+
+  }
+
+  addsingle(){
+    let idArr = [];
+    idArr.push(this.guruArray[0].id);
     const obj = {
-      guru : g,
-      shishya : s,
-      session : this.route.snapshot.params['id'],
-      add : true,
-    }
-    console.log(obj)
-      this.user.mapGuruShishya(obj).subscribe(res => {
-        console.log(res);
-      },
-      err => {
-        console.log(err);
-      });
-
+      _id : this.route.snapshot.params['id'],
+      guru : idArr,
+    };
+    console.log(obj);
+    this.session.saveSession(obj).subscribe(res => {
+      console.log(res);
+    },
+    err => {
+      console.log(err);
+    });
   }
 
 
