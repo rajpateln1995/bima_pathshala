@@ -21,7 +21,7 @@ export class AssignUsersComponent implements OnInit {
 
   getUsers() {
     const match = this.searchField.match(/^\d+$/)
-    if(match[0] === this.searchField){
+    if(match && match[0] === this.searchField){
       this.user.getUsers('','1000','1','','','',this.searchField).subscribe(res => {
         document.getElementById('select-user').click();
         const temp: any = res;

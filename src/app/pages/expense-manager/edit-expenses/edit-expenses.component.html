@@ -1,0 +1,22 @@
+
+<div class="card">
+    <div class="card-header">
+        <b>Edit Expense</b>
+        
+    </div>
+    <div class="card-body">
+        
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Change Status</label>
+            <select [(ngModel)]="status" class="form-control" id="exampleFormControlSelect1">
+                <option value="1">Pending</option>
+                <option value="2">Approved</option>
+                <option value="3">Sent Back</option>
+            </select>
+        </div>
+        <div class="text-center">
+            <button class="mr-2" nbButton size="medium" (click)="changeStatus()" status="success">Submit</button>
+        </div>
+
+    </div>
+</div>

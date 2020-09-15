@@ -14,46 +14,46 @@ export const MENU_ITEMS: NbMenuItem[] = [
     children: [
       {
         title: 'Sanchalak',
-        link: 'users/sanchalak',
+        link: '/pages/users/sanchalak',
       },
       {
         title: 'Guru',
-        link: 'users/guru',
+        link: '/pages/users/guru',
       },
       {
         title: 'Shishya',
-        link: 'users/shishya',
+        link: '/pages/users/shishya',
       }
     ]
   },
   {
       title: 'Our Courses',
       icon: 'award',
-      link: 'courses',
+      link: '/pages/courses/all-courses',
       home: true,
   },
   {
     title: 'Document / Articles',
     icon: 'file',
-    link: 'document',
+    link: '/pages/document/documents',
     home: true,
   },
   {
     title: 'Videos',
-    icon: 'file',
-    link: 'videos',
+    icon: 'video',
+    link: '/pages/videos/all-videos',
     home: true,
   },
   {
     title: 'Sessions',
     icon: 'book-open',
-    link: 'sessions',
+    link: '/pages/sessions/all-sessions',
     home: true,
   },
   {
     title: 'Expense Manager',
     icon: 'credit-card',
-    link: 'expense-manager',
+    link: '/pages/expense-manager/all-expenses',
     home: true,
   },
   {

@@ -125,14 +125,14 @@ export class AllSessionsComponent implements OnInit {
     
       console.log(sesionId)
       let obj;
-      this.courses.getCourseDetails(sesionId).subscribe(res => {
+      this.session.getSessionDetails(sesionId).subscribe(res => {
         console.log(res);
         const temp: any = res;
-        obj = temp.data.course.otherLanguages;
+        obj = temp.data.otherLanguages;
         const data = [];
         for (const x of obj){
           data.push({
-            id : x.course,
+            id : x.session,
             lang : x.language});
         }
         localStorage.setItem('session-list', JSON.stringify({data : data}));

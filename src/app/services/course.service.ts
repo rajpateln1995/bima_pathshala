@@ -66,6 +66,17 @@ export class CourseService {
     return this.http.post(this.base_url + '/course/sections', data, { headers: header });
   }
 
+  getSectionDetails(id){
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.auth.getToken());
+
+    let q_params = new HttpParams();
+    q_params = q_params.append('_id', id);
+
+    return this.http.get(this.base_url + '/course/sections', {headers: header});
+
+  }
+
   createSubSection(data) {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());

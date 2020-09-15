@@ -23,6 +23,8 @@ export class CreateSessionRouteComponent implements OnInit {
   disable = true;
   section_name;
   section_description;
+  sections;
+  curriculum = [];
 
   ngOnInit(): void {
 
@@ -36,6 +38,8 @@ export class CreateSessionRouteComponent implements OnInit {
       console.log(res);
       this.details = res;
       this.details = this.details.data;
+      this.curriculum = this.details.curriculum;
+
     },
     err => {
       console.log(err);
@@ -86,7 +90,7 @@ export class CreateSessionRouteComponent implements OnInit {
 }
 
 saveSession(){
-
+  this.details.curriculum = this.curriculum;
 
   this.session.saveSession(this.details).subscribe(res => {
     console.log(res);
@@ -97,23 +101,30 @@ saveSession(){
 
 }
 
-
-
 createSection(form) {
   const obj = {
-    title: this.section_name,
+    name: this.section_name,
     description : this.section_description,
-    data : []
+    data: [],
   }
-  this.details.curriculum.push(obj);
-  console.log(this.details.curriculum);
-  form.resetForm();
-  document.getElementById('close-section').click();
+  this.courses.createSection(obj).subscribe((res: any) => {
+    console.log(res);
+    form.resetForm();
+    this.details.curriculum.push(res.data);
+    this.saveSession();
+    document.getElementById('close-section').click();
+  },
+  err => {
+    console.log(err);
+  })
+
 }
 
-temp(){
-  console.log('asfasdf');
-}
+
+
+
+
+
 
 
 }

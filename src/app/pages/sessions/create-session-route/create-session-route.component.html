@@ -262,47 +262,17 @@
             class="fa fa-plus"  aria-hidden="true"></i> Add New Section</button>
     
     <nb-accordion class="mt-3">
-        <nb-accordion-item *ngFor="let section of details.curriculum" style="border: solid #5d5c5ce0 1px;">
+        <nb-accordion-item *ngFor="let c of curriculum ; let i = index" style="border: solid #5d5c5ce0 1px;">
             <nb-accordion-item-header>
-                {{section.name}}
+                {{c.name}}
             </nb-accordion-item-header>
             <nb-accordion-item-body>
-                <div class="form-group row">
-                    <label class="col-md-4 col-form-label text-center">Section Name<span style="color: red;">
-                            *</span></label>
-                    <div class="col-md-8">
-                        <input type="text" [disabled]="section_disable" name="sectionName" required #sectionName="ngModel"
-                            [(ngModel)]="section.name" class="form-control" placeholder="Enter Section Name [In {{language}}]">
-                        <p *ngIf="sectionName.invalid && sectionName.touched" class="text-center mb-3 mt-1" style="color: red;">This
-                            Field is Mandatory !</p>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-md-4 col-form-label text-center">Section Description<span style="color: red;">
-                            *</span></label>
-                    <div class="col-md-8">
-                        <textarea name="sectionDescription" [disabled]="section_disable" required rows="6" class="form-control"
-                            #sectionDescription="ngModel" [(ngModel)]="section.description"
-                            placeholder="Enter Section Description [In {{language}}]"></textarea>
-                        <p *ngIf="sectionDescription.invalid && sectionDescription.touched" class="text-center mb-3 mt-1"
-                            style="color: red;">This Field is Mandatory !</p>
-                    </div>
-                </div>
-                <hr>
-                <p class="text-center" style="font-size: larger;"><b>Sub Sections</b></p>
-                <hr>
-                <nb-accordion>
-                    <nb-accordion-item style="border: solid #5d5c5ce0 1px;">
-                        <nb-accordion-item-header>
-                            dfgd
-                        </nb-accordion-item-header>
-                        <nb-accordion-item-body>
-                            xfg
-                        </nb-accordion-item-body>
-                    </nb-accordion-item>
-                    
-                </nb-accordion>
+                <ngx-create-section [curriculum]="c">
+
+                </ngx-create-section>
             </nb-accordion-item-body>
+            
+            
         </nb-accordion-item>
     </nb-accordion>
 
@@ -361,3 +331,5 @@
         </div>
     </div>
 </div>
+
+

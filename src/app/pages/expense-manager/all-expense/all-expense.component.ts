@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ExpenseManagerService } from '../../../services/expense-manager.service';
 
 @Component({
@@ -8,7 +9,8 @@ import { ExpenseManagerService } from '../../../services/expense-manager.service
 })
 export class AllExpenseComponent implements OnInit {
 
-  constructor(private expenses: ExpenseManagerService) { }
+  constructor(private expenses: ExpenseManagerService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.getExpenses();
@@ -27,6 +29,7 @@ export class AllExpenseComponent implements OnInit {
 
 
   getExpenses(){
+    
     this.expenses.getAllExpense().subscribe((res: any) => {
       console.log(res);
       this.Data = res.data;
@@ -37,8 +40,9 @@ export class AllExpenseComponent implements OnInit {
     });
   }
 
-  viewSession(id){
-    
+  viewSession(id,status){
+    console.log(this.Data.status);
+    this.router.navigateByUrl(`/pages/expense-manager/edit/${id}/${status}`);
   }
 
 }

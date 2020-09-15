@@ -10,10 +10,11 @@ import { NbIconModule, NbButtonModule, NbInputModule, NbCheckboxModule, NbTabset
 import { CreateSessionRouteComponent } from './create-session-route/create-session-route.component';
 import { CreateComponent } from './create/create.component';
 import { AssignUsersComponent } from './assign-users/assign-users.component';
+import { CreateSectionComponent } from './create-section/create-section.component';
 
 
 @NgModule({
-  declarations: [SessionsComponent, AllSessionsComponent, CreateSessionRouteComponent, CreateComponent, AssignUsersComponent],
+  declarations: [SessionsComponent, AllSessionsComponent, CreateSessionRouteComponent, CreateComponent, AssignUsersComponent, CreateSectionComponent],
   imports: [
     CommonModule,
     SessionsRoutingModule,

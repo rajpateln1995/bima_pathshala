@@ -7,10 +7,11 @@ import { AllExpenseComponent } from './all-expense/all-expense.component';
 import { FormsModule } from '@angular/forms';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbIconModule, NbButtonModule, NbInputModule, NbCheckboxModule, NbTabsetModule, NbCardModule, NbAccordionModule, NbRouteTabsetModule } from '@nebular/theme';
+import { EditExpensesComponent } from './edit-expenses/edit-expenses.component';
 
 
 @NgModule({
-  declarations: [ExpenseManagerComponent, AllExpenseComponent],
+  declarations: [ExpenseManagerComponent, AllExpenseComponent, EditExpensesComponent],
   imports: [
     CommonModule,
     ExpenseManagerRoutingModule,
