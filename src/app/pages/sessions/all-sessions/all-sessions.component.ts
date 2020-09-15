@@ -113,7 +113,7 @@ export class AllSessionsComponent implements OnInit {
       console.log(obj);
       localStorage.setItem('session-list', JSON.stringify({ 'data' : id }));
       document.getElementById('close-btn').click();
-      this.router.navigateByUrl(`pages/sessions/create/id/${id[0].id}`);
+      this.router.navigateByUrl(`pages/sessions/create/id/${id[0].id}/0`);
 
     },
     err => {
@@ -121,7 +121,7 @@ export class AllSessionsComponent implements OnInit {
     });
   }
 
-  viewSession(sesionId){
+  viewSession(sesionId, status){
     
       console.log(sesionId)
       let obj;
@@ -136,7 +136,7 @@ export class AllSessionsComponent implements OnInit {
             lang : x.language});
         }
         localStorage.setItem('session-list', JSON.stringify({data : data}));
-        this.router.navigateByUrl('pages/sessions/create/id/' + sesionId);
+        this.router.navigateByUrl('pages/sessions/create/id/' + sesionId + '/' + status);
       },
       err => {
         console.log(err);

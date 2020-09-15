@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { NbComponentStatus, NbToastrService } from '@nebular/theme';
 import { CourseService } from '../../../services/course.service';
+import { SessionsService } from '../../../services/sessions.service';
 
 @Component({
   selector: 'ngx-create',
@@ -9,11 +12,14 @@ import { CourseService } from '../../../services/course.service';
 export class CreateComponent implements OnInit {
 
   constructor(private course: CourseService,
-    ) { }
+            private route: ActivatedRoute,
+            private toaster : NbToastrService,
+            private session : SessionsService) { }
 
   languages: any;
   id: any;
   x = 'asd';
+  s;
 
   tempLang = {
   'HI' : 'HINDI',
@@ -21,6 +27,8 @@ export class CreateComponent implements OnInit {
   'MH' : 'MARATHI',
   };
   ngOnInit(): void {
+
+  this.s = window.location.href.slice(-1);
 
   this.id = JSON.parse(localStorage.getItem('session-list'));
   const tabs = [];
@@ -36,5 +44,29 @@ export class CreateComponent implements OnInit {
   }
 
   tabs: any[] ;
+
+  
+  changeStatus(status , type: NbComponentStatus){
+    this.s = status;
+    this.toaster.show(`Session Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
+    const obj = {
+      _id : this.route.firstChild.snapshot.params['id'],
+      status : status,
+    }
+    this.session.saveSession(obj).subscribe(res => {
+      console.log(res);
+    },err => {
+      console.log(err);
+    });
+
+  }
+
+status = [
+  'Not Completed',
+  'Verified',
+  'Live',
+  'Disabled',
+  'Deleted',
+]
 
 }

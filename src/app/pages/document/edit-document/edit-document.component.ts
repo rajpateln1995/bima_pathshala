@@ -47,7 +47,7 @@ export class EditDocumentComponent implements OnInit {
 
   changeStatus(status ,type : NbComponentStatus){
     this.s = status;
-    this.toaster.show(`Video Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
+    this.toaster.show(`Document Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
     const obj = {
       _id : this.route.firstChild.snapshot.params['id'],
       status : status,
