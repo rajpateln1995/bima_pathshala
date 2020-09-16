@@ -3,6 +3,8 @@ import { UserService } from '../../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SessionsService } from '../../../services/sessions.service';
+import { NbToastrService } from '@nebular/theme';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'ngx-user-details',
@@ -18,10 +20,11 @@ export class UserDetailsComponent implements OnInit {
   constructor(private user: UserService,
               private route: ActivatedRoute,
               private router: Router,
-              private session : SessionsService)
-    {
-      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    }
+              private session: SessionsService,
+              private toaster: NbToastrService)
+  {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
 
   userId: string = '';
@@ -37,7 +40,15 @@ export class UserDetailsComponent implements OnInit {
   myShishya;
   gurusArray = [];
   shishyasArray = [];
-  
+
+
+  searchFieldGuru="";
+  searchFieldShishya="";
+  gurus;
+  shishyas;
+  guru;
+  shishya;
+
 
   ngOnInit() {
     this.loading = true;
@@ -58,10 +69,9 @@ export class UserDetailsComponent implements OnInit {
       }else{
         this.getGurus();
       }
-
-
     },
     err => {
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
       console.log(err);
     });
 
@@ -71,10 +81,12 @@ export class UserDetailsComponent implements OnInit {
       this.certificates = data.data.certificates;
       this.courses = data.data.courses;
       this.sessions = data.data.session;
-
+      this.gurus = data.data.myGurus;
+      this.shishyas = data.data.myShishyas;
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
 
     this.editForm = new FormGroup({
@@ -95,6 +107,25 @@ export class UserDetailsComponent implements OnInit {
       'country': new FormControl(null, Validators.required),
 
   });
+  
+  
+  // for (const g of this.gurus){
+  //       const obj = {
+  //         img : g.imageUrl,
+  //         id : g._id,
+  //         name : g.fName + ' ' + g.lName,
+  //       };
+  //       this.guruArray.push(obj);
+  // }
+
+  // for (const s of this.attendees){
+  //   const obj = {
+  //     img : s.imageUrl,
+  //     id : s._id,
+  //     name : s.fName + ' ' + s.lName,
+  //   };
+  //   this.shishyaArray.push(obj);
+  // }
 
 
   }
@@ -119,6 +150,7 @@ export class UserDetailsComponent implements OnInit {
       },
       err => {
         console.log(err);
+        this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
       });
     }
   }
@@ -139,6 +171,7 @@ export class UserDetailsComponent implements OnInit {
       },
       err => {
         console.log(err);
+        this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
       });
     }
   }
@@ -171,11 +204,12 @@ export class UserDetailsComponent implements OnInit {
     };
     this.user.updateUserDetails(data).subscribe(res => {
       console.log(res);
-      document.getElementById('success').click();
+      this.toaster.show('User Details Saved Successfully', 'Saved Successfully' , { status : 'success' });
       this.loading = false;
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
       this.loading = false;
     });
 
@@ -202,61 +236,146 @@ export class UserDetailsComponent implements OnInit {
 
 }
 
+changeStatus(status , type){
+  const obj = {
+    _id : this.route.snapshot.params['id'],
+    status : status,
+  };
+  this.user.updateUserDetails(obj).subscribe(res => {
+    console.log(res);
+    this.toaster.show(`User Is ${this.status[status]}`, this.status[status] , { status : type });
+  }, err => {
+    console.log(err);
+    this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
+  });
+}
+
+status = [
+  'Created By Sanchalak',
+  'Verified',
+  'Enabled',
+  'Blocked',
+  'Deleted',
+];
+
+
+guruList;
+getGuruSearch(){
+  let name = "";
+  let contact = "";
+  const match = this.searchFieldGuru.match(/^\d+$/);
+  if(match && match[0]===this.searchFieldGuru){
+    contact = this.searchFieldGuru;
+  }else{
+    name = this.searchFieldGuru;
+  }
+  this.user.getUsers('guru', '10000' , '1', '' , name , '' , contact).subscribe((res: any) => {
+    console.log(res);
+    this.guruList = res.data.guru;
+  },
+  err => {
+    console.log(err);
+  })
+}
+
+
+shishyaList;
+getShishyaSearch(){
+  let name = "";
+  let contact = "";
+  const match = this.searchFieldShishya.match(/^\d+$/);
+  
+  if(match && match[0]===this.searchFieldShishya){
+    contact = this.searchFieldShishya;
+  }else{
+    name = this.searchFieldShishya;
+  }
+  this.user.getUsers('shishya', '10000' , '1', '' , name , '' , contact).subscribe((res: any) => {
+    console.log(res);
+    this.shishyaList = res.data.shishya;
+  },
+  err => {
+    console.log(err);
+  });
+}
+
+assignGuru(g){
+  const obj = {
+    shishya : this.route.snapshot.params['id'],
+    guru : g._id,
+    add : true,
+  };
+  this.user.mapGuruShishya(obj).subscribe(res => {
+    console.log(res);
+    this.toaster.show('Guru Assigned Successfully !', 'Guru Assigned' , { status : 'success' });
+  }, err => {
+    console.log(err);
+    this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
+  });
+  const x = {
+    _id : g._id,
+    name : g.fName + ' ' + g.lName,
+    phone : g.phone,
+    email : g.email,
+  };
+  this.gurusArray.push(x);
+}
+
+assignShishya(s){
+  const obj = {
+    shishya : s._id,
+    guru : this.route.snapshot.params['id'],
+    add: true,
+  };
+  this.user.mapGuruShishya(obj).subscribe(res => {
+    console.log(res);
+    this.toaster.show('Shishya Assigned Successfully !', 'Shishya Assigned' , { status : 'success' });
+    
+  }, err => {
+    console.log(err);
+    this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
+  });
+  const x = {
+    _id : s._id,
+    name : s.fName + ' ' + s.lName,
+    phone : s.phone,
+    email : s.email,
+  };
+  this.shishyasArray.push(x);
 }
 
 
 
 
-
-export class Address {
-  locality: string = '';
-  city: string = '';
-  state: string = '';
-  country: string = '';
-  pincode: string = '';
 }
 
-export class Location {
-  type: string = '';
-  coordinates: number[];
-}
 
-export class Auth {
-  expires: string = '';
-  token: string = '';
-}
-
-export class userModel {
-  _id: string = '';
-  address: Address;
-  location: Location;
-  fName: string = '';
-  lName: string = '';
-  imageUrl: string = '';
-  aadharNumber: string = '';
-  referralCode: string = '';
-  gender: string = '';
-  occupation: string = '';
-  dob: string = '';
-  age: string = '';
-  motherTongue: string = '';
-  maritalStatus: string = '';
-  dependents: number = 0;
-  role: string = '';
-  orders: any[];
-  isVip: number = 0;
-  externalUrls: any[];
-  status: number = 0;
-  passHash: string = '';
-  email: string;
-  media: any[];
-  cart: any[];
-  salt: string = '';
-  initialPas: string = '';
-  createdAt: Date;
-  updatedAt: Date;
-  rollNumber: number;
-  __v: number = 0;
-  auth: Auth;
-  id: string = '';
-}
+// age: "NA"
+// cart: []
+// dependents: 0
+// dob: "2020-08-31T18:30:00.000Z"
+// email: "rajpateln1995@gmail.com"
+// externalUrls: []
+// fName: "Raj"
+// gender: "male"
+// id: "5f5dc235e40bb30017cdab4c"
+// imageUrl: "https://picsum.photos/400"
+// isVip: 0
+// lName: "Ghamsani"
+// location: {type: "Point", coordinates: Array(2)}
+// maritalStatus: "single"
+// media: []
+// motherTongue: "Gujarati"
+// myGurus: (5) ["5f5e47dd70f86f0017c821cd", "5f5f65a01155970017fd5569", "5f6009eb51b6f400175c2aa0", "5f5fd32395d46b0017207c21", "5f6002f651b6f400175c2a96"]
+// myShishyas: []
+// occupation: "Student"
+// orders: []
+// passHash: "default"
+// phone: "8108504206"
+// profileImage: "https://picsum.photos/400"
+// referralCode: "NA"
+// role: "shishya"
+// status: 1
+// updatedAt: "2020-09-15T15:45:15.060Z"
+// __v: 0
+// _id: "5f5d

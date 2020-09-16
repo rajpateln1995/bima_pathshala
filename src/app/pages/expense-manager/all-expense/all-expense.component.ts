@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 import { ExpenseManagerService } from '../../../services/expense-manager.service';
 
 @Component({
@@ -10,7 +11,8 @@ import { ExpenseManagerService } from '../../../services/expense-manager.service
 export class AllExpenseComponent implements OnInit {
 
   constructor(private expenses: ExpenseManagerService,
-              private router: Router) { }
+              private router: Router,
+              private toaster : NbToastrService) { }
 
   ngOnInit(): void {
     this.getExpenses();
@@ -43,6 +45,7 @@ export class AllExpenseComponent implements OnInit {
     },
     err =>{
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
   }
 

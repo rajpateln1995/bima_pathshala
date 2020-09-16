@@ -37,6 +37,7 @@ export class UserService {
     q_params = q_params.append('city' , city);
     q_params = q_params.append('state' , state);
     q_params = q_params.append('country' , country);
+    console.log(q_params);
 
 
     let header = new HttpHeaders();

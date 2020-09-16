@@ -61,6 +61,7 @@ export class EditVideoComponent implements OnInit {
       console.log(res);
     },err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     })
 
   }

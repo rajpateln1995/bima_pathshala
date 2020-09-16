@@ -14,6 +14,8 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   constructor(private courses: CourseService,
               private route: ActivatedRoute,
               private toaster : NbToastrService) { }
+
+  
   @Input() section: any;
   @Input() language: any;
   @Output() courseEvent = new EventEmitter();
@@ -98,6 +100,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
   }
 
@@ -110,9 +113,11 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     };
     this.courses.createSubSection(obj).subscribe(res => {
       console.log(res);
+      this.toaster.show('Section Saved Successfully !', 'Section Saved' , { status : 'success' });
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
   }
 
@@ -122,10 +127,11 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       console.log(res);
       const temp: any = res;
       this.sub = temp.data.data;
+      this.toaster.show('Sub Section Deleted Successfully', 'Sub Section Deleted' , { status : 'success' });
     },
     err => {
       console.log(err);
-      this.toaster.show('Sub Section Deleted Successfully', 'Sub Section Deleted' , { status : 'danger' });
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
   }
 
@@ -138,6 +144,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
   }
 
@@ -166,14 +173,15 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     };
 
     this.courses.createSubSection(obj).subscribe(res => {
-      console.log(res);
       const str = `close-sub-section${this.section_id}`;
       document.getElementById(str).click();
       form.resetForm();
       this.progress = 0;
+      this.toaster.show('Sub Section Saved Successfully!', 'Sub Section Saved' , { status : 'success' });
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
     
   }

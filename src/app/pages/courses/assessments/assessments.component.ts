@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { NbToastrService } from '@nebular/theme';
 import { CourseService } from '../../../services/course.service';
 
 @Component({
@@ -8,7 +9,8 @@ import { CourseService } from '../../../services/course.service';
 })
 export class AssessmentsComponent implements OnInit {
 
-  constructor(private course: CourseService) { }
+  constructor(private course: CourseService,
+              private toaster : NbToastrService) { }
 
   @Input() assessment: any;
   @Input() section_id: any;
@@ -64,6 +66,7 @@ export class AssessmentsComponent implements OnInit {
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
 
   }
@@ -87,6 +90,7 @@ export class AssessmentsComponent implements OnInit {
   }
 
   deleteQuestion(i){
+    this.toaster.show('Question Deleted Successfully !', 'Question Deleted' , { status : 'danger' });
     this.data.questions.splice(i, 1);
   }
 
@@ -98,10 +102,12 @@ export class AssessmentsComponent implements OnInit {
       questions : this.data.questions,
       _id : this.data._id,
     }
+    
     this.course.editAssesment(obj).subscribe(res => {
       console.log(res);
     },
     err => {
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
       console.log(err);
     });
   }

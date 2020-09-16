@@ -45,7 +45,6 @@ export class CreateCourseRouteComponent implements OnInit {
   }
 
   createSection(form){
-    this.toaster.show('Section Created Successfully !', 'Section Created' , { status : 'success' });
     console.log(this.route.snapshot.params['id']);
     const obj = {
       'name' : this.SectionName,
@@ -61,6 +60,7 @@ export class CreateCourseRouteComponent implements OnInit {
       this.getCourse();
     }, err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
       document.getElementById('close-section').click();
     });
   }
@@ -84,8 +84,7 @@ export class CreateCourseRouteComponent implements OnInit {
     err => {
       console.log(err);
       this.progressImg = 0;
-      this.toaster.show('Something Went Wrong !', 'Upload Failed' , { status : 'warning' });
-
+      this.toaster.show('Something Went Wrong !', 'Upload Failed' , { status : 'danger' });
     });
   }
   covervideo;
@@ -101,12 +100,13 @@ export class CreateCourseRouteComponent implements OnInit {
           console.log(event);
           const data: any = event;
           this.covervideo = data.body.data[0];
+          this.toaster.show('Video Uploaded Successfully !', 'Video Uploaded' , { status : 'success' });
         }
       },
       err => {
         console.log(err);
         this.progressVideo = 0;
-        this.toaster.show('Something Went Wrong !', 'Upload Failed' , { status : 'warning' });
+        this.toaster.show('Something Went Wrong !', 'Upload Failed' , { status : 'danger' });
       });
   }
 
@@ -126,6 +126,7 @@ export class CreateCourseRouteComponent implements OnInit {
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
   }
 

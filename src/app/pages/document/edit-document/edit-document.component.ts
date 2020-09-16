@@ -56,6 +56,7 @@ export class EditDocumentComponent implements OnInit {
       console.log(res);
     },err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
 
   }

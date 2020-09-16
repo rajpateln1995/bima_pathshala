@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 import { ExpenseManagerService } from '../../../services/expense-manager.service';
 
 @Component({
@@ -10,7 +11,8 @@ import { ExpenseManagerService } from '../../../services/expense-manager.service
 export class EditExpensesComponent implements OnInit {
 
   constructor(private expenses : ExpenseManagerService,
-              private route : ActivatedRoute) { }
+              private route : ActivatedRoute,
+              private toaster : NbToastrService) { }
 
   status;
 
@@ -25,9 +27,11 @@ export class EditExpensesComponent implements OnInit {
     }
     this.expenses.updateExpense(obj).subscribe(res => {
       console.log(res);
+      this.toaster.show('Changes Saved Successfully!', 'Changes Saved' , { status : 'success' });
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     })
   }
 

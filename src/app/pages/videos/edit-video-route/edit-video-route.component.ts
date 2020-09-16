@@ -3,6 +3,7 @@ import { VideoService } from '../../../services/video.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpEventType } from '@angular/common/http';
 import { CourseService } from '../../../services/course.service';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-edit-video-route',
@@ -14,7 +15,8 @@ export class EditVideoRouteComponent implements OnInit {
   constructor(private video: VideoService,
               private route: ActivatedRoute,
               private courses: CourseService,
-              private router: Router) {
+              private router: Router,
+              private toaster : NbToastrService) {
 
   this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 }
@@ -56,10 +58,12 @@ export class EditVideoRouteComponent implements OnInit {
         const data: any = event;
         this.mediaUrl = data.body.data[0];
         this.disableBtn = false;
+        this.toaster.show('File Uploaded Successfully', 'File Uploaded' , { status : 'success' });
       }
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     });
   }
 
@@ -76,10 +80,12 @@ export class EditVideoRouteComponent implements OnInit {
         const data: any = event;
         this.thumbUrl = data.body.data[0];
         this.disableBtn = false;
+        this.toaster.show('File Uploaded Successfully', 'File Uploaded' , { status : 'success' });
       }
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     });
   }
     
@@ -99,9 +105,11 @@ export class EditVideoRouteComponent implements OnInit {
     this.video.saveVideo(obj).subscribe(res => {
       console.log(res);
       this.getVideoDetails();
+      this.toaster.show('Details Saved Successfully', 'Saved Successfully' , { status : 'success' });
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     });
   }
 

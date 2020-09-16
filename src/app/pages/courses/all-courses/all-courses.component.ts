@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CourseService } from '../../../services/course.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Router } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-all-courses',
@@ -11,7 +12,8 @@ import { Router } from '@angular/router';
 export class AllCoursesComponent implements OnInit {
 
   constructor(private courses: CourseService,
-              private router: Router) { }
+              private router: Router,
+              private toaster : NbToastrService) { }
 
 
   table_head = [
@@ -140,7 +142,7 @@ export class AllCoursesComponent implements OnInit {
       'languages' : languages.slice(0, (languages.length - 1)),
       'category' : category,
     };
-    console.log(obj);
+    this.toaster.show('Courses Created Successfully !', 'Courses Created' , { status : 'success' });
     this.courses.createCourse(obj).subscribe(res => {
       console.log(res);
       let data: any = res;

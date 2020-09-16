@@ -22,6 +22,13 @@ export class ShishyaComponent implements OnInit {
 
   data: any;
   total: Number = 0;
+  status = [
+    'Created By Sanchalak',
+    'Verified',
+    'Enabled',
+    'Blocked',
+    'Deleted',
+  ];
   table_head =[
     'View / Edit',
     'First Name',
@@ -138,12 +145,12 @@ export class ShishyaComponent implements OnInit {
 
   removeFilters() {
     this.filter.reset();
-    this.user.getUsers('sanchalak', '200', '1').subscribe(res => {
+    this.user.getUsers('shishya', this.limit, '1').subscribe(res => {
       console.log(res);
       this.data = res;
-      this.data = this.data.data.sanchalak;
+      this.total = this.data.total;
+      this.data = this.data.data.shishya;
       console.log(this.data);
-      this.total = this.data.length;
 
     },
     err => {
@@ -154,9 +161,10 @@ export class ShishyaComponent implements OnInit {
 
 
   filterUsers() {
-    this.user.getUsers('sanchalak',
-    '200',
+    this.user.getUsers('shishya',
+    this.limit,
     '1',
+    '',
     this.filter.value.name,
     this.filter.value.email,
     this.filter.value.contact,
@@ -167,9 +175,10 @@ export class ShishyaComponent implements OnInit {
     ).subscribe(res => {
       console.log(res);
       this.data = res;
-      this.data = this.data.data.sanchalak;
+      this.total = this.data.total;
+      this.data = this.data.data.shishya;
       console.log(this.data);
-      this.total = this.data.length;
+      
     },
     err => {
       console.log(err);

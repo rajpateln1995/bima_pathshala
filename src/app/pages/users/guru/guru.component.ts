@@ -23,6 +23,13 @@ export class GuruComponent implements OnInit {
 
   data: any;
   total: Number;
+  status = [
+    'Created By Sanchalak',
+    'Verified',
+    'Enabled',
+    'Blocked',
+    'Deleted',
+  ];
   table_head = [
     'View / Edit',
     'First Name',
@@ -131,35 +138,31 @@ export class GuruComponent implements OnInit {
 
   removeFilters() {
     this.filter.reset();
-    this.user.getUsers('sanchalak', '200', '1').subscribe(res => {
+    this.user.getUsers('guru', this.limit, '1').subscribe(res => {
       console.log(res);
       this.data = res;
-      this.data = this.data.data.sanchalak;
-      console.log(this.data);
-      this.total = this.data.length;
-
+      this.total = this.data.total;
+      this.data = this.data.data.guru;
     },
     err => {
       console.log(err);
     });
-    console.log(this.filter);
   }
 
   addField(field){
-    console.log(field);
     this.table_head_obj[field] = !this.table_head_obj[field];
   }
 
   removeField(field){
-    console.log(field);
     this.table_head_obj[field] = !this.table_head_obj[field];
   }
 
 
   filterUsers() {
-    this.user.getUsers('sanchalak',
+    this.user.getUsers('guru',
     '200',
     '1',
+    '',
     this.filter.value.name,
     this.filter.value.email,
     this.filter.value.contact,
@@ -170,9 +173,9 @@ export class GuruComponent implements OnInit {
     ).subscribe(res => {
       console.log(res);
       this.data = res;
-      this.data = this.data.data.sanchalak;
+      this.total = this.data.total;
+      this.data = this.data.data.guru;
       console.log(this.data);
-      this.total = this.data.length;
     },
     err => {
       console.log(err);

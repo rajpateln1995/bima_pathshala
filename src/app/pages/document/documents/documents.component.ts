@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DocumentService } from '../../../services/document.service';
 import { CourseService } from '../../../services/course.service';
 import { Router } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-documents',
@@ -12,7 +13,8 @@ export class DocumentsComponent implements OnInit {
 
   constructor(private document: DocumentService,
               private courses: CourseService,
-              private router: Router) { }
+              private router: Router,
+              private toaster: NbToastrService) { }
   Data: any;
   total: number = 0;
   languages = [];
@@ -58,6 +60,7 @@ export class DocumentsComponent implements OnInit {
       },
       err => {
         console.log(err);
+        this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
       });
     }
 
@@ -73,6 +76,7 @@ export class DocumentsComponent implements OnInit {
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
   }
 
@@ -125,11 +129,12 @@ export class DocumentsComponent implements OnInit {
         console.log(temp.data[0].otherLanguages[0].document);
         this.router.navigateByUrl(`pages/document/edit/id/${temp.data[0].otherLanguages[0].document}/0`);
         document.getElementById('close-btn').click();
-
+        this.toaster.show('Documents Created Successfully !', 'Documents Created' , { status : 'success' });
       },
       err => {
         console.log(err);
         document.getElementById('close-btn').click();
+        this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
       });
     }
 
@@ -145,6 +150,7 @@ export class DocumentsComponent implements OnInit {
       },
       err => {
         console.log(err);
+        this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
       });
   }
 

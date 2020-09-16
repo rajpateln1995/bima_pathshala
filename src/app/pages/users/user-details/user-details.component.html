@@ -283,6 +283,19 @@
                             
                         </ul>                        
                     </ng-container>
+                    <ng-container *ngIf="role === 'shishya'">
+                        <hr>
+                        <h5 class="text-center mb-4">Assign Guru</h5>
+                        <div class="input-group">
+                            <input type="text" id="input1-group2" [(ngModel)]="searchFieldGuru" name="input1-group2" class="form-control"
+                                placeholder="Search By Name or Phone No.">
+                            <span class="input-group-prepend" (click)="getGuruSearch()">
+                                <button type="button" data-toggle="modal" data-target="#guruModal" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                            </span>
+                        </div>
+                    </ng-container>
+                    
+
                     <ng-container *ngIf="role === 'guru'" >
                         <hr>
                         <h5 class="text-center mb-4">My Shishya</h5> 
@@ -335,6 +348,18 @@
                         </ul>
                         
                     </ng-container>
+
+                    <ng-container *ngIf="role === 'guru'">
+                        <hr>
+                        <h5 class="text-center mb-4">Assign Shishya</h5>
+                        <div class="input-group">
+                            <input type="text" id="input1-group2" [(ngModel)]="searchFieldShishya" name="input1-group2" class="form-control"
+                                placeholder="Search By Name or Phone No.">
+                            <span class="input-group-prepend" (click)="getShishyaSearch()">
+                                <button type="button" data-toggle="modal" data-target="#shishyaModal" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                            </span>
+                        </div>
+                    </ng-container>
                     
                     <ng-container *ngIf="role === 'sishya'" >
                         <hr>
@@ -343,17 +368,14 @@
                     <hr>
                     <h5 class="text-center mb-4">Actions</h5>
                     <div class="row">
-                        <div class="col-md-3 text-center">
-                            <button nbButton status="danger">Disable User</button>
+                        <div class="col-md-4 text-center">
+                            <button nbButton (click)="changeStatus('3', 'danger')" status="danger">Block / Disable User</button>
                         </div>
-                        <div class="col-md-3 text-center">
-                            <button nbButton status="danger">Delete From Web</button>
+                        <div class="col-md-4 text-center">
+                            <button nbButton status="danger" (click)="changeStatus('4', 'danger')">Delete User</button>
                         </div>
-                        <div class="col-md-3 text-center">
-                            <button nbButton status="danger">Block User</button>
-                        </div>
-                        <div class="col-md-3 text-center">
-                            <button nbButton status="success">Add to Website</button>
+                        <div class="col-md-4 text-center">
+                            <button nbButton status="success" (click)="changeStatus('2', 'success')">Enable</button>
                         </div>
                     </div>
                     <hr>
@@ -365,24 +387,73 @@
 </ng-container>
 
 
-<button style="display: none;" id="success" data-toggle="modal" data-target="#successModal"></button>
-<div class="modal" tabindex="-1" id="successModal">
-  <div style="margin-top: 20%;" class="modal-dialog">
-    <div class="modal-content">
-      <!-- <div class="modal-header">
-        <h5 style="color: #00d68f;" class="modal-title">Details Updated Successfully</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div> -->
-      <div class="modal-body" style="text-align: center;">
-        <h5 style="color: #00d68f;">Details Updated Successfully <br><i class="fa fa-thumbs-up" aria-hidden="true"></i></h5>
-        <button id="close-upload" data-dismiss="modal" nbButton status="primary">Ok</button>
-      </div>
+
+
+<!-- modal guru-->
+<!-- <button style="display: none;" id="guru-modal" data-toggle="modal" data-target="#guruModal"></button> -->
+<div class="modal fade" id="guruModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div style="width: 70%;" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Select Guru</h5>
+                <button id='close-user' type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div *ngIf="guruList" class="modal-body">
+                <div class="list">                    
+                       
+                                          
+                    <div (click)="assignGuru(g)" data-dismiss="modal" *ngFor="let g of guruList">
+                        <div class="ml-4">
+                            <img style="border-radius: 50%;" width="40px" height="40px" src="{{g.imageUrl}}">
+                            <p style="margin-top: 16px;" class="ml-3 d-inline-block text-center">{{g.fName + ' ' + g.lName}}</p>
+                        </div>
+                    </div>                        
+                    
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
+
+
+<!-- modal shishya-->
+<!-- <button  id="shishya-modal" data-toggle="modal" data-target="#shishyaModal"></button> -->
+<div class="modal fade" id="shishyaModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+        <div style="width: 70%;" class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Select Shishya</h5>
+                <button id='close-user' type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div *ngIf="shishyaList" class="modal-body">
+                <div class="list">                    
+                                          
+                    <div (click)="assignShishya(s)" data-dismiss="modal" *ngFor="let s of shishyaList">
+                        <div class="ml-4">
+                            <img style="border-radius: 50%;" width="40px" height="40px" src="{{s.imageUrl}}">
+                            <p style="margin-top: 16px;" class="ml-3 d-inline-block text-center">{{s.fName + ' ' + s.lName}}</p>
+                        </div>
+                    </div>                        
+                   
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 
-<div *ngIf="loading" id="cover-spin"></div>
+
+
+
+
+
+
+
+
+
+

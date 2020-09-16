@@ -5,6 +5,7 @@ import { HttpEventType } from '@angular/common/http';
 import { CourseService } from '../../../services/course.service';
 import '../../editors/ckeditor/ckeditor.loader';
 import 'ckeditor';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-edit-document-route',
@@ -16,7 +17,8 @@ export class EditDocumentRouteComponent implements OnInit {
   constructor(private document: DocumentService,
               private route: ActivatedRoute,
               private courses: CourseService,
-              private router : Router) {
+              private router : Router,
+              private toaster : NbToastrService) {
    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
 }
 
@@ -58,10 +60,12 @@ export class EditDocumentRouteComponent implements OnInit {
         const data: any = event;
         this.mediaUrl = data.body.data[0];
         this.disableBtn = false;
+        this.toaster.show('File Uploaded Successfully !', 'File Uploaded' , { status : 'success' });
       }
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
   }
 
@@ -82,9 +86,11 @@ export class EditDocumentRouteComponent implements OnInit {
 
     this.document.saveDocument(obj).subscribe(res => {
       console.log(res);
+      this.toaster.show('Article Saved Successfully !', 'Article Saved' , { status : 'success' });
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     })
 
   }

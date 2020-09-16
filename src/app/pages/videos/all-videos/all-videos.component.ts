@@ -3,6 +3,7 @@ import { VideoService } from '../../../services/video.service';
 import { CourseService } from '../../../services/course.service';
 import { HttpEventType } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-all-videos',
@@ -13,7 +14,8 @@ export class AllVideosComponent implements OnInit {
 
   constructor(private video : VideoService,
               private courses: CourseService,
-              private router : Router) { }
+              private router : Router,
+              private toaster : NbToastrService) { }
 
   data: any;
   table_head = [
@@ -65,6 +67,7 @@ export class AllVideosComponent implements OnInit {
       },
       err => {
         console.log(err);
+        this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
       });
     }
 
@@ -81,6 +84,7 @@ export class AllVideosComponent implements OnInit {
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     })
   } 
 
@@ -134,9 +138,11 @@ export class AllVideosComponent implements OnInit {
       localStorage.setItem('video-list', JSON.stringify({data : temp.data[0].otherLanguages}));
       this.router.navigateByUrl(`pages/videos/edit/id/${temp.data[0].otherLanguages[0].video}/0`)
       document.getElementById('close-btn').click();
+      this.toaster.show('Videos Created Successfully', 'Videos Created' , { status : 'success' });
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     });
 
   }

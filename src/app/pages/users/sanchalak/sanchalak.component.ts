@@ -88,7 +88,13 @@ export class SanchalakComponent implements OnInit {
   disable_contact: Boolean = false;
   postalUrl = 'https://api.postalpincode.in/pincode/';
   filter: FormGroup;
-  
+  status = [
+    'Created By Sanchalak',
+    'Verified',
+    'Enabled',
+    'Blocked',
+    'Deleted',
+  ];
 
 
   ngOnInit(): void {
@@ -143,6 +149,7 @@ export class SanchalakComponent implements OnInit {
     this.user.getUsers('sanchalak',
     '200',
     '1',
+    '',
     this.filter.value.name,
     this.filter.value.email,
     this.filter.value.contact,
@@ -187,9 +194,9 @@ export class SanchalakComponent implements OnInit {
     this.user.getUsers('sanchalak', '200', '1').subscribe(res => {
       console.log(res);
       this.data = res;
+      this.total = this.data.total;
       this.data = this.data.data.sanchalak;
       console.log(this.data);
-      this.total = this.data.length;
 
     },
     err => {
