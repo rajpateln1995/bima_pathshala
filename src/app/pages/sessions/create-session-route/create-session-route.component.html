@@ -81,31 +81,20 @@
         <div class="form-group row mt-4">
             <label class="col-md-4 col-form-label text-center">Session Date<span style="color: red;">
                     *</span></label>
-            <div class="col-md-8">
+            
 
                 <!-- <input class="d-block mb-2" nbInput name="session_date" [disabled]="disable"  placeholder="Enter Session Date [In {{details.language}}]"
                     [(ngModel)]="details.sessionDate" [nbDatepicker]="formpicker">
                 <nb-datepicker #formpicker></nb-datepicker> -->
-                <dp-date-picker disabled="disable" [(ngModel)]="details.sessionDate" ></dp-date-picker>  
-
+                <dp-day-time-calendar [(ngModel)]="details.sessionDate" theme="dp-material" ></dp-day-time-calendar> 
+                <!-- <dp-day-time-calendar theme="dp-material" [disabled]="disable" [(ngModel)]="details.sessionDate" ></dp-day-time-calendar> -->
                 <!-- <p *ngIf="session_date.invalid && session_date.touched" class="text-center mb-3 mt-1"
                     style="color: red;">
                     This Field is Mandatory !</p> -->
-            </div>
+           
         </div>
 
-        <div class="form-group row mt-4">
-            <label class="col-md-4 col-form-label text-center">Session Time<span style="color: red;">
-                    *</span></label>
-            <div class="col-md-8">
-                <input type="text" [disabled]="disable" name="session_time" required #session_time="ngModel"
-                    [(ngModel)]="details.sessionTime" class="form-control"
-                    placeholder="Enter Session Date [In {{details.language}}]">
-                <p *ngIf="session_time.invalid && session_time.touched" class="text-center mb-3 mt-1"
-                    style="color: red;">
-                    This Field is Mandatory !</p>
-            </div>
-        </div>
+      
 
 
         <div class="container text-center">
@@ -193,15 +182,13 @@
         </div>
         <div class="container text-center">
             <hr>
-            <p>Start Location<span style="color: red;">
-                    *</span></p>
+            <p>Start Location</p>
             <hr>
         </div>
         <div class="form-group row mt-4">
-            <label class="col-md-4 col-form-label text-center">Latitude <span style="color: red;">
-                    *</span></label>
+            <label class="col-md-4 col-form-label text-center">Latitude </label>
             <div class="col-md-8">
-                <input type="number" [disabled]="disable" name="startlat" required #startlat="ngModel"
+                <input type="number" [disabled]="disable" name="startlat" #startlat="ngModel"
                     [(ngModel)]="details.startLocation.coordinates[0]" class="form-control"
                     placeholder="Enter Latitude [In {{details.language}}]">
                 <p *ngIf="startlat.invalid && startlat.touched" class="text-center mb-3 mt-1" style="color: red;">
@@ -209,10 +196,9 @@
             </div>
         </div>
         <div class="form-group row mt-4">
-            <label class="col-md-4 col-form-label text-center">Longitude <span style="color: red;">
-                    *</span></label>
+            <label class="col-md-4 col-form-label text-center">Longitude </label>
             <div class="col-md-8">
-                <input type="number" [disabled]="disable" name="startlng" required #startlng="ngModel"
+                <input type="number" [disabled]="disable" name="startlng" #startlng="ngModel"
                     [(ngModel)]="details.startLocation.coordinates[1]" class="form-control"
                     placeholder="Enter Longitude [In {{details.language}}]">
                 <p *ngIf="startlng.invalid && startlng.touched" class="text-center mb-3 mt-1" style="color: red;">
@@ -221,15 +207,13 @@
         </div>
         <div class="container text-center">
             <hr>
-            <p>End Location<span style="color: red;">
-                    *</span></p>
+            <p>End Location</p>
             <hr>
         </div>
         <div class="form-group row mt-4">
-            <label class="col-md-4 col-form-label text-center">Latitude <span style="color: red;">
-                    *</span></label>
+            <label class="col-md-4 col-form-label text-center">Latitude </label>
             <div class="col-md-8">
-                <input type="number" [disabled]="disable" name="endlat" required #endlat="ngModel"
+                <input type="number" [disabled]="disable" name="endlat" #endlat="ngModel"
                     [(ngModel)]="details.endLocation.coordinates[0]" class="form-control"
                     placeholder="Enter Latitude [In {{details.language}}]">
                 <p *ngIf="endlat.invalid && endlat.touched" class="text-center mb-3 mt-1" style="color: red;">
@@ -237,10 +221,9 @@
             </div>
         </div>
         <div class="form-group row mt-4">
-            <label class="col-md-4 col-form-label text-center">Longitude <span style="color: red;">
-                    *</span></label>
+            <label class="col-md-4 col-form-label text-center">Longitude </label>
             <div class="col-md-8">
-                <input type="number" [disabled]="disable" name="endlng" required #endlng="ngModel"
+                <input type="number" [disabled]="disable" name="endlng" #endlng="ngModel"
                     [(ngModel)]="details.endLocation.coordinates[1]" class="form-control"
                     placeholder="Enter Longitude [In {{details.language}}]">
                 <p *ngIf="endlng.invalid && endlng.touched" class="text-center mb-3 mt-1" style="color: red;">

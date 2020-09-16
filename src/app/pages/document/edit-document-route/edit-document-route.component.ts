@@ -27,13 +27,14 @@ export class EditDocumentRouteComponent implements OnInit {
   Data;
   reading_time;
   documentImg;
-  htmlText;
+  htmlText = "";
 
   ngOnInit(): void {
     this.getDocument();
   }
 
   getDocument(){
+    console.log(this.route.snapshot.params['id'])
     this.document.getDocAndArticle('', this.route.snapshot.params['id'], '1', '50', 'true').subscribe(res => {
       console.log(res);
       const temp: any = res;
