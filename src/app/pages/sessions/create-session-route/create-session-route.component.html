@@ -1,5 +1,8 @@
 <ng-container *ngIf="details">
     <form #f="ngForm">
+        <div class="text-right">
+            <button nbButton status="primary" class="mr-2 mt-3" (click)="disable = false">Edit</button>
+        </div>
         <div class="form-group row mt-4">
             <label class="col-md-4 col-form-label text-center">Session Name<span style="color: red;">
                     *</span></label>
@@ -80,14 +83,14 @@
                     *</span></label>
             <div class="col-md-8">
 
-                <input class="d-block mb-2" nbInput name="session_date" [disabled]="disable" required
-                    #session_date="ngModel" placeholder="Enter Session Date [In {{details.language}}]"
+                <!-- <input class="d-block mb-2" nbInput name="session_date" [disabled]="disable"  placeholder="Enter Session Date [In {{details.language}}]"
                     [(ngModel)]="details.sessionDate" [nbDatepicker]="formpicker">
-                <nb-datepicker #formpicker></nb-datepicker>
+                <nb-datepicker #formpicker></nb-datepicker> -->
+                <dp-date-picker disabled="disable" [(ngModel)]="details.sessionDate" ></dp-date-picker>  
 
-                <p *ngIf="session_date.invalid && session_date.touched" class="text-center mb-3 mt-1"
+                <!-- <p *ngIf="session_date.invalid && session_date.touched" class="text-center mb-3 mt-1"
                     style="color: red;">
-                    This Field is Mandatory !</p>
+                    This Field is Mandatory !</p> -->
             </div>
         </div>
 
@@ -245,7 +248,7 @@
             </div>
         </div>
         <div class="text-right">
-            <button nbButton status="primary" class="mr-2" (click)="disable = false">Edit</button>
+            
             <button nbButton status="success" [disabled]="f.invalid || disable" (click)="saveSession()">Save Session
                 Details</button>
         </div>

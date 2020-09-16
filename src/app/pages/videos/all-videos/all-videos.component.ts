@@ -39,7 +39,7 @@ export class AllVideosComponent implements OnInit {
   }
 
   getAllVideos(page){
-    this.video.getVideos(this.limit, page).subscribe(res => {
+    this.video.getVideos(this.limit, page, 'true').subscribe(res => {
       console.log(res);
       const temp: any = res;
       this.data = temp.data;

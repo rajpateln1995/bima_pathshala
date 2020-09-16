@@ -17,13 +17,14 @@ export class VideoService {
 
 
 
-  getVideos(limit = '', page = '') {
+  getVideos(limit = '', page = '', all='true') {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
 
     let q_params = new HttpParams();
     q_params = q_params.append('limit', limit);
     q_params = q_params.append('page', page);
+    q_params = q_params.append('all', all);
 
     return this.http.get(this.base_url + '/video/all' , { headers : header , params : q_params });
   }

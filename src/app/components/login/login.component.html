@@ -14,7 +14,7 @@
             <h1>Admin Login</h1>
             <form [formGroup]="login_form">
                 <div>
-                    <input formControlName="email" type="email" placeholder="Email" class="input-field  mb-4 mt-1">
+                    <input [ngClass]="{ 'border-red': !login_form.get('email').valid && login_form.get('email').touched }" formControlName="email" type="email" placeholder="Email" class="input-field  mb-4 mt-1">
 
                     <input formControlName="password" type="password" placeholder="Password"
                         class="input-field  mb-4 mt-1">
@@ -22,7 +22,7 @@
                 </div>
                 <span class="d-block" *ngIf="!login_form.get('email').valid && login_form.get('email').touched"
                     style="color: red;">Invalid Email</span>
-                <span class="d-block" *ngIf="showMsg" style="color: red;">Login Failed !</span>
+                <span class="d-block" *ngIf="showMsg" style="color: red;">Username / Password Incorrect</span>
                 <span class="d-block" *ngIf="pleaseWait" style="color: #00d68f;">Please Wait ...</span>
                 <button [disabled]="!login_form.valid" class="login-button mt-1" (click)="login()"
                     type="button">Login</button>

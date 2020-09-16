@@ -77,12 +77,13 @@
 .input-field
 {
     box-sizing: border-box;
-    font-size: 14px;
+    font-size: 16px;
     padding: 10px;
     border-radius: 7px;
     border: 1px solid rgb(168, 168, 168);
     width: 60%  ;
     outline: none;
+    line-height: 1.3em;
 }
 
 .login-button{
@@ -103,19 +104,10 @@
     color:black
 }
 
-
-
-.signup-button{
-    box-sizing: border-box;
-    color: white;
-    font-size: 14px;
-    padding: 13px;
-    border-radius: 7px;
-    border: none;
-    width: 250px;
-    outline: none;
-    background-color: rgb(56, 189, 149);  
+.border-red{
+    border: solid red 1px;;
 }
+
 
 
 

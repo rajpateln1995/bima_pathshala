@@ -34,7 +34,7 @@ export class EditDocumentRouteComponent implements OnInit {
   }
 
   getDocument(){
-    this.document.getDocAndArticle('', this.route.snapshot.params['id']).subscribe(res => {
+    this.document.getDocAndArticle('', this.route.snapshot.params['id'], '1', '50', 'true').subscribe(res => {
       console.log(res);
       const temp: any = res;
       this.Data = temp.data[0];

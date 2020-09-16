@@ -6,12 +6,13 @@ import { SessionsComponent } from './sessions.component';
 import { AllSessionsComponent } from './all-sessions/all-sessions.component';
 import { FormsModule } from '@angular/forms';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
-import { NbIconModule, NbButtonModule, NbInputModule, NbCheckboxModule, NbTabsetModule, NbCardModule, NbAccordionModule, NbRouteTabsetModule } from '@nebular/theme';
+import { NbIconModule, NbButtonModule, NbInputModule, NbCheckboxModule, NbTabsetModule, NbCardModule, NbAccordionModule, NbRouteTabsetModule, } from '@nebular/theme';
 import { CreateSessionRouteComponent } from './create-session-route/create-session-route.component';
 import { CreateComponent } from './create/create.component';
 import { AssignUsersComponent } from './assign-users/assign-users.component';
 import { CreateSectionComponent } from './create-section/create-section.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {DpDatePickerModule} from 'ng2-date-picker';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NbAccordionModule,
     NbRouteTabsetModule,
     NgxPaginationModule,
+    DpDatePickerModule,
   ]
 })
 export class SessionsModule { }
