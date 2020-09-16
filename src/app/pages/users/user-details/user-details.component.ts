@@ -328,7 +328,7 @@ assignShishya(s){
     add: true,
   };
   this.user.mapGuruShishya(obj).subscribe(res => {
-    console.log(res);
+    
     this.toaster.show('Shishya Assigned Successfully !', 'Shishya Assigned' , { status : 'success' });
     
   }, err => {
