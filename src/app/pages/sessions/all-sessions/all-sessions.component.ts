@@ -15,7 +15,7 @@ export class AllSessionsComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    this.getSessions();
+    this.getSessions('1');
   }
 
   Data;
@@ -36,6 +36,8 @@ export class AllSessionsComponent implements OnInit {
   protection;
   languages = [];
   sessionType;
+  limit = '50';
+  curr_page = 1;
 
   status = [
     'Not Completed',
@@ -43,10 +45,10 @@ export class AllSessionsComponent implements OnInit {
     'Live',
     'Disabled',
     'Deleted',
-  ]
+  ];
 
-  getSessions(){
-    this.session.getAllSessions().subscribe(res => {
+  getSessions(page){
+    this.session.getAllSessions(this.limit , page , 'true').subscribe(res => {
       console.log(res);
       let temp: any = res;
       this.total = temp.total;
@@ -58,6 +60,19 @@ export class AllSessionsComponent implements OnInit {
       console.log(err);
     });
   }
+
+  changeLimit(limit){
+    this.limit = limit;
+    this.getSessions('1');
+  }
+
+  getPage(page){
+    this.curr_page = page;
+    this.getSessions(page);
+  }
+
+
+
 
   createSession() {
     if (this.languages.length > 0) {

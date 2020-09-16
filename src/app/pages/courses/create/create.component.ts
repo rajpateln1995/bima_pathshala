@@ -97,7 +97,7 @@ check(){
         if (temp.data.course && temp.data.course.sections.length > 0){
           if(temp.data.course.sections.data && temp.data.course.sections.data.length > 0){
             if (temp.data.course.sections[0].assessment && temp.data.course.sections[0].assessment !== null){
-              validate = true;
+              
             } else {
               return false;
             }
@@ -115,6 +115,18 @@ check(){
         }
       }
     }
+  }
+
+  makeCourseLive(id){
+    const obj = {
+      _id : id,
+      status : status,
+    };
+  this.course.putCourse(obj).subscribe(res => {
+    console.log(res);
+  }, err => {
+    console.log(err);
+  });
   }
 
   status = [

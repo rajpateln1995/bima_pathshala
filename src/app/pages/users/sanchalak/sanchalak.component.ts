@@ -53,8 +53,8 @@ export class SanchalakComponent implements OnInit {
       'First Name': true,
       'Last Name': true,
       'Status': true,
-      'Email': false,
-      'Phone': false,
+      'Email': true,
+      'Phone': true,
       'Roll No.': false,
       'Aadhaar No.': false,
       'Gender': false,
@@ -141,6 +141,20 @@ export class SanchalakComponent implements OnInit {
       console.log(err);
     });
     console.log(this.filter);
+  }
+
+  changeLimit(e){
+    this.limit = e;
+    this.user.getUsers('sanchalak', this.limit, '1').subscribe(res => {
+      console.log(res);
+      this.data = res;
+      this.total = this.data.total;
+      this.data = this.data.data.guru;
+
+    },
+    err => {
+      console.log(err);
+    });
   }
 
 

@@ -56,8 +56,8 @@ export class GuruComponent implements OnInit {
       'First Name': true,
       'Last Name': true,
       'Status': true,
-      'Email': false,
-      'Phone': false,
+      'Email': true,
+      'Phone': true,
       'Roll No.': false,
       'Aadhaar No.': false,
       'Gender': false,
@@ -72,7 +72,7 @@ export class GuruComponent implements OnInit {
       'Mother Tongue': false,
       'Marital Status': false,
     };
-  limit: string = '10';
+  limit: string = '50';
   locality: string = '';
   location = new Array();
   country: String = '';
@@ -134,6 +134,20 @@ export class GuruComponent implements OnInit {
       console.log(err);
     });
 
+  }
+
+  changeLimit(e){
+    this.limit = e;
+    this.user.getUsers('guru', this.limit, '1').subscribe(res => {
+      console.log(res);
+      this.data = res;
+      this.total = this.data.total;
+      this.data = this.data.data.guru;
+
+    },
+    err => {
+      console.log(err);
+    });
   }
 
   removeFilters() {

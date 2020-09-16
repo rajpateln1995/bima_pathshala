@@ -3,7 +3,7 @@ import { DocumentService } from '../../../services/document.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpEventType } from '@angular/common/http';
 import { CourseService } from '../../../services/course.service';
-import '../../editors/ckeditor/ckeditor.loader';
+import './ckeditor.loader';
 import 'ckeditor';
 import { NbToastrService } from '@nebular/theme';
 

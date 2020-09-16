@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ export class CourseService {
   constructor(private http: HttpClient,
     private auth: AuthService) { }
 
-  base_url = 'https://bimapath.herokuapp.com/api';
+    base_url = environment.base_url;
 
   id: any;
   getCourses(status = '' , page = '' , limit = '', all='false' ) {

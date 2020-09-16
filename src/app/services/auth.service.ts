@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { User } from '../user.model';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 
 
@@ -19,7 +20,7 @@ export class AuthService {
 
   user = new Subject<User>();
 
-  base_url = 'https://bimapath.herokuapp.com/api';
+  base_url = environment.base_url;
 
 
   getToken() {

@@ -18,6 +18,9 @@ export class DocumentsComponent implements OnInit {
   Data: any;
   total: number = 0;
   languages = [];
+  limit = '50';
+  curr_page = 1;
+  pageSize;
   table_head = [
     'Title',
     'Type',
@@ -38,7 +41,12 @@ export class DocumentsComponent implements OnInit {
   
 
   ngOnInit() {
-    this.getDocuments();
+    this.getDocuments('1');
+  }
+
+  getPage(page) {
+    this.getDocuments(page);
+    this.curr_page = page;
   }
 
   getLanguages(){
@@ -66,13 +74,18 @@ export class DocumentsComponent implements OnInit {
 
   }
 
-  getDocuments(){
-    this.document.getDocAndArticle('', '', '1' , '10000' , 'true').subscribe(res => {
+  changeLimit(limit){
+    this.limit = limit;
+    this.getDocuments('1');
+  }
+
+  getDocuments(page){
+    this.document.getDocAndArticle('', '', page , this.limit , 'true').subscribe(res => {
       console.log(res);
       const temp: any = res;
       this.Data = temp.data;
-      this.total = this.Data.length;
-      console.log(this.Data);
+      this.total = temp.total;
+      console.log(this.total);
     },
     err => {
       console.log(err);
@@ -141,9 +154,10 @@ export class DocumentsComponent implements OnInit {
   }
 
   viewDocument(id, status){
-      this.document.getDocAndArticle('' , id).subscribe(res => {
+      this.document.getDocAndArticle('' , id, '1', '10', 'true').subscribe(res => {
         console.log(res);
         const temp: any = res;
+        console.log(id);
         const obj = temp.data[0].otherLanguages;
         localStorage.setItem('doc-list' , JSON.stringify({ data : obj }));
         this.router.navigateByUrl(`pages/document/edit/id/${id}/${status}`);

@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   btn_valid: boolean = false;
   login_form: FormGroup;
   showMsg;
+  pleaseWait = false;
 
   ngOnInit(): void {
     this.spinner$.load();
@@ -47,10 +48,11 @@ export class LoginComponent implements OnInit, OnDestroy {
       console.log(res);
       const r = res;
       if (r['success'] === 1) {
-        this.router.navigateByUrl('/pages/users/sanchalak');
+        this.pleaseWait = true;
+        this.router.navigateByUrl('/pages/home');
       }else{
         this.loader.hide();
-        this.showMsg = true
+        this.showMsg = true;
       }
       
     },
@@ -59,8 +61,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  signup(){
-    this.router.navigateByUrl('/auth/signup');
-  }
+  // signup(){
+  //   this.router.navigateByUrl('/auth/signup');
+  // }
 
 }

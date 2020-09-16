@@ -75,15 +75,12 @@
                   </table>
             </div>
             <div class="row">
-                <div *ngIf="total !== 0" class="col-md-8 center">
+                <div *ngIf="total !== 0" class="col-md-7 center">
                   <pagination-controls id="pagination" (pageChange)="getPage($event)"></pagination-controls>
                 </div>
-                <div class="col-md-4 center">
+                <div class="col-md-5 center">
                     <label class="label-margin">No. of Rows per page :</label>
-                    <select class="form-control form-control-width" selected="10" [(ngModel)]="limit">
-                        <option value="10">10</option>
-                        <option value="15">15</option>
-                        <option value="25">25</option>
+                    <select class="form-control form-control-width" selected="50" ngModel (ngModelChange)="changeLimit($event)">
                         <option value="50">50</option>
                         <option value="100">100</option>
                         <option value="200">200</option>

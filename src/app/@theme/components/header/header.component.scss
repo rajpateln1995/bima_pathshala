@@ -90,11 +90,12 @@
 .menuItem{
   padding: 10px 30px;
   background-color: #ffffff;
-  border:solid #eaeef5 1px;
+  border:solid black 1px;
   border-radius:5px;
 }
 
 .menuItem:hover{
-  color: #3366ff;
+  color: red;
   cursor: pointer;
+  border:solid red 1px;
 }

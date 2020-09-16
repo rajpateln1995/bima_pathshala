@@ -16,14 +16,17 @@
                                 <th *ngFor="let th of table_head">{{th}}</th>
                             </tr>
                         </thead>
-                        <!-- <tbody *ngIf="total === 0">
+                        <tbody *ngIf="total === 0">
                       <tr >
                         <td style="text-align: center;">No Data Available</td>                
                       </tr>
-                    </tbody> -->
-                        <!-- <tbody *ngIf="total !== 0"> -->
-                        <tbody>
-                            <tr *ngFor="let d of Data">
+                    </tbody>
+                        <tbody *ngIf="total !== 0">
+                        
+                            <tr *ngFor="let d of Data | paginate: { id: 'pagination',
+                                itemsPerPage: limit,
+                                currentPage: curr_page,
+                                totalItems: total}">
                                 <td>{{d.title}}</td>
                                 <td>{{d.type}}</td>
                                 <td>{{d.language}}</td>
@@ -38,19 +41,20 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- <div *ngIf="total !== 0" class="row">
+                <div *ngIf="total !== 0" class="row">
                 <div class="col-md-8 center">
                   <pagination-controls id="pagination" (pageChange)="getPage($event)"></pagination-controls>
                 </div>
                 <div class="col-md-4 center">
                     <label class="label-margin">No. of Rows per page :</label>
-                    <select class="form-control form-control-width" selected="5" [(ngModel)]="pageSize">
-                        <option value="5">5</option>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
+                    <select class="form-control form-control-width" selected="50" ngModel (ngModelChange)="changeLimit($event)">
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="500">500</option>
                     </select>
                 </div>  
-            </div> -->
+            </div>
             </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -11,7 +12,7 @@ export class ExpenseManagerService {
               private auth: AuthService,
               ) { }
 
-  base_url = 'https://bimapath.herokuapp.com/api';
+  base_url = environment.base_url;
 
   getAllExpense(){
     let header = new HttpHeaders();

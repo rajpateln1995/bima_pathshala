@@ -164,6 +164,19 @@ export class AllCoursesComponent implements OnInit {
     });
   }
 
+  changeLimit(e){
+    this.limit = e;
+    this.courses.getCourses('', '1' , this.limit, 'true').subscribe(res => {
+      console.log(res);
+      this.data = res;
+      this.total = this.data.total;
+      this.data = this.data.data;
+    },
+    err => {
+      console.log(err);
+    });
+  }
+
 
 
 }

@@ -89,7 +89,7 @@
                 </div>
                 <div class="col-md-4 center">
                     <label class="label-margin">No. of Rows per page :</label>
-                    <select class="form-control form-control-width" selected="10" [(ngModel)]="limit">
+                    <select class="form-control form-control-width" selected="10" ngModel (ngModelChange)="changeLimit($event)">
                       <option value="10">10</option>
                       <option value="15">15</option>
                       <option value="25">25</option>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders , HttpParams } from '@angular/common/http';
 import { UserService } from '../@core/mock/users.service';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -12,15 +13,19 @@ export class VideoService {
               private auth: AuthService) { }
 
 
-  base_url = 'https://bimapath.herokuapp.com/api';
+  base_url = environment.base_url;
 
 
 
-  getVideos() {
+  getVideos(limit = '', page = '') {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
 
-    return this.http.get(this.base_url + '/video' , { headers : header });
+    let q_params = new HttpParams();
+    q_params = q_params.append('limit', limit);
+    q_params = q_params.append('page', page);
+
+    return this.http.get(this.base_url + '/video/all' , { headers : header , params : q_params });
   }
 
   getVideoDetails(id){

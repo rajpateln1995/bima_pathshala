@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { EditDocumentComponent } from './edit-document/edit-document.component';
 import { EditDocumentRouteComponent } from './edit-document-route/edit-document-route.component';
 import { CKEditorModule } from 'ng2-ckeditor';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -31,6 +32,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
     NbAccordionModule,
     NbRouteTabsetModule,
     CKEditorModule,
+    NgxPaginationModule,
   ]
 })
 export class DocumentModule { }

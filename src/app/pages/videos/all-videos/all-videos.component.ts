@@ -31,21 +31,35 @@ export class AllVideosComponent implements OnInit {
   languages = [];
   videoTitle;
   videoType;
+  curr_page = 1;
+  limit = '50';
 
   ngOnInit(): void {
-    this.getAllVideos();
+    this.getAllVideos('1');
   }
 
-  getAllVideos(){
-    this.video.getVideos().subscribe(res => {
+  getAllVideos(page){
+    this.video.getVideos(this.limit, page).subscribe(res => {
       console.log(res);
-      const temp: any = res
+      const temp: any = res;
       this.data = temp.data;
-      this.total = this.data.length;
+      this.total = temp.total;
     },
     err => {
       console.log(err)
     })
+  }
+
+
+
+  getPage(page){
+    this.curr_page = page;
+    this.getAllVideos(page);
+  }
+
+  changeLimit(limit){
+    this.limit = limit;
+    this.getAllVideos('1');
   }
 
   getLanguages(){

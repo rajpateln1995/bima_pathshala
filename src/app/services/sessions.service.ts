@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -10,17 +11,18 @@ export class SessionsService {
   constructor(private http: HttpClient,
               private auth: AuthService) { }
 
-  base_url = 'https://bimapath.herokuapp.com/api';
+  base_url = environment.base_url;
 
-  getAllSessions(role='' , _id = ''){
+  getAllSessions(limit='' , page = '', all='false' ){
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
 
     let q_params = new HttpParams();
-    q_params = q_params.append('role', role);
-    q_params = q_params.append('_id', _id);
+    q_params = q_params.append('limit', limit);
+    q_params = q_params.append('page', page);
+    q_params = q_params.append('all', all);
 
-    return this.http.get(this.base_url + '/sessions' , { headers : header , params: q_params });
+    return this.http.get(this.base_url + '/sessions/all' , { headers : header , params: q_params });
   }
 
   createSession(data){

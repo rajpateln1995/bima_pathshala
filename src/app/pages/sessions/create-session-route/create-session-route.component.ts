@@ -1,6 +1,7 @@
 import { HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 import { CourseService } from '../../../services/course.service';
 import { SessionsService } from '../../../services/sessions.service';
 
@@ -14,7 +15,8 @@ export class CreateSessionRouteComponent implements OnInit {
   constructor(private session : SessionsService,
               private route : ActivatedRoute,
               private router : Router,
-              private courses : CourseService)
+              private courses : CourseService,
+              private toaster : NbToastrService)
       {
         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       }
@@ -40,6 +42,7 @@ export class CreateSessionRouteComponent implements OnInit {
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     });
   }
 
@@ -61,6 +64,7 @@ export class CreateSessionRouteComponent implements OnInit {
     },
     err => {
       console.log(err);
+      this.toaster.show('Upload Failed', 'Error' , { status : 'danger' });
     });
   }
 
@@ -79,10 +83,12 @@ export class CreateSessionRouteComponent implements OnInit {
         const data: any = event;
         this.covervideo = data.body.data[0];
         this.progressVideo = 0;
+        this.toaster.show('Video Uploaded Successfully', 'Video Uploaded' , { status : 'success' });
       }
     },
     err => {
       console.log(err);
+      this.toaster.show('Upload Failed', 'Error' , { status : 'danger' });
     });
 }
 
@@ -91,9 +97,11 @@ saveSession(){
 
   this.session.saveSession(this.details).subscribe(res => {
     console.log(res);
+    this.toaster.show('Section Saved Successfully', 'Section Saved' , { status : 'success' });
   },
   err => {
     console.log(err);
+    this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
   })
 
 }
@@ -110,9 +118,11 @@ createSection(form) {
     this.details.curriculum.push(res.data);
     this.saveSession();
     document.getElementById('close-section').click();
+    this.toaster.show('Section Created Successfully', 'Section Crested' , { status : 'success' });
   },
   err => {
     console.log(err);
+    this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
   })
 
 }

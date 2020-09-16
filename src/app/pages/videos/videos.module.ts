@@ -9,6 +9,7 @@ import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { FormsModule } from '@angular/forms';
 import { EditVideoComponent } from './edit-video/edit-video.component';
 import { EditVideoRouteComponent } from './edit-video-route/edit-video-route.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { EditVideoRouteComponent } from './edit-video-route/edit-video-route.com
     NbCardModule,
     NbAccordionModule,
     NbRouteTabsetModule,
+    NgxPaginationModule,
   ]
 })
 export class VideosModule { }

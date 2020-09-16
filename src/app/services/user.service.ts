@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,9 @@ export class UserService {
 
   constructor(private http: HttpClient,
               private auth: AuthService) { }
-  base_url = 'https://bimapath.herokuapp.com/api';
+
+              
+  base_url = environment.base_url;
 
 
 

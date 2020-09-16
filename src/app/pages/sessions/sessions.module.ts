@@ -11,6 +11,7 @@ import { CreateSessionRouteComponent } from './create-session-route/create-sessi
 import { CreateComponent } from './create/create.component';
 import { AssignUsersComponent } from './assign-users/assign-users.component';
 import { CreateSectionComponent } from './create-section/create-section.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { CreateSectionComponent } from './create-section/create-section.componen
     NbCardModule,
     NbAccordionModule,
     NbRouteTabsetModule,
+    NgxPaginationModule,
   ]
 })
 export class SessionsModule { }

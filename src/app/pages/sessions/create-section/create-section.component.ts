@@ -1,6 +1,7 @@
 import { HttpEventType } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NbToastrService } from '@nebular/theme';
 import { CourseService } from '../../../services/course.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class CreateSectionComponent implements OnInit {
   deleteTarget;
 
   constructor(private courses : CourseService,
-              private route : ActivatedRoute) { }
+              private route : ActivatedRoute,
+              private toaster : NbToastrService) { }
 
   ngOnInit(): void {
     console.log(this.curriculum);
@@ -58,10 +60,12 @@ export class CreateSectionComponent implements OnInit {
         const data: any = event;
         this.mediaUrl = data.body.data[0];
         this.disableBtn = false;
+        this.toaster.show('Media Uploaded Successfully', 'Media Uploaded' , { status : 'success' });
       }
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     });
   }
 
@@ -70,9 +74,11 @@ export class CreateSectionComponent implements OnInit {
 
     this.courses.createSubSection(this.curriculum).subscribe(res => {
       console.log(res);
+      this.toaster.show('Session Saved Successfully', 'Session Saved' , { status : 'success' });
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     });
   }
 
@@ -90,9 +96,11 @@ export class CreateSectionComponent implements OnInit {
       document.getElementById(str).click();
       subSecModal.resetForm();
       this.progress = 0;
+      this.toaster.show('Sub Section Created Successfully', 'Sub Section Created' , { status : 'success' });
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     });
   }
 
@@ -101,10 +109,11 @@ export class CreateSectionComponent implements OnInit {
       console.log(res);
       const temp: any = res;
       this.curriculum.data = temp.data.data;
-      
+      this.toaster.show('Sub Section Deleted', 'Error' , { status : 'danger' });
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     });
   }
 
@@ -115,9 +124,11 @@ export class CreateSectionComponent implements OnInit {
     this.courses.delSection('', this.curriculum._id, this.route.snapshot.params['id']).subscribe(res => {
       console.log(res);
       this.courseEvent.next();
+      this.toaster.show('Section Deleted', 'Error' , { status : 'danger' });
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     });
   }
 

@@ -20,6 +20,7 @@ export class AllExpenseComponent implements OnInit {
   
   Data: any;
   total = 0;
+  limit = '50';
   table_head = [
     'Name',
     'Date',
@@ -47,6 +48,11 @@ export class AllExpenseComponent implements OnInit {
       console.log(err);
       this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
+  }
+
+  changeLimit(limit){
+    this.limit = limit;
+    this.getExpenses();
   }
 
   viewSession(id,status){

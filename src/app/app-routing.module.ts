@@ -1,17 +1,9 @@
 import { ExtraOptions, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
-import {
-  NbAuthComponent,
-  NbLoginComponent,
-  NbLogoutComponent,
-  NbRegisterComponent,
-  NbRequestPasswordComponent,
-  NbResetPasswordComponent,
 
-} from '@nebular/auth';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './services/auth.guard';
-import { SignupComponent } from './components/signup/signup.component';
+
 
 export const routes: Routes = [
   {
@@ -36,22 +28,6 @@ export const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
-      },
-      {
-        path: 'signup',
-        component: SignupComponent,
-      },
-      {
-        path: 'logout',
-        component: NbLogoutComponent,
-      },
-      {
-        path: 'request-password',
-        component: NbRequestPasswordComponent,
-      },
-      {
-        path: 'reset-password',
-        component: NbResetPasswordComponent,
       },
     ],
   },

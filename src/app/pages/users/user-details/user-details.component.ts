@@ -345,37 +345,5 @@ assignShishya(s){
 }
 
 
-
-
 }
 
-
-// age: "NA"
-// cart: []
-// dependents: 0
-// dob: "2020-08-31T18:30:00.000Z"
-// email: "rajpateln1995@gmail.com"
-// externalUrls: []
-// fName: "Raj"
-// gender: "male"
-// id: "5f5dc235e40bb30017cdab4c"
-// imageUrl: "https://picsum.photos/400"
-// isVip: 0
-// lName: "Ghamsani"
-// location: {type: "Point", coordinates: Array(2)}
-// maritalStatus: "single"
-// media: []
-// motherTongue: "Gujarati"
-// myGurus: (5) ["5f5e47dd70f86f0017c821cd", "5f5f65a01155970017fd5569", "5f6009eb51b6f400175c2aa0", "5f5fd32395d46b0017207c21", "5f6002f651b6f400175c2a96"]
-// myShishyas: []
-// occupation: "Student"
-// orders: []
-// passHash: "default"
-// phone: "8108504206"
-// profileImage: "https://picsum.photos/400"
-// referralCode: "NA"
-// role: "shishya"
-// status: 1
-// updatedAt: "2020-09-15T15:45:15.060Z"
-// __v: 0
-// _id: "5f5d
