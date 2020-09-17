@@ -112,25 +112,7 @@ export class AllVideosComponent implements OnInit {
 
   mediaUrl;
   
-  // upload(event){
-    
-  //   const data = event.target.files[0];
-  //   this.courses.upload(data).subscribe(event => {
-  //     if (event.type === HttpEventType.UploadProgress){
-  //       console.log(event);
-  //       this.progress = (event.loaded / event.total) * 100;
-  //     }else if (event.type === HttpEventType.Response){
-  //       console.log(event);
-  //       const data:any = event;
-  //       this.mediaUrl = data.body.data[0];
-  //       this.disableBtn = false;
-  //     }
-  //   },
-  //   err => {
-  //     console.log(err);
-  //   });
-  // }
-  
+
 
   submit() {
 

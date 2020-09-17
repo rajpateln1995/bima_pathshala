@@ -5,6 +5,7 @@ import { NbToastrService } from '@nebular/theme';
 import { CourseService } from '../../../services/course.service';
 import { SessionsService } from '../../../services/sessions.service';
 
+
 @Component({
   selector: 'ngx-create-session-route',
   templateUrl: './create-session-route.component.html',
@@ -127,11 +128,11 @@ createSection(form) {
 
 }
 
-
-
-
-
-
+config = {
+  hours24Format : true,
+  hideInputContainer :false,
+  
+}
 
 
 }

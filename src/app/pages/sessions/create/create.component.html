@@ -13,8 +13,10 @@
         <hr>
         <p class="text-center">Current Status: {{status[s]}}</p>
         <hr>
-
-        <nb-route-tabset *ngIf="tabs" fullWidth [tabs]="tabs"></nb-route-tabset>
+        <ng-container *ngIf="tabs">
+            <nb-route-tabset  fullWidth [tabs]="tabs"></nb-route-tabset>
+        </ng-container>
+        
         
     </div>
 </div>

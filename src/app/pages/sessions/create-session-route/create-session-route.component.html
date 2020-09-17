@@ -79,22 +79,18 @@
 
 
         <div class="form-group row mt-4">
-            <label class="col-md-4 col-form-label text-center">Session Date<span style="color: red;">
+            <label class="col-md-4 col-form-label text-center">Session Date and Time<span style="color: red;">
                     *</span></label>
-            
 
-                <!-- <input class="d-block mb-2" nbInput name="session_date" [disabled]="disable"  placeholder="Enter Session Date [In {{details.language}}]"
-                    [(ngModel)]="details.sessionDate" [nbDatepicker]="formpicker">
-                <nb-datepicker #formpicker></nb-datepicker> -->
-                <dp-day-time-calendar [(ngModel)]="details.sessionDate" theme="dp-material" ></dp-day-time-calendar> 
-                <!-- <dp-day-time-calendar theme="dp-material" [disabled]="disable" [(ngModel)]="details.sessionDate" ></dp-day-time-calendar> -->
-                <!-- <p *ngIf="session_date.invalid && session_date.touched" class="text-center mb-3 mt-1"
-                    style="color: red;">
-                    This Field is Mandatory !</p> -->
-           
+            <div class="col-md-8">
+                <input [disabled]="disable" type="datetime-local" id="date-time" name="dateTime" #dateTime="ngModel"
+                    name="meeting-time" [(ngModel)]="details.sessionDate">
+            </div>
+            <p *ngIf="dateTime.invalid && dateTime.touched" class="text-center mb-3 mt-1" style="color: red;">
+                This Field is Mandatory !</p>
+
         </div>
 
-      
 
 
         <div class="container text-center">
@@ -231,7 +227,7 @@
             </div>
         </div>
         <div class="text-right">
-            
+
             <button nbButton status="success" [disabled]="f.invalid || disable" (click)="saveSession()">Save Session
                 Details</button>
         </div>

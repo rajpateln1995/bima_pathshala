@@ -62,7 +62,7 @@ export class UserService {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
 
-    return this.http.put(this.base_url + '/user/' , data, { headers : header });
+    return this.http.put(this.base_url + '/user' , data, { headers : header });
   }
 
   createMultipleUser(data: any){

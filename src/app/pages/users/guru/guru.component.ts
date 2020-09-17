@@ -106,7 +106,7 @@ export class GuruComponent implements OnInit {
       'phone' : new FormControl(null, Validators.required),
       'dob' : new FormControl(null, Validators.required),
       'aadhaarNo' : new FormControl(null, Validators.required),
-      'aadhaarImg' : new FormControl(null, Validators.required),
+      'aadhaarImg' : new FormControl(null),
       'maritalStatus' : new FormControl(null),
       'motherTongue' : new FormControl(null),
       'occupation' : new FormControl(null),

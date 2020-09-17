@@ -178,11 +178,11 @@
                 
                 <label class="label">Date of Birth<span style="color: red;">*</span></label>
 
-                      <input formControlName="dob" class="d-block mb-2" nbInput (mouseup)="date()"
-                             placeholder="Select Date of Birth"
-                             [nbDatepicker]="formpicker">
-                      <nb-datepicker #formpicker></nb-datepicker>
-                      <label *ngIf="!createGuru.get('dob').valid && createGuru.get('dob').touched" style="color: red;" class="label">Please Select a Date</label>
+               
+                  <input class="mb-3" type="datetime-local" id="date-time" 
+                  formControlName="dob" >
+               
+                <label *ngIf="!createGuru.get('dob').valid && createGuru.get('dob').touched" style="color: red;" class="label">Please Select a Date</label>
                     
                 
                 <div class="form-group">
@@ -191,7 +191,7 @@
                   <label *ngIf="createGuru.get('aadhaarNo').invalid && createGuru.get('aadhaarNo').touched" style="color: red;" class="label">This field is Required !</label>              
                 </div>
                 <div class="form-group">
-                  <label for="inputFirstName" class="label">Aadhaar Card Image <span style="color: red;">*</span></label>
+                  <label for="inputFirstName" class="label">Aadhaar Card Image </label>
                   <input formControlName="aadhaarImg" class="d-block" type="file" >    
                   <label *ngIf="createGuru.get('aadhaarImg').invalid && createGuru.get('aadhaarImg').touched" style="color: red;" class="label">This field is Required !</label>                          
                 </div>

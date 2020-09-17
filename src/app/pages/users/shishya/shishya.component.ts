@@ -105,7 +105,7 @@ export class ShishyaComponent implements OnInit {
       'phone' : new FormControl(null, Validators.required),
       'dob' : new FormControl(null, Validators.required),
       'aadhaarNo' : new FormControl(null, Validators.required),
-      'aadhaarImg' : new FormControl(null, Validators.required),
+      'aadhaarImg' : new FormControl(null),
       'maritalStatus' : new FormControl(null),
       'motherTongue' : new FormControl(null),
       'occupation' : new FormControl(null),
@@ -440,11 +440,13 @@ export class ShishyaComponent implements OnInit {
       }else if (event.type === HttpEventType.Response){
         console.log(event);
         const data: any = event;
+        this.progressImg = 0;
         this.aadhaarImg = data.body.data[0];
       }
     },
     err => {
       console.log(err);
+      this.progressImg = 0;
     });
   }
 
@@ -458,7 +460,7 @@ export class ShishyaComponent implements OnInit {
         'password': 'default',
         'dob': this.createShishya.value.dob,
         'aadharNumber': this.createShishya.value.aadhaarNo,
-        // 'aadhaarImg': this.aadhaarImg,
+        'aadhaarImg': this.aadhaarImg,
         'motherTongue': this.createShishya.value.motherTongue,
         'maritalStatus': this.createShishya.value.maritalStatus,
         'occupation': this.createShishya.value.occupation,

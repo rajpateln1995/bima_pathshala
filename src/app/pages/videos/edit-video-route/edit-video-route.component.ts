@@ -45,30 +45,32 @@ export class EditVideoRouteComponent implements OnInit {
 
   mediaUrl;
   disableBtn;
-  progress;
+  progressVideo = 0;
   upload(event){
 
     const data = event.target.files[0];
     this.courses.upload(data).subscribe(event => {
       if (event.type === HttpEventType.UploadProgress){
         console.log(event);
-        this.progress = (event.loaded / event.total) * 100;
+        this.progressVideo = (event.loaded / event.total) * 100;
       }else if (event.type === HttpEventType.Response){
         console.log(event);
         const data: any = event;
         this.mediaUrl = data.body.data[0];
         this.disableBtn = false;
+        this.progressVideo = 0;
         this.toaster.show('File Uploaded Successfully', 'File Uploaded' , { status : 'success' });
       }
     },
     err => {
       console.log(err);
+      this.progressVideo = 0;
       this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     });
   }
 
   thumbUrl;
-  progressThumb;
+  progressThumb = 0;
   uploadThumb(event){
     const data = event.target.files[0];
     this.courses.upload(data).subscribe(event => {
@@ -78,6 +80,7 @@ export class EditVideoRouteComponent implements OnInit {
       }else if (event.type === HttpEventType.Response){
         console.log(event);
         const data: any = event;
+        this.progressThumb = 0;
         this.thumbUrl = data.body.data[0];
         this.disableBtn = false;
         this.toaster.show('File Uploaded Successfully', 'File Uploaded' , { status : 'success' });
@@ -86,6 +89,7 @@ export class EditVideoRouteComponent implements OnInit {
     err => {
       console.log(err);
       this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
+      this.progressThumb = 0;
     });
   }
     

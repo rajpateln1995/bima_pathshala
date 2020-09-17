@@ -12,7 +12,7 @@ import { CreateComponent } from './create/create.component';
 import { AssignUsersComponent } from './assign-users/assign-users.component';
 import { CreateSectionComponent } from './create-section/create-section.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import {DpDatePickerModule} from 'ng2-date-picker';
+
 
 
 @NgModule({
@@ -31,7 +31,6 @@ import {DpDatePickerModule} from 'ng2-date-picker';
     NbAccordionModule,
     NbRouteTabsetModule,
     NgxPaginationModule,
-    DpDatePickerModule,
   ]
 })
 export class SessionsModule { }
