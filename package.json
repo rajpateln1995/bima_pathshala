@@ -25,9 +25,9 @@
     "docs:serve": "compodoc -p src/tsconfig.app.json -d docs -s",
     "release:changelog": "npm run conventional-changelog -- -p angular -i CHANGELOG.md -s",
     "postinstall": "ng build --aot --prod",
-    "buildStaging": "ng build --aot --staging",
-    "buildUat": "ng build --aot --uat",
-    "buildProd": "ng build --aot --prod"
+    "buildStaging": "ng build --aot staging",
+    "buildUat": "ng build --configuration  uat",
+    "buildProd": "ng build --configuration --aot --prod"
   },
   "dependencies": {
     "@akveo/ng2-completer": "^9.0.1",

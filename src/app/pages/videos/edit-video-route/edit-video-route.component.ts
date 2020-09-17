@@ -52,7 +52,7 @@ export class EditVideoRouteComponent implements OnInit {
     this.courses.upload(data).subscribe(event => {
       if (event.type === HttpEventType.UploadProgress){
         console.log(event);
-        this.progressVideo = (event.loaded / event.total) * 100;
+        this.progressVideo = (event.loaded / event.total) * 100 ;
       }else if (event.type === HttpEventType.Response){
         console.log(event);
         const data: any = event;

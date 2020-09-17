@@ -6,5 +6,6 @@
 export const environment = {
   production: true,
   base_url : 'https://uat.bimapaathshala.org/api',
+  environmentName: 'uat',
   
 };
