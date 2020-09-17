@@ -22,25 +22,29 @@ export class CreateComponent implements OnInit {
   s;
 
   tempLang = {
-  'HI' : 'HINDI',
-  'EN' : 'ENGLISH',
-  'MH' : 'MARATHI',
+
   };
+
+ 
   ngOnInit(): void {
+    const tabs = [];
+    this.id = JSON.parse(localStorage.getItem('session-list'));
+    this.course.getLanguages().subscribe((res:any) => {
+      for (const l of res.data){
+        this.tempLang[l.name] = l.displayName;
+      }
+      for (const id of this.id.data){
+        console.log(id);
+        tabs.push({
+          title : this.tempLang[id.lang],
+          route : [`id/${id.id}/${this.s}`],
+        });
+      }
+      this.tabs = tabs;
+    });
 
   this.s = window.location.href.slice(-1);
 
-  this.id = JSON.parse(localStorage.getItem('session-list'));
-  const tabs = [];
-
-  for (const id of this.id.data){
-  console.log(id);
-  tabs.push({
-  title : this.tempLang[id.lang],
-  route : [`id/${id.id}/${this.s}`],
-  });
-  }
-  this.tabs = tabs;
   }
 
   tabs: any[] ;

@@ -27,13 +27,12 @@
                 <input type="file" accept="video/*" class="d-block form-control-file" name="video" #video="ngModel"
                     ngModel required (change)="upload($event)">
                 <a target="_blank" *ngIf="Data && Data.videoUrl !== null && Data.videoUrl.length > 0" href="{{Data.videoUrl}}">preview</a>
-            </div>
-            <div *ngIf="progressVideo > 0" class="progress mt-4">
-                <div class="progress mt-4">
+                <div *ngIf="progressVideo > 0" class="progress mt-4">
                     <div class="progress-bar bg-success" role="progressbar" style="width: {{progressVideo}}%"
                         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
+            
         </div>
         <p *ngIf="video.invalid && video.touched" class="text-center mb-3 mt-1" style="color: red;">This
             Field is Mandatory !</p>
@@ -44,14 +43,14 @@
                 <input type="file" accept="image/*" class="d-block form-control-file" name="thumbnail" #thumbnail="ngModel"
                     ngModel required (change)="uploadThumb($event)">
                 <a target="_blank" *ngIf="Data && Data.thumb !== null && Data.videoUrl.thumb > 0" href="{{Data.thumb}}">preview</a>
+                <div *ngIf="progressThumb > 0" class="progress mt-4">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{progressThumb}}%"
+                        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
             </div>
+            
         </div>
-        <div *ngIf="progressThumb > 0" class="progress mt-4">
-            <div class="progress mt-4">
-                <div class="progress-bar bg-success" role="progressbar" style="width: {{progressThumb}}%"
-                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-        </div>
+       
         <p *ngIf="thumbnail.invalid && thumbnail.touched" class="text-center mb-3 mt-1" style="color: red;">This
             Field is Mandatory !</p>
 
