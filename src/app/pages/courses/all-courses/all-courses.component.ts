@@ -20,6 +20,7 @@ export class AllCoursesComponent implements OnInit {
     'Course Name',
     'Type',
     'Course Fee',
+    'Language',
     'Status',
     'Duration',
     'Rating',
@@ -103,7 +104,7 @@ export class AllCoursesComponent implements OnInit {
           this.languages.push({
             'name': l.name,
             'displayName' : l.displayName,
-            'value' : false,
+            'value' : true,
           });
         }
         console.log(this.languages);

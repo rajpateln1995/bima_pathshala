@@ -65,12 +65,12 @@ export class CreateComponent implements OnInit {
 
   }
 
-status = [
-  'Not Completed',
-  'Verified',
-  'Live',
-  'Disabled',
-  'Deleted',
-]
+  status = [
+    'Not Verified',
+    'Verified / Marked as Complete',
+    'Live',
+    'Disabled',
+    'Deleted',
+  ]
 
 }

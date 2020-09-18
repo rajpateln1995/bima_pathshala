@@ -43,18 +43,13 @@ export class CreateComponent implements OnInit {
 
     this.s = window.location.href.slice(-1);
 
-    
-    
-    
+
   }
 
   tabs: any[] ;
 
 
   markComplete(){
-    
-
-
 
   }
   changeStatus(status, type: NbComponentStatus) {
@@ -138,7 +133,7 @@ check(){
 
   status = [
     'Not Verified',
-    'Verified',
+    'Verified / Marked as Complete',
     'Live',
     'Disabled',
     'Deleted',

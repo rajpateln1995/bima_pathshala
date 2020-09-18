@@ -5,7 +5,7 @@ import { HttpEventType } from '@angular/common/http';
 import { CourseService } from '../../../services/course.service';
 import './ckeditor.loader';
 import 'ckeditor';
-import { NbToastrService } from '@nebular/theme';
+import { NbComponentStatus, NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-edit-document-route',
@@ -26,11 +26,12 @@ export class EditDocumentRouteComponent implements OnInit {
   document_name;
   Data;
   reading_time;
-  documentImg;
   htmlText = "";
+  s;
 
   ngOnInit(): void {
     this.getDocument();
+    this.s = window.location.href.slice(-1);
   }
 
   getDocument(){
@@ -43,6 +44,24 @@ export class EditDocumentRouteComponent implements OnInit {
       this.document_description = this.Data.description;
       this.reading_time = this.Data.readingTime;
       this.htmlText = this.Data.data[0].body;
+      this.s = this.Data.status;
+    });
+  }
+
+
+  changeStatus(status, type: NbComponentStatus) {
+    
+      const obj = {
+        _id : this.route.snapshot.params['id'],
+        status : status,
+      };
+      this.document.saveDocument(obj).subscribe(res => {
+      console.log(res);
+      this.toaster.show(`Document Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
+      this.s = status;
+    }, err => {
+      console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
   }
 
@@ -59,6 +78,7 @@ export class EditDocumentRouteComponent implements OnInit {
       }else if (event.type === HttpEventType.Response){
         console.log(event);
         const data: any = event;
+        this.progress = 0;
         this.mediaUrl = data.body.data[0];
         this.disableBtn = false;
         this.toaster.show('File Uploaded Successfully !', 'File Uploaded' , { status : 'success' });
@@ -66,6 +86,7 @@ export class EditDocumentRouteComponent implements OnInit {
     },
     err => {
       console.log(err);
+      this.progress = 0;
       this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
   }
@@ -99,5 +120,13 @@ export class EditDocumentRouteComponent implements OnInit {
   ngOnDestroy() {
     this.save();
   }
+
+  status = [
+    'Not Verified',
+    'Verified / Marked as Complete',
+    'Live',
+    'Disabled',
+    'Deleted',
+  ];
 
 }

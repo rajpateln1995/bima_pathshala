@@ -32,7 +32,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
       home: true,
   },
   {
-    title: 'Document / Articles',
+    title: 'Articles',
     icon: 'file',
     link: '/pages/document/documents',
     home: true,

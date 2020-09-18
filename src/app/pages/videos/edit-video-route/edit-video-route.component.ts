@@ -3,7 +3,7 @@ import { VideoService } from '../../../services/video.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpEventType } from '@angular/common/http';
 import { CourseService } from '../../../services/course.service';
-import { NbToastrService } from '@nebular/theme';
+import { NbComponentStatus, NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-edit-video-route',
@@ -23,11 +23,28 @@ export class EditVideoRouteComponent implements OnInit {
   Data: any;
   video_name;
   video_description;
+  s;
 
   ngOnInit(): void {
     this.getVideoDetails();
-
+    this.s = window.location.href.slice(-1);
   }
+
+  changeStatus(status, type: NbComponentStatus) {
+
+    const obj = {
+      _id : this.route.snapshot.params['id'],
+      status : status,
+    };
+    this.video.saveVideo(obj).subscribe(res => {
+    console.log(res);
+    this.toaster.show(`Video Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
+    this.s = status;
+  }, err => {
+    console.log(err);
+    this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
+  });
+}
 
   getVideoDetails(){
     console.log(this.route.snapshot.params['id']);
@@ -120,5 +137,13 @@ export class EditVideoRouteComponent implements OnInit {
   ngOnDestroy() {
     this.save();
   }
+
+  status = [
+    'Not Verified',
+    'Verified / Marked as Complete',
+    'Live',
+    'Disabled',
+    'Deleted',
+  ];
 
 }
