@@ -13,7 +13,7 @@ export class CreateComponent implements OnInit {
 
   constructor(private course: CourseService,
              private route: ActivatedRoute,
-             private toaster : NbToastrService) { }
+             private toaster : NbToastrService,) { }
 
   languages: any;
   id: any;
@@ -21,33 +21,35 @@ export class CreateComponent implements OnInit {
   s;
 
   tempLang = {
-    'HI' : 'HINDI',
-    'EN' : 'ENGLISH',
-    'MH' : 'MARATHI',
+    
   };
   ngOnInit(): void {
+    const tabs = [];
+    this.id = JSON.parse(localStorage.getItem('course-list'));
+    this.course.getLanguages().subscribe((res:any) => {
+      for (const l of res.data){
+        this.tempLang[l.name] = l.displayName;
+      }
+      for (const id of this.id.data){
+        console.log(id);
+        tabs.push({
+          title : this.tempLang[id.lang],
+          route : [`id/${id.id}/${this.s}`],
+        });
+      }
+      this.tabs = tabs;
+    });
+    console.log(this.tempLang);
+
     this.s = window.location.href.slice(-1);
 
-    this.id = JSON.parse(localStorage.getItem('course-list'));
-    const tabs = [];
 
-    for (const id of this.id.data){
-      console.log(id);
-      tabs.push({
-        title : this.tempLang[id.lang],
-        route : [`id/${id.id}/${this.s}`],
-      });
-    }
-    this.tabs = tabs;
   }
 
   tabs: any[] ;
 
 
   markComplete(){
-    
-
-
 
   }
   changeStatus(status, type: NbComponentStatus) {
@@ -97,7 +99,7 @@ check(){
         if (temp.data.course && temp.data.course.sections.length > 0){
           if(temp.data.course.sections.data && temp.data.course.sections.data.length > 0){
             if (temp.data.course.sections[0].assessment && temp.data.course.sections[0].assessment !== null){
-              
+
             } else {
               return false;
             }
@@ -131,7 +133,7 @@ check(){
 
   status = [
     'Not Verified',
-    'Verified',
+    'Verified / Marked as Complete',
     'Live',
     'Disabled',
     'Deleted',

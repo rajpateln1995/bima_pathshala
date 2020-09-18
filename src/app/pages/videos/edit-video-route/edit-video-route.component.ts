@@ -3,7 +3,7 @@ import { VideoService } from '../../../services/video.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpEventType } from '@angular/common/http';
 import { CourseService } from '../../../services/course.service';
-import { NbToastrService } from '@nebular/theme';
+import { NbComponentStatus, NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-edit-video-route',
@@ -23,11 +23,28 @@ export class EditVideoRouteComponent implements OnInit {
   Data: any;
   video_name;
   video_description;
+  s;
 
   ngOnInit(): void {
     this.getVideoDetails();
-
+    this.s = window.location.href.slice(-1);
   }
+
+  changeStatus(status, type: NbComponentStatus) {
+
+    const obj = {
+      _id : this.route.snapshot.params['id'],
+      status : status,
+    };
+    this.video.saveVideo(obj).subscribe(res => {
+    console.log(res);
+    this.toaster.show(`Video Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
+    this.s = status;
+  }, err => {
+    console.log(err);
+    this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
+  });
+}
 
   getVideoDetails(){
     console.log(this.route.snapshot.params['id']);
@@ -45,42 +62,42 @@ export class EditVideoRouteComponent implements OnInit {
 
   mediaUrl;
   disableBtn;
-  progressVideo = 0;
+  progressVideo = '0';
   upload(event){
 
     const data = event.target.files[0];
     this.courses.upload(data).subscribe(event => {
       if (event.type === HttpEventType.UploadProgress){
         console.log(event);
-        this.progressVideo = (event.loaded / event.total) * 100 ;
+        this.progressVideo = ((event.loaded / event.total) * 100).toString();
       }else if (event.type === HttpEventType.Response){
         console.log(event);
         const data: any = event;
         this.mediaUrl = data.body.data[0];
         this.disableBtn = false;
-        this.progressVideo = 0;
+        this.progressVideo = '0';
         this.toaster.show('File Uploaded Successfully', 'File Uploaded' , { status : 'success' });
       }
     },
     err => {
       console.log(err);
-      this.progressVideo = 0;
+      this.progressVideo = '0';
       this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     });
   }
 
   thumbUrl;
-  progressThumb = 0;
+  progressThumb = '0';
   uploadThumb(event){
     const data = event.target.files[0];
     this.courses.upload(data).subscribe(event => {
       if (event.type === HttpEventType.UploadProgress){
         console.log(event);
-        this.progressThumb = (event.loaded / event.total) * 100;
-      }else if (event.type === HttpEventType.Response){
+        this.progressThumb = ((event.loaded / event.total) * 100).toString();
+      }else if (event.type === HttpEventType.Response) {
         console.log(event);
         const data: any = event;
-        this.progressThumb = 0;
+        this.progressThumb = '0';
         this.thumbUrl = data.body.data[0];
         this.disableBtn = false;
         this.toaster.show('File Uploaded Successfully', 'File Uploaded' , { status : 'success' });
@@ -89,7 +106,7 @@ export class EditVideoRouteComponent implements OnInit {
     err => {
       console.log(err);
       this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
-      this.progressThumb = 0;
+      this.progressThumb = '0';
     });
   }
     
@@ -120,5 +137,13 @@ export class EditVideoRouteComponent implements OnInit {
   ngOnDestroy() {
     this.save();
   }
+
+  status = [
+    'Not Verified',
+    'Verified / Marked as Complete',
+    'Live',
+    'Disabled',
+    'Deleted',
+  ];
 
 }

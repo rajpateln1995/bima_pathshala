@@ -7,12 +7,12 @@
         </div> -->
     </div>
     <div class="card-body">
-        <button class="mr-2" size="small" (click)="changeStatus('2', 'success')" type="button" nbButton status="success">Live</button>
+        <!-- <button class="mr-2" size="small" (click)="changeStatus('2', 'success')" type="button" nbButton status="success">Live</button>
         <button class="mr-2" size="small" (click)="changeStatus('3' , 'warning')" type="button" nbButton status="warning">Disable</button>
         <button size="small" (click)="changeStatus('4' , 'danger')" type="button" nbButton status="danger">Delete</button>
         <hr>
         <p class="text-center">Current Status: {{status[s]}}</p>
-        <hr>
+        <hr> -->
         <ng-container *ngIf="tabs">
             <nb-route-tabset  fullWidth [tabs]="tabs"></nb-route-tabset>
         </ng-container>

@@ -73,7 +73,7 @@ export class AllVideosComponent implements OnInit {
           this.languages.push({
             'name': l.name,
             'displayName' : l.displayName,
-            'value' : false,
+            'value' : true,
           });
         }
         console.log(this.languages);
@@ -111,8 +111,6 @@ export class AllVideosComponent implements OnInit {
   }
 
   mediaUrl;
-  
-
 
   submit() {
 

@@ -116,10 +116,12 @@
                   <div class="form-group">
                       <label for="inputFirstName" class="label">First Name of Shishya <span style="color: red;">*</span></label>
                       <input formControlName="fName" type="text" nbInput fullWidth  placeholder="Enter First Name ">
+                      <label *ngIf="!createShishya.get('fName').valid && createShishya.get('fName').touched" style="color: red;" class="label">This Field is Required</label>
                   </div>
                   <div class="form-group">
                     <label for="inputFirstName" class="label">Last Name of Shishya <span style="color: red;">*</span></label>
                     <input formControlName="lName" type="text" nbInput fullWidth  placeholder="Enter Last Name ">
+                    <label *ngIf="!createShishya.get('lName').valid && createShishya.get('lName').touched" style="color: red;" class="label">This Field is Required</label>
                   </div>
                 
                   
@@ -168,7 +170,8 @@
                   
                   <div class="form-group">
                     <label for="inputFirstName" class="label">Aadhaar Number <span style="color: red;">*</span></label>
-                    <input formControlName="aadhaarNo" type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Aadhaar Number">                
+                    <input formControlName="aadhaarNo" type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Aadhaar Number"> 
+                    <label *ngIf="!createShishya.get('aadhaarNo').valid && createShishya.get('aadhaarNo').touched" style="color: red;" class="label">Please Enter a Valid Aadhaar No.</label>               
                   </div>
 
 
@@ -202,16 +205,57 @@
                     </nb-radio-group>
                   </div>
                   <div class="form-group">
-                    <label for="inputFirstName" class="label">Marital Status</label>
-                    <input formControlName="maritalStatus" type="text" nbInput fullWidth placeholder="Enter Marital Status">                
+                    <label class="label">Marital Status</label>                  
+                    <select formControlName="maritalStatus" class="form-control">
+                      <option value="unmarried">Unmarried</option>
+                      <option value="divorced">Divorced</option>
+                      <option value="married">Married</option>
+                      <option value="separated">Separated</option>
+                      <option value="widowed">Widowed</option>                
+                    </select>      
                   </div>
                   <div class="form-group">
-                    <label for="inputFirstName" class="label">Mother Tongue</label>
-                    <input formControlName="motherTongue" type="text" nbInput fullWidth placeholder="Enter Mother Tongue">                
+                    <label  class="label">Mother Tongue</label>
+                    <select formControlName="motherTongue" class="form-control">
+                      <option value="Other">Other</option>
+                      <option value="Assamese">Assamese</option>
+                      <option value="Bengali">Bengali</option>
+                      <option value="English">English</option>
+                      <option value="Gujarati">Gujarati</option>                
+                      <option value="Hindi">Hindi</option>                
+                      <option value="Kannada">Kannada</option>                
+                      <option value="Malayalam">Malayalam</option>                
+                      <option value="Manipuri">Manipuri</option>                
+                      <option value="Marathi">Marathi</option>                
+                      <option value="Odia">Odia</option>                
+                      <option value="Punjabi">Punjabi</option>                
+                      <option value="Sanskrit">Sanskrit</option>                
+                      <option value="Tamil">Tamil</option>                
+                      <option value="Telugu">Telugu</option>                  
+                    </select>  
                   </div>
                   <div class="form-group">
-                    <label for="inputFirstName" class="label">Occupation</label>
-                    <input formControlName="occupation" type="text" nbInput fullWidth  placeholder="Enter Occupation">                
+                    <label  class="label">Occupation</label>
+                    <select formControlName="occupation" class="form-control">
+                      <option value="Other">Other</option>
+                      <option value="Accountant">Accountant</option>
+                      <option value="Cleaner">Cleaner</option>
+                      <option value="Construction labour">Construction labour</option>
+                      <option value="Driver">Driver</option>                
+                      <option value="Farmer">Farmer</option>                
+                      <option value="Fisherman">Fisherman</option>                
+                      <option value="Nurse">Nurse</option>                
+                      <option value="Office clerk">Office Clerk</option>                
+                      <option value="Sewing machine operator">Sewing Machine Operator</option>                
+                      <option value="Shopkeeper">Shopkeeper</option>                
+                      <option value="Student">Student</option>                
+                      <option value="Tailor">Tailor</option>                
+                      <option value="Teacher">Teacher</option>                
+                      <option value="Vegetable harvester">Vegetable Harvester</option>                  
+                      <option value="Vegetable picker">Vegetable Picker</option>                  
+                      <option value="Waiter">Waiter</option>                  
+                      <option value="Waiter">Salesperson</option>                  
+                    </select>  
                   </div>
                   <div class="form-group">
                     <label for="inputFirstName" class="label">Pincode <span style="color: red;">*</span></label>

@@ -88,7 +88,66 @@
                              
                         </div>
                     </div>   
-                    
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label text-center">Marital Status</label>   
+                        <div class="col-md-9">
+                            <select class="form-control" name="motherTongue" [disabled]="!editable" [(ngModel)]="details.maritalStatus">                    
+                                <option value="unmarried">Unmarried</option>
+                                <option value="divorced">Divorced</option>
+                                <option value="married">Married</option>
+                                <option value="separated">Separated</option>
+                                <option value="widowed">Widowed</option>                
+                              </select> 
+                        </div>           
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label text-center">Mother Tongue</label>   
+                        <div class="col-md-9">
+                            <select class="form-control" name="motherTongue" [disabled]="!editable" [(ngModel)]="details.motherTongue">                    
+                                <option value="Other">Other</option>
+                                <option value="Assamese">Assamese</option>
+                                <option value="Bengali">Bengali</option>
+                                <option value="English">English</option>
+                                <option value="Gujarati">Gujarati</option>                
+                                <option value="Hindi">Hindi</option>                
+                                <option value="Kannada">Kannada</option>                
+                                <option value="Malayalam">Malayalam</option>                
+                                <option value="Manipuri">Manipuri</option>                
+                                <option value="Marathi">Marathi</option>                
+                                <option value="Odia">Odia</option>                
+                                <option value="Punjabi">Punjabi</option>                
+                                <option value="Sanskrit">Sanskrit</option>                
+                                <option value="Tamil">Tamil</option>                
+                                <option value="Telugu">Telugu</option>               
+                            </select> 
+                        </div>           
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label text-center">Occupation</label>   
+                        <div class="col-md-9">
+                            <select class="form-control" name="motherTongue" [disabled]="!editable" [(ngModel)]="details.motherTongue">                    
+                                <option value="Other">Other</option>
+                                <option value="Accountant">Accountant</option>
+                                <option value="Cleaner">Cleaner</option>
+                                <option value="Construction labour">Construction labour</option>
+                                <option value="Driver">Driver</option>                
+                                <option value="Farmer">Farmer</option>                
+                                <option value="Fisherman">Fisherman</option>                
+                                <option value="Nurse">Nurse</option>                
+                                <option value="Office clerk">Office Clerk</option>                
+                                <option value="Sewing machine operator">Sewing Machine Operator</option>                
+                                <option value="Shopkeeper">Shopkeeper</option>                
+                                <option value="Student">Student</option>                
+                                <option value="Tailor">Tailor</option>                
+                                <option value="Teacher">Teacher</option>                
+                                <option value="Vegetable harvester">Vegetable Harvester</option>                  
+                                <option value="Vegetable picker">Vegetable Picker</option>                  
+                                <option value="Waiter">Waiter</option>                  
+                                <option value="Waiter">Salesperson</option>                 
+                              </select> 
+                        </div>           
+                    </div>
+                                          
                     <div class="form-group row">
                         <label class="col-md-3 col-form-label text-center">Mother Tongue</label>
                         <div class="col-md-9">

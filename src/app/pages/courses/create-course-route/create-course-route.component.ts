@@ -2,8 +2,8 @@ import { Component, OnInit, ɵConsole } from '@angular/core';
 import { CourseService } from '../../../services/course.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpEventType } from '@angular/common/http';
-import { NbToastrService } from '@nebular/theme';
-// import { CreateCourseSectionRouteComponent } from '../create-course-section-route/create-course-section-route.component';
+import { NbComponentStatus, NbToastrService } from '@nebular/theme';
+
 
 @Component({
   selector: 'ngx-create-course-route',
@@ -25,19 +25,74 @@ export class CreateCourseRouteComponent implements OnInit {
   SectionDescription;
 
   disable: boolean = true;
+  s;
 
   ngOnInit(): void {
 
     this.getCourse();
+    this.s = window.location.href.slice(-1);
 
   }
 
+
+  changeStatus(status, type: NbComponentStatus) {
+    this.s = status;
+      const obj = {
+        _id : this.route.snapshot.params['id'],
+        status : status,
+      };
+    this.courses.putCourse(obj).subscribe(res => {
+      console.log(res);
+      this.toaster.show(`Course Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  validateCourse(){
+    let validate = false;    
+    const temp: any = this.details;
+    if (temp && temp.sections.length > 0){
+      if(temp.sections && temp.sections.length > 0 ){
+        for (const sec of temp.sections){
+          if (sec.assessment && sec.data && sec.data.length > 0){
+            validate = true;
+          } else{
+            validate = false;
+          }
+        }
+      } else {
+        validate = false;
+      }
+    }else {
+      validate = false;
+    }
+    if(validate){
+      this.s = 1;
+      const obj = {
+        _id : this.route.snapshot.params['id'],
+        status : 1,
+      };
+      this.courses.putCourse(obj).subscribe(res => {
+        console.log(res);
+        this.toaster.show('Course Validated Successfully !', 'Course Validated' , { status : 'success' });
+      }, err => {
+        console.log(err);
+        this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
+      });
+    }else{
+      this.toaster.show('Please Make Sure Course Has Atleast 1 Section with 1 Assessment and 1 Sub-Section in Each !', 'Cannot Verify Course' , { status : 'danger' });
+    }
+  }
+
   getCourse(){
+    console.log(this.route.snapshot.params['id'])
     this.id = this.route.snapshot.params['id'];
     this.courses.getCourseDetails(this.id).subscribe(res => {
       console.log(res);
-      const data: any = res;
+      const data: any = res;  
       this.details = data.data.course;
+      this.s = data.data.course.status;
     },
     err => {
       console.log(err);
@@ -111,12 +166,13 @@ export class CreateCourseRouteComponent implements OnInit {
   }
 
   saveCourse(){
-    
+
     const obj = {
       name : this.details.name,
       description : this.details.description,
       coverImage : this.coverimage,
       coverVideo : this.covervideo,
+      duration : this.details.duration,
       _id : this.route.snapshot.params['id'],
     };
     this.courses.putCourse(obj).subscribe(res => {
@@ -130,12 +186,19 @@ export class CreateCourseRouteComponent implements OnInit {
     });
   }
 
+
   ngOnDestroy(){
     this.saveCourse();
   }
 
 
-
+  status = [
+    'Not Verified',
+    'Verified / Marked as Complete',
+    'Live',
+    'Disabled',
+    'Deleted',
+  ]
 
 
 

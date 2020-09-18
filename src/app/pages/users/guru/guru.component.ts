@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { guru } from './guru.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { UserService } from '../../../services/user.service';
 import { NbDateService } from '@nebular/theme';
 import { saveAs } from 'file-saver';
 import { Router } from '@angular/router';
 import { Papa } from 'ngx-papaparse';
+import { CourseService } from '../../../services/course.service';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class GuruComponent implements OnInit {
   constructor(private http: HttpClient,
               private user: UserService,
               private router: Router,
-              private papa: Papa) { }
+              private papa: Papa,
+              private courses: CourseService) { }
 
   data: any;
   total: Number;
@@ -83,7 +85,7 @@ export class GuruComponent implements OnInit {
   genderValue = 'male';
 
 
-  pageSize: string = '5';
+  pageSize: string = '50';
   curr_page: number = 1;
   createGuru: FormGroup;
   otp: String = '';
@@ -143,7 +145,6 @@ export class GuruComponent implements OnInit {
       this.data = res;
       this.total = this.data.total;
       this.data = this.data.data.guru;
-
     },
     err => {
       console.log(err);
@@ -210,15 +211,6 @@ export class GuruComponent implements OnInit {
     });
   }
 
-
-  date(){
-    setTimeout(() => {
-      if (document.getElementsByClassName('cdk-overlay-container')[0]){
-        document.getElementsByClassName('cdk-overlay-container')[0].setAttribute('style', 'z-index: 1080;');
-      }
-    }, 200);
-
-  }
 
   ConvertToCSV(objArray, headerList) {
     const array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
@@ -319,8 +311,10 @@ export class GuruComponent implements OnInit {
     }
   }
 
+  pincodeCheck = false;
   pincode(event){
     if (event.target.value.length === 6){
+      this.pincodeCheck = true;
       const x = event.target.value;
       const match = x.match(/^\d{6}$/);
       console.log(match);
@@ -345,9 +339,11 @@ export class GuruComponent implements OnInit {
                 this.city = loc_obj[0].city;
                 this.state = loc_obj[0].state;
                 this.country = loc_obj[0].country;
+                this.pincodeInvalid = false;
               }else{
                 document.getElementById('triggerPincode').click();
                 this.location = loc_obj;
+                this.pincodeInvalid = false;
               }
             }else{
               this.location = loc_obj;
@@ -451,6 +447,28 @@ export class GuruComponent implements OnInit {
     this.router.navigateByUrl(`/pages/users/user-details/guru/${id}`);
   }
 
+  aadhaarImg;
+  progressImg = 0;
+  uploadImage(event){
+    const data = event.target.files[0];
+    this.courses.upload(data).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress){
+        console.log(event);
+        this.progressImg = (event.loaded / event.total) * 100;
+
+      }else if (event.type === HttpEventType.Response){
+        console.log(event);
+        const data: any = event;
+        this.progressImg = 0;
+        this.aadhaarImg = data.body.data[0];
+      }
+    },
+    err => {
+      console.log(err);
+      this.progressImg = 0;
+    });
+  }
+
   createUser(){
     const obj = {
       'data' : [{
@@ -461,7 +479,7 @@ export class GuruComponent implements OnInit {
         'password': 'default',
         'dob': this.createGuru.value.dob,
         'aadharNumber': this.createGuru.value.aadhaarNo,
-        'aadhaarImg': this.createGuru.value.aadhaarImg,
+        'aadhaarImg': this.aadhaarImg,
         'motherTongue': this.createGuru.value.motherTongue,
         'maritalStatus': this.createGuru.value.maritalStatus,
         'occupation': this.createGuru.value.occupation,
@@ -483,6 +501,15 @@ export class GuruComponent implements OnInit {
       console.log(res);
       this.createGuru.reset();
       document.getElementById('close-btn').click();
+      this.user.getUsers('guru', this.limit, '1').subscribe(res => {
+        console.log(res);
+        this.data = res;
+        this.total = this.data.total;
+        this.data = this.data.data.guru;
+      },
+      err => {
+        console.log(err);
+      });
     },
     err => {
       console.log(err);

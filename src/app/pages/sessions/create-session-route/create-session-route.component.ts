@@ -1,7 +1,7 @@
 import { HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NbToastrService } from '@nebular/theme';
+import { NbComponentStatus, NbToastrService } from '@nebular/theme';
 import { CourseService } from '../../../services/course.service';
 import { SessionsService } from '../../../services/sessions.service';
 
@@ -28,6 +28,7 @@ export class CreateSessionRouteComponent implements OnInit {
   section_description;
   sections;
   curriculum = [];
+  s;
 
   ngOnInit(): void {
     this.getDetails();
@@ -44,6 +45,20 @@ export class CreateSessionRouteComponent implements OnInit {
     err => {
       console.log(err);
       this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
+    });
+  }
+
+  changeStatus(status, type: NbComponentStatus) {
+    this.s = status;
+      const obj = {
+        _id : this.route.snapshot.params['id'],
+        status : status,
+      };
+    this.courses.putCourse(obj).subscribe(res => {
+      console.log(res);
+      this.toaster.show(`Course Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
+    }, err => {
+      console.log(err);
     });
   }
 
@@ -107,6 +122,44 @@ saveSession(){
 
 }
 
+validateSession(){
+  // let validate = false;
+  // const temp: any = this.details;
+  // if (temp && temp.sections.length > 0){
+  //   if(temp.sections && temp.sections.length > 0 ){
+  //     for (const sec of temp.sections){
+  //       if (sec.assessment && sec.data && sec.data.length > 0){
+  //         validate = true;
+  //       } else{
+  //         validate = false;
+  //       }
+  //     }
+  //   } else {
+  //     validate = false;
+  //   }
+  // }else {
+  //   validate = false;
+  // }
+  // if(validate){
+  //   this.s = 1;
+  //   const obj = {
+  //     _id : this.route.snapshot.params['id'],
+  //     status : 1,
+  //   };
+  //   this.courses.putCourse(obj).subscribe(res => {
+  //     console.log(res);
+  //     this.toaster.show('Course Validated Successfully !', 'Course Validated' , { status : 'success' });
+  //   }, err => {
+  //     console.log(err);
+  //     this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
+  //   });
+  // }else{
+  //   this.toaster.show('Please Make Sure Session Has Atleast 1 Section with 1 Sub-Section in Each !', 'Cannot Verify Session' , { status : 'danger' });
+  // }
+}
+
+
+
 createSection(form) {
   const obj = {
     name: this.section_name,
@@ -133,6 +186,15 @@ config = {
   hideInputContainer :false,
   
 }
+
+
+status = [
+  'Not Verified',
+  'Verified / Marked as Complete',
+  'Live',
+  'Disabled',
+  'Deleted',
+]
 
 
 }

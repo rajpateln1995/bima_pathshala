@@ -89,8 +89,6 @@
                 </div>  
             </div>
             
-         
-          
         </div>
       </div>
     </div>
@@ -115,17 +113,17 @@
                 <label class="label">Fields Marked with <span style="color: red;">*</span> are Mandatory !</label>
               </div>
                 <div class="form-group">
-                    <label for="inputFirstName" class="label">First Name of Guru <span style="color: red;">*</span></label>
+                    <label  class="label">First Name of Guru <span style="color: red;">*</span></label>
                     <input formControlName="fName" type="text" nbInput fullWidth  placeholder="Enter First Name ">
                     <label *ngIf="createGuru.get('fName').invalid && createGuru.get('fName').touched" style="color: red;" class="label">This field is Required !</label>
                 </div>
                 <div class="form-group">
-                  <label for="inputFirstName" class="label">Last Name of Guru <span style="color: red;">*</span></label>
+                  <label  class="label">Last Name of Guru <span style="color: red;">*</span></label>
                   <input formControlName="lName" type="text" nbInput fullWidth  placeholder="Enter Last Name ">
                   <label *ngIf="createGuru.get('lName').invalid && createGuru.get('lName').touched" style="color: red;" class="label">This field is Required !</label>
                 </div>
                 <!-- <div class="form-group">
-                  <label for="inputFirstName" class="label">Guru Type <span style="color: red;">*</span></label>
+                  <label  class="label">Guru Type <span style="color: red;">*</span></label>
                   <select class="form-control" style="width: 50%;">
                     <option selected>--Select--</option>
                     <option value="Full Time">Full Time</option>
@@ -134,7 +132,7 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="inputFirstName" class="label">Guru Level <span style="color: red;">*</span></label>
+                  <label  class="label">Guru Level <span style="color: red;">*</span></label>
                   <select class="form-control" style="width: 50%">
                     <option selected>--Select--</option>
                     <option value="level 1">Level 1</option>
@@ -144,18 +142,18 @@
                 </div> -->
                 
                 <div class="form-group">
-                    <label for="inputFirstName" class="label">Email <span style="color: red;">*</span></label>
+                    <label  class="label">Email <span style="color: red;">*</span></label>
                     <input formControlName="email" type="text" nbInput fullWidth  placeholder="Enter Email">
                     <label *ngIf="!createGuru.get('email').valid && createGuru.get('email').touched" style="color: red;" class="label">Please Enter a Valid Email</label>
                 </div>
                 <div class="form-group">
-                  <label for="inputFirstName" class="label">Contact No. <span style="color: red;">*</span></label>
+                  <label  class="label">Contact No. <span style="color: red;">*</span></label>
                   <input formControlName="phone" type="text" nbInput fullWidth minlength="10" placeholder="Enter Contact No.">
                   <label *ngIf="!createGuru.get('phone').valid && createGuru.get('phone').touched" style="color: red;" class="label">Please Enter a Valid Phone No.</label>
                 </div>
                 
                 <!-- <div class="form-group">
-                    <label for="inputFirstName" class="label">Contact No.<span style="color: red;">*</span></label> -->
+                    <label  class="label">Contact No.<span style="color: red;">*</span></label> -->
                     <!-- <div class="row">
                       <div class="col-md-8"> -->
                         <!-- <input [disabled] = "disable_contact" [ngModelOptions]="{standalone: true}" [(ngModel)] = "contact" type="text" nbInput fullWidth  placeholder="Enter Contact No."> -->
@@ -166,7 +164,7 @@
                     </div> -->
                 <!-- </div> -->
                 <!-- <div *ngIf="show_otp" class="form-group">
-                  <label *ngIf="verified.length === 0" for="inputFirstName" class="label d-block">Please enter otp sent at </label>
+                  <label *ngIf="verified.length === 0"  class="label d-block">Please enter otp sent at </label>
                   <ng-otp-input *ngIf="verified.length === 0" class="d-inline-block" (onInputChange)="onOtpChange($event)"  [config]="{length:4}"></ng-otp-input>
                   <h5 *ngIf="verified.length > 0" style="color: #00d68f; text-align:center;">
                     <i class="fa fa-check mr-2" aria-hidden="true"></i>{{verified}}
@@ -179,25 +177,30 @@
                 <label class="label">Date of Birth<span style="color: red;">*</span></label>
 
                
-                  <input class="mb-3" type="datetime-local" id="date-time" 
+                  <input type="date" id="date-time" 
                   formControlName="dob" >
                
                 <label *ngIf="!createGuru.get('dob').valid && createGuru.get('dob').touched" style="color: red;" class="label">Please Select a Date</label>
                     
                 
-                <div class="form-group">
-                  <label for="inputFirstName" class="label">Aadhaar Number <span style="color: red;">*</span></label>
+                <div class="form-group mt-3">
+                  <label  class="label">Aadhaar Number <span style="color: red;">*</span></label>
                   <input formControlName="aadhaarNo" type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Aadhaar Number">  
                   <label *ngIf="createGuru.get('aadhaarNo').invalid && createGuru.get('aadhaarNo').touched" style="color: red;" class="label">This field is Required !</label>              
                 </div>
+
                 <div class="form-group">
-                  <label for="inputFirstName" class="label">Aadhaar Card Image </label>
-                  <input formControlName="aadhaarImg" class="d-block" type="file" >    
+                  <label  class="label">Aadhaar Card Image </label>
+                  <input formControlName="aadhaarImg" (change)="uploadImage($event)" class="d-block" type="file" >    
                   <label *ngIf="createGuru.get('aadhaarImg').invalid && createGuru.get('aadhaarImg').touched" style="color: red;" class="label">This field is Required !</label>                          
+                  <div *ngIf="progressImg > 0" class="progress mt-4">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{progressImg}}%"
+                        aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
                 </div>
                 
                 <div class="form-group">
-                  <label for="inputFirstName" class="label">Gender <span style="color: red;">*</span></label>
+                  <label  class="label">Gender <span style="color: red;">*</span></label>
                   <nb-radio-group [(value)]="genderValue">
                     <nb-radio
                       [value]="'male'">
@@ -214,19 +217,60 @@
                   </nb-radio-group>
                 </div>
                 <div class="form-group">
-                  <label for="inputFirstName" class="label">Marital Status</label>
-                  <input formControlName="maritalStatus" type="text" nbInput fullWidth placeholder="Enter Marital Status">                
+                  <label class="label">Marital Status</label>                  
+                  <select formControlName="maritalStatus" class="form-control">
+                    <option value="unmarried">Unmarried</option>
+                    <option value="divorced">Divorced</option>
+                    <option value="married">Married</option>
+                    <option value="separated">Separated</option>
+                    <option value="widowed">Widowed</option>                
+                  </select>      
                 </div>
                 <div class="form-group">
-                  <label for="inputFirstName" class="label">Mother Tongue</label>
-                  <input formControlName="motherTongue" type="text" nbInput fullWidth placeholder="Enter Mother Tongue">                
+                  <label  class="label">Mother Tongue</label>
+                  <select formControlName="motherTongue" class="form-control">
+                    <option value="Other">Other</option>
+                    <option value="Assamese">Assamese</option>
+                    <option value="Bengali">Bengali</option>
+                    <option value="English">English</option>
+                    <option value="Gujarati">Gujarati</option>                
+                    <option value="Hindi">Hindi</option>                
+                    <option value="Kannada">Kannada</option>                
+                    <option value="Malayalam">Malayalam</option>                
+                    <option value="Manipuri">Manipuri</option>                
+                    <option value="Marathi">Marathi</option>                
+                    <option value="Odia">Odia</option>                
+                    <option value="Punjabi">Punjabi</option>                
+                    <option value="Sanskrit">Sanskrit</option>                
+                    <option value="Tamil">Tamil</option>                
+                    <option value="Telugu">Telugu</option>                  
+                  </select>  
                 </div>
                 <div class="form-group">
-                  <label for="inputFirstName" class="label">Occupation</label>
-                  <input formControlName="occupation" type="text" nbInput fullWidth  placeholder="Enter Occupation">                
+                  <label  class="label">Occupation</label>
+                  <select formControlName="occupation" class="form-control">
+                    <option value="Other">Other</option>
+                    <option value="Accountant">Accountant</option>
+                    <option value="Cleaner">Cleaner</option>
+                    <option value="Construction labour">Construction labour</option>
+                    <option value="Driver">Driver</option>                
+                    <option value="Farmer">Farmer</option>                
+                    <option value="Fisherman">Fisherman</option>                
+                    <option value="Nurse">Nurse</option>                
+                    <option value="Office clerk">Office Clerk</option>                
+                    <option value="Sewing machine operator">Sewing Machine Operator</option>                
+                    <option value="Shopkeeper">Shopkeeper</option>                
+                    <option value="Student">Student</option>                
+                    <option value="Tailor">Tailor</option>                
+                    <option value="Teacher">Teacher</option>                
+                    <option value="Vegetable harvester">Vegetable Harvester</option>                  
+                    <option value="Vegetable picker">Vegetable Picker</option>                  
+                    <option value="Waiter">Waiter</option>                  
+                    <option value="Waiter">Salesperson</option>                  
+                  </select>  
                 </div>
                 <div class="form-group">
-                  <label for="inputFirstName" class="label">Pincode <span style="color: red;">*</span></label>
+                  <label  class="label">Pincode <span style="color: red;">*</span></label>
                   <input [(ngModel)]="pinCode" [ngModelOptions]="{standalone: true}" maxlength="6" (input)="pincode($event)" type="text" nbInput fullWidth  placeholder="Enter Pin Code">    
                   
                 </div>
@@ -234,26 +278,26 @@
                   <label class="label" style="color: red;">Invalid Pincode</label>
                 </div>
                 <div class="form-group">
-                  <label for="inputFirstName" class="label">Locality <span style="color: red;">*</span></label>
+                  <label  class="label">Locality <span style="color: red;">*</span></label>
                   <input  [(ngModel)]="locality" [ngModelOptions]="{standalone: true}" type="text" nbInput fullWidth  placeholder="Enter Locality">                
                 </div>
                 <div class="form-group">
-                  <label for="inputFirstName" class="label">City / District <span style="color: red;">*</span></label>
+                  <label  class="label">City / District <span style="color: red;">*</span></label>
                   <input   [(ngModel)]="city" [ngModelOptions]="{standalone: true}" type="text" nbInput fullWidth  placeholder="Enter City">                
                 </div>
                 <div class="form-group">
-                  <label for="inputFirstName" class="label">State <span style="color: red;">*</span></label>
+                  <label  class="label">State <span style="color: red;">*</span></label>
                   <input [(ngModel)]="state" [ngModelOptions]="{standalone: true}" type="text" nbInput fullWidth  placeholder="Enter State">               
                 </div>
                 <div class="form-group">
-                    <label for="inputFirstName" class="label">Country <span style="color: red;">*</span></label>
+                    <label  class="label">Country <span style="color: red;">*</span></label>
                     <input [(ngModel)]="country" [ngModelOptions]="{standalone: true}" type="text" nbInput fullWidth  placeholder="Enter Pincode">                
                 </div>
                 
         </div>
         <div class="modal-footer">
           <button id="close-btn" nbButton status="danger" data-dismiss="modal">Close</button>
-          <button [disabled]="!createGuru.valid" nbButton status="success" (click)="createUser()">Create</button>
+          <button [disabled]="createGuru.invalid || !pincodeCheck" nbButton status="success" (click)="createUser()">Create</button>
           
         </div>
       </div>

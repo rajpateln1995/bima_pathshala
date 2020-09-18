@@ -22,25 +22,28 @@ export class EditDocumentComponent implements OnInit {
   s;
 
   tempLang = {
-  'HI' : 'HINDI',
-  'EN' : 'ENGLISH',
-  'MH' : 'MARATHI',
+
   };
   ngOnInit(): void {
 
+    const tabs = [];
+    this.id = JSON.parse(localStorage.getItem('doc-list'));
+    this.course.getLanguages().subscribe((res:any) => {
+      for (const l of res.data){
+        this.tempLang[l.name] = l.displayName;
+      }
+      for (const id of this.id.data){
+        console.log(id);
+        tabs.push({
+          title : this.tempLang[id.language],
+          route : [`id/${id.document}/${this.s}`],
+        });
+      }
+      this.tabs = tabs;
+    });
+
     this.s = window.location.href.slice(-1);
 
-    this.id = JSON.parse(localStorage.getItem('doc-list'));
-    const tabs = [];
-
-    for (const id of this.id.data){
-    console.log(id);
-    tabs.push({
-    title : this.tempLang[id.language],
-    route : [`id/${id.document}/${this.s}`],
-    });
-    }
-    this.tabs = tabs;
   }
 
   tabs: any[] ;
@@ -61,13 +64,12 @@ export class EditDocumentComponent implements OnInit {
 
   }
 
-status = [
-  'Not Completed',
-  'Verified',
-  'Live',
-  'Disabled',
-  'Deleted',
-]
-
+  status = [
+    'Not Verified',
+    'Verified / Marked as Complete',
+    'Live',
+    'Disabled',
+    'Deleted',
+  ]
 
 }

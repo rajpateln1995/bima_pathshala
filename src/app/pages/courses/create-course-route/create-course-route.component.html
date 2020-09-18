@@ -1,4 +1,18 @@
 <ng-container *ngIf="details">
+
+    <hr>
+    <p class="text-center"><span style="color: #3366ff;">Current Status :</span> {{status[s]}}</p>
+    <hr>
+    <p style="color:#ffaa00;" class="text-center">**Make sure that you validate course before making live !**</p>
+    <div class="text-center">
+        <button class="mr-2" size="small" (click)="validateCourse()" type="button" nbButton status="primary">Mark as
+            Complete / Validate</button>
+        <button class="mr-2" [disabled]="!(s === 1)" size="small" (click)="changeStatus('2', 'success')" type="button" nbButton status="success">Live</button>
+        <button class="mr-2" size="small" (click)="changeStatus('3' , 'warning')" type="button" nbButton status="danger">Disable</button>
+    </div>
+
+    <!-- <button size="small" (click)="changeStatus('4' , 'danger')" type="button" nbButton status="danger">Delete</button> -->
+    <hr>
     <form #f="ngForm">
         <div class="form-group row mt-4">
             <label class="col-md-4 col-form-label text-center">Course Name<span style="color: red;">
@@ -42,12 +56,10 @@
         <p *ngIf="courseImage.invalid && courseImage.touched" class="text-center mb-3 mt-1" style="color: red;">This
             Field is Mandatory !</p>
         <div class="form-group row">
-            <label class="col-md-4 col-form-label text-center">Cover Video <span style="color: red;">
-                    *</span></label>
+            <label class="col-md-4 col-form-label text-center">Cover Video </label>
             <div class="col-md-8 pt-2">
                 <input [disabled]="disable" type="file" accept="video/*" class="d-block form-control-file"
                     name="courseVideo" #courseVideo="ngModel" ngModel
-                    [required]="!(details.coverVideo && details.coverVideo.length > 0 && details.couverVideo !== 'NA')"
                     (change)="uploadVideo($event)">
                 <a target="_blank" *ngIf="details.coverVideo.length > 0 && details.coverVideo !== 'NA'"
                     href="{{details.coverVideo}}">preview</a>
@@ -57,8 +69,17 @@
                 </div>
             </div>
         </div>
-        <p *ngIf="courseVideo.invalid && courseVideo.touched" class="text-center mb-3 mt-1" style="color: red;">This
-            Field is Mandatory !</p>
+        <div class="form-group row mt-4">
+            <label class="col-md-4 col-form-label text-center">Course Duration<span style="color: red;">
+                    *</span></label>
+            <div class="col-md-8">
+                <input type="text" [disabled]="disable" name="courseDuration" required #courseDuration="ngModel"
+                    [(ngModel)]="details.duration" class="form-control"
+                    placeholder="Enter Course Duration [In {{details.language}}]">
+                <p *ngIf="courseDuration.invalid && courseDuration.touched" class="text-center mb-3 mt-1" style="color: red;">
+                    This Field is Mandatory !</p>
+            </div>
+        </div>
         <div class="text-right">
             <button nbButton status="primary" class="mr-2" (click)="disable = false">Edit</button>
             <button nbButton status="success" [disabled]="f.invalid || disable" (click)="saveCourse()">Save Course
@@ -85,8 +106,6 @@
     </nb-accordion>
 
 </ng-container>
-
-
 
 <div class="modal" tabindex="-1" id="sectionModal">
     <div class="modal-dialog">
