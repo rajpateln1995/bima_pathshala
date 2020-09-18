@@ -21,6 +21,7 @@ export class DocumentsComponent implements OnInit {
   limit = '50';
   curr_page = 1;
   pageSize;
+  filterSelect = '';
   table_head = [
     'Title',
     'Type',
@@ -42,6 +43,16 @@ export class DocumentsComponent implements OnInit {
 
   ngOnInit() {
     this.getDocuments('1');
+    this.getLang();
+  }
+
+  lang = {};
+  getLang(){
+    this.courses.getLanguages().subscribe((res: any) => {
+      for (const l of res.data){
+        this.lang[l.name] = l.displayName;
+      }
+    })
   }
 
   getPage(page) {

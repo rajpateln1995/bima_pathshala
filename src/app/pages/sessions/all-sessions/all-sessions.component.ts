@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CourseService } from '../../../services/course.service';
 import { SessionsService } from '../../../services/sessions.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'ngx-all-sessions',
@@ -16,8 +17,23 @@ export class AllSessionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSessions('1');
+    this.getLanguages();
   }
 
+  lang = {};
+  getLanguages(){
+    this.courses.getLanguages().subscribe((res: any) => {
+      for (const l of res.data){
+        this.lang[l.name] = l.displayName;
+      }
+    })
+  }
+
+  formatDate(date){
+    const temp = new Date(date);
+    return moment(temp).format('MMMM Do YYYY, h:mm:ss a')
+  }
+  filterSelect = '';
   Data;
   total;
   table_head = [

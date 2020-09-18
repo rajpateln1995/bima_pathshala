@@ -13,6 +13,7 @@ import { CreateCourseRouteComponent } from './create-course-route/create-course-
 import { CreateCourseSectionRouteComponent } from './create-course-section-route/create-course-section-route.component';
 import { AssessmentsComponent } from './assessments/assessments.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 
@@ -35,6 +36,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NbAccordionModule,
     NbRouteTabsetModule,
     NgxPaginationModule,
+    Ng2SearchPipeModule,
   ],
 })
 export class CoursesModule { }

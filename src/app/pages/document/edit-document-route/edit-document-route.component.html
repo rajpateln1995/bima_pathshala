@@ -8,17 +8,17 @@
     </div>
     <form #document="ngForm">
         <div class="form-group row mt-4">
-            <label class="col-md-4 col-form-label text-center">Document Title<Title></Title><span style="color: red;">
+            <label class="col-md-4 col-form-label text-center">Article Title<span style="color: red;">
                     *</span></label>
             <div class="col-md-8">
                 <input type="text" name="documentName" required #documentName="ngModel" [(ngModel)]="document_name"
-                    class="form-control" placeholder="Enter Document Title [In {{Data.language}}]">
+                    class="form-control" placeholder="Enter Article Title [In {{Data.language}}]">
                 <p *ngIf="documentName.invalid && documentName.touched" class="text-center mb-3 mt-1"
                     style="color: red;">
                     This Field is Mandatory !</p>
             </div>
         </div>
-        <div class="form-group row">
+        <!-- <div class="form-group row">
             <label class="col-md-4 col-form-label text-center">Document Description<span style="color: red;">
                     *</span></label>
             <div class="col-md-8">
@@ -28,7 +28,7 @@
                 <p *ngIf="documentDescription.invalid && documentDescription.touched" class="text-center mb-3 mt-1"
                     style="color: red;">This Field is Mandatory !</p>
             </div>
-        </div>
+        </div> -->
         <div class="form-group row">
             <label class="col-md-4 col-form-label text-center">Reading Time<span style="color: red;">
                     *</span></label>
@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-md-4 col-form-label text-center">Document Image<span style="color: red;">
+            <label class="col-md-4 col-form-label text-center">Article Image<span style="color: red;">
                     *</span></label>
             <div class="col-md-8">
                 <input class="mt-1 d-block" type="file" (change)="upload($event)" accept="Image/*" name="docimg" [required]="!(Data && Data.img && Data.img.length > 0)"
@@ -56,6 +56,8 @@
             </div>
         </div>
 
+        <hr>
+        <label class="d-block mb-0 text-center">Article Body <span style="color: red;">*</span></label>
         <hr>
         <ckeditor [ngModelOptions]="{standalone: true}" [config]="{ extraPlugins: 'divarea', height: '320' }"
             [(ngModel)]="htmlText"></ckeditor>

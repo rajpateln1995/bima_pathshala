@@ -33,9 +33,20 @@ export class AllVideosComponent implements OnInit {
   videoType;
   curr_page = 1;
   limit = '50';
+  filterSelect = '';
 
   ngOnInit(): void {
     this.getAllVideos('1');
+    this.getLang();
+  }
+
+  lang = {};
+  getLang(){
+    this.courses.getLanguages().subscribe((res: any) => {
+      for (const l of res.data){
+        this.lang[l.name] = l.displayName;
+      }
+    })
   }
 
   getAllVideos(page){

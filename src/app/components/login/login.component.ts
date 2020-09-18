@@ -49,6 +49,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       const r = res;
       if (r['success'] === 1) {
         this.pleaseWait = true;
+        this.showMsg = false;
         this.router.navigateByUrl('/pages/home');
       }else{
         this.loader.hide();

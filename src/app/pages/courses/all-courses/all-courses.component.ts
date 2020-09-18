@@ -13,7 +13,7 @@ export class AllCoursesComponent implements OnInit {
 
   constructor(private courses: CourseService,
               private router: Router,
-              private toaster : NbToastrService) { }
+              private toaster: NbToastrService) { }
 
 
   table_head = [
@@ -34,6 +34,7 @@ export class AllCoursesComponent implements OnInit {
     'Disabled',
     'Deleted',
   ];
+  filterSelect = '';
   total: number = 0;
   data: any ;
   courseType: string;
@@ -42,20 +43,28 @@ export class AllCoursesComponent implements OnInit {
   courseTitle = '';
   fee = 0;
   limit: string = '50';
-  curr_page:string = '1';
+  curr_page: string = '1';
+ 
 
   ngOnInit(): void {
     this.courses.getCourses('', '1' , this.limit, 'true').subscribe(res => {
-      console.log(res);
       this.data = res;
       this.total = this.data.total;
       this.data = this.data.data;
-      
     },
     err => {
       console.log(err);
     });
+    this.getLanguages();
+  }
 
+  lang = {};
+  getLanguages(){
+    this.courses.getLanguages().subscribe((res: any) => {
+      for (const l of res.data){
+        this.lang[l.name] = l.displayName;
+      }
+    })
   }
 
   getPage(page){
@@ -72,7 +81,7 @@ export class AllCoursesComponent implements OnInit {
   }
 
   viewCourse(courseId, status) {
-    console.log(courseId)
+    console.log(courseId);
     let obj;
     this.courses.getCourseDetails(courseId).subscribe(res => {
       console.log(res);
