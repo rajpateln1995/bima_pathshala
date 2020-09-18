@@ -58,7 +58,7 @@ export class CourseService {
     let q_params = new HttpParams();
     q_params = q_params.append('_id', id);
 
-    return this.http.get(this.base_url + '/course/details', { headers: header, params: q_params });
+    return this.http.get(this.base_url + '/course/detailsDashboard', { headers: header, params: q_params });
   }
 
   createSection(data) {
