@@ -6,5 +6,5 @@
 export const environment = {
   production: true,
   base_url : 'https://bimapath.herokuapp.com/api',
-  environment : 'prod',
+  environmentName : 'prod',
 };
