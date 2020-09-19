@@ -31,7 +31,7 @@
     <div class="text-right mb-3">
         <button class="mr-2" size="small" (click)="section_disable = false" type="button" nbButton status="success">
             Edit</button>
-        <button class="mr-2" [disabled]="section.invalid || section_disable" size="small" (click)="saveSection()" type="button" nbButton status="success">
+        <button class="mr-2" [disabled]="section.invalid || section_disable" size="small" (click)="saveSection(false)" type="button" nbButton status="success">
             Save</button>
     </div>
 </form>

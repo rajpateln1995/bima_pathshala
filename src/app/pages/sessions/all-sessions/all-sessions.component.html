@@ -5,8 +5,7 @@
 
 
 <label class="d-block bold"><b>Filter By Language</b></label>
-<select class="custom-select mb-3" style="width: 40%;" [(ngModel)]="filterSelect">
-<option selected value="">--Select--</option>
+<select class="custom-select mb-3" style="width: 40%;" [(ngModel)]="filterSelect" (ngModelChange)="changeFilter()">
 <ng-container *ngFor="let l of lang | keyvalue" >
     <option [value]="l.key">{{l.value}}</option>
 </ng-container>
@@ -38,11 +37,11 @@
                             itemsPerPage: limit,
                             currentPage: curr_page,
                             totalItems: total}">
-                            <tr *ngIf="filterSelect === '' || d.language === filterSelect">
+                            <tr>
                                 <td>{{d.name}}</td>
                                 <td>{{d.duration}}</td>
                                 <td>{{formatDate(d.sessionDate)}}</td>
-                                <td>{{d.language}}</td>
+                                <td>{{lang[d.language]}}</td>
                                 <td>{{status[d.status]}}</td>
                                 <td>
                                     <a target="_blank" href="{{d.coverImage}}"><i class="fa fa-eye"

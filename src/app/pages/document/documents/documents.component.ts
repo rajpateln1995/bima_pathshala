@@ -21,7 +21,7 @@ export class DocumentsComponent implements OnInit {
   limit = '50';
   curr_page = 1;
   pageSize;
-  filterSelect = '';
+  filterSelect = 'EN';
   table_head = [
     'Title',
     'Type',
@@ -60,6 +60,10 @@ export class DocumentsComponent implements OnInit {
     this.curr_page = page;
   }
 
+  changeFilter(){
+    this.getDocuments('1');
+  }
+
   getLanguages(){
     if (this.languages.length > 0){
       document.getElementById('create-doc-modal').click();
@@ -91,7 +95,7 @@ export class DocumentsComponent implements OnInit {
   }
 
   getDocuments(page){
-    this.document.getDocAndArticle('', '', page , this.limit , 'true').subscribe(res => {
+    this.document.getDocAndArticle('', '', page , this.limit , 'true' , this.filterSelect).subscribe(res => {
       console.log(res);
       const temp: any = res;
       this.Data = temp.data;
@@ -165,7 +169,7 @@ export class DocumentsComponent implements OnInit {
   }
 
   viewDocument(id, status){
-      this.document.getDocAndArticle('' , id, '1', '10', 'true').subscribe(res => {
+      this.document.getDocAndArticle('' , id, '1', '10', 'true' , this.filterSelect).subscribe(res => {
         console.log(res);
         const temp: any = res;
         console.log(id);

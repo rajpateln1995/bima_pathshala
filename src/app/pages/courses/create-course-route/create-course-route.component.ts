@@ -50,7 +50,7 @@ export class CreateCourseRouteComponent implements OnInit {
   }
 
   validateCourse(){
-    let validate = false;    
+    let validate = false;
     const temp: any = this.details;
     if (temp && temp.sections.length > 0){
       if(temp.sections && temp.sections.length > 0 ){
@@ -81,7 +81,7 @@ export class CreateCourseRouteComponent implements OnInit {
         this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
       });
     }else{
-      this.toaster.show('Please Make Sure Course Has Atleast 1 Section with 1 Assessment and 1 Sub-Section in Each !', 'Cannot Verify Course' , { status : 'danger' });
+      this.toaster.show('Please Make Sure Course Has Atleast 1 Section with Atleast 1 Sub-Section in Each !', 'Cannot Verify Course' , { status : 'danger' , duration : 5000 });
     }
   }
 
@@ -165,7 +165,7 @@ export class CreateCourseRouteComponent implements OnInit {
       });
   }
 
-  saveCourse(){
+  saveCourse(ondestroy){
 
     const obj = {
       name : this.details.name,
@@ -178,7 +178,9 @@ export class CreateCourseRouteComponent implements OnInit {
     this.courses.putCourse(obj).subscribe(res => {
       console.log(res);
       this.getCourse();
-      this.toaster.show('Details Saved Successfully !', 'Saved Successfully' , { status : 'success' });
+      if(!ondestroy){
+        this.toaster.show('Course Details Saved Successfully !', 'Course Saved Successfully' , { status : 'success' });
+      }
     },
     err => {
       console.log(err);
@@ -188,7 +190,7 @@ export class CreateCourseRouteComponent implements OnInit {
 
 
   ngOnDestroy(){
-    this.saveCourse();
+    this.saveCourse(true);
   }
 
 

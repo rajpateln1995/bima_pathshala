@@ -15,15 +15,17 @@ export class CourseService {
     base_url = environment.base_url;
 
   id: any;
-  getCourses(status = '' , page = '' , limit = '', all='false' ) {
+  getCourses(status = '' , page = '' , limit = '', all='false', language) {
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
+    console.log(language);
 
     let q_params = new HttpParams();
     q_params = q_params.append('status', status);
     q_params = q_params.append('page', page);
     q_params = q_params.append('limit', limit);
     q_params = q_params.append('all', all);
+    q_params = q_params.append('language', language);
 
     return this.http.get(this.base_url + '/course/all', { headers: header , params : q_params});
   }

@@ -23,7 +23,8 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: LoginComponent,
+        redirectTo: 'login',
+        pathMatch: 'full',
       },
       {
         path: 'login',
@@ -31,7 +32,6 @@ export const routes: Routes = [
       },
     ],
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
   { path: '**', redirectTo: 'pages' },
 ];
 

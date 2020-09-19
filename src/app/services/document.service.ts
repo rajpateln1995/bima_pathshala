@@ -13,7 +13,7 @@ export class DocumentService {
 
     base_url = environment.base_url;
 
-  getDocAndArticle(type='' , _id = '' , page='1' , limit='50' , all='false'){
+  getDocAndArticle(type='' , _id = '' , page='1' , limit='50' , all='false' , language=''){
     let header = new HttpHeaders();
     header = header.append('Authorization', this.auth.getToken());
 
@@ -23,6 +23,7 @@ export class DocumentService {
     q_params = q_params.append('page', page);
     q_params = q_params.append('limit', limit);
     q_params = q_params.append('all', all);
+    q_params = q_params.append('language', language);
 
     return this.http.get(this.base_url + '/document/all' , { headers : header , params: q_params });
   }

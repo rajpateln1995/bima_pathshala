@@ -6,4 +6,5 @@
 export const environment = {
   production: true,
   base_url : 'https://bimapath.herokuapp.com/api',
+  environmentName : 'staging',
 };

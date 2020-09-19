@@ -28,8 +28,7 @@ export class AuthService {
     const data = JSON.parse(localStorage.getItem('Token'));
     var bytes = crypto.AES.decrypt(data.token, 'Secret Key Bima Paathshala');
     var deToken = bytes.toString(crypto.enc.Utf8);
-    console.log(deToken)
-    if (data.expDate < Date.now()){
+    if (data.expDate < Date.now()) {
       alert('Your Session has expired! Please Log In Again');
       this.logout();
       return null;
@@ -47,7 +46,6 @@ export class AuthService {
       console.log(res);
       const data: any = res;
       var enToken = crypto.AES.encrypt(data.data.auth.token, 'Secret Key Bima Paathshala').toString();
-      console.log(data.data.auth.token);
 
       if(data.data[0] !== null) {
         const Obj = {
@@ -60,7 +58,6 @@ export class AuthService {
         };
         localStorage.setItem('Token', JSON.stringify(Obj));
       }
-      
     }));
   }
 
@@ -85,8 +82,16 @@ export class AuthService {
 
 
   logout(){
-    localStorage.setItem('Token', null);
-    this.router.navigateByUrl('auth/login');
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.getToken());
+
+    this.http.get(this.base_url +  '/user/logout' , { headers : header }).subscribe(res => {
+      console.log(res);
+      localStorage.setItem('Token', null);
+      this.router.navigateByUrl('auth/login');
+    }, err => {
+      console.log(err);
+    });
   }
 
 }

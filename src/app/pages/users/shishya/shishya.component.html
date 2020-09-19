@@ -161,14 +161,14 @@
                   <label class="label">Date of Birth<span style="color: red;">*</span></label>
 
                
-                  <input class="mb-3" type="datetime-local" id="date-time" 
+                  <input type="date" id="date-time" 
                   formControlName="dob" >
                
                 <label *ngIf="!createShishya.get('dob').valid && createShishya.get('dob').touched" style="color: red;" class="label">Please Select a Date</label>
   
                
                   
-                  <div class="form-group">
+                  <div class="form-group mt-3">
                     <label for="inputFirstName" class="label">Aadhaar Number <span style="color: red;">*</span></label>
                     <input formControlName="aadhaarNo" type="text" nbInput fullWidth maxlength="12" minlength="12" placeholder="Enter Aadhaar Number"> 
                     <label *ngIf="!createShishya.get('aadhaarNo').valid && createShishya.get('aadhaarNo').touched" style="color: red;" class="label">Please Enter a Valid Aadhaar No.</label>               
@@ -284,7 +284,7 @@
           </div>
           <div class="modal-footer">
             <button id="close-btn" nbButton status="danger" data-dismiss="modal">Close</button>
-            <button [disabled]="!createShishya.valid" nbButton status="success" (click)="createUser()">Create</button>
+            <button [disabled]="createShishya.invalid || !pincodeCheck" nbButton status="success" (click)="createUser()">Create</button>
           </div>
         </div>
       </div>

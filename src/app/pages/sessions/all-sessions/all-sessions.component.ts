@@ -33,7 +33,7 @@ export class AllSessionsComponent implements OnInit {
     const temp = new Date(date);
     return moment(temp).format('MMMM Do YYYY, h:mm:ss a')
   }
-  filterSelect = '';
+  filterSelect = 'EN';
   Data;
   total;
   table_head = [
@@ -64,7 +64,7 @@ export class AllSessionsComponent implements OnInit {
   ];
 
   getSessions(page){
-    this.session.getAllSessions(this.limit , page , 'true').subscribe(res => {
+    this.session.getAllSessions(this.limit , page , 'true' , this.filterSelect).subscribe(res => {
       console.log(res);
       let temp: any = res;
       this.total = temp.total;
@@ -87,7 +87,9 @@ export class AllSessionsComponent implements OnInit {
     this.getSessions(page);
   }
 
-
+  changeFilter(){
+    this.getSessions('1');
+  }
 
 
   createSession() {

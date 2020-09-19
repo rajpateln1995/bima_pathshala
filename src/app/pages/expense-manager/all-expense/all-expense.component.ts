@@ -26,6 +26,7 @@ export class AllExpenseComponent implements OnInit {
     'Date',
     'Amount',
     'Status',
+    'User Details',
     'Bill Image',
     'View / Edit',
   ];
@@ -58,6 +59,10 @@ export class AllExpenseComponent implements OnInit {
   viewSession(id,status){
     console.log(this.Data.status);
     this.router.navigateByUrl(`/pages/expense-manager/edit/${id}/${status}`);
+  }
+
+  showUser(id){
+    this.router.navigateByUrl(`/pages/users/user-details/guru/${id}`);
   }
 
 }

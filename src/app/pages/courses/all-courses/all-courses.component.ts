@@ -34,7 +34,7 @@ export class AllCoursesComponent implements OnInit {
     'Disabled',
     'Deleted',
   ];
-  filterSelect = '';
+  filterSelect = 'EN';
   total: number = 0;
   data: any ;
   courseType: string;
@@ -47,10 +47,11 @@ export class AllCoursesComponent implements OnInit {
  
 
   ngOnInit(): void {
-    this.courses.getCourses('', '1' , this.limit, 'true').subscribe(res => {
+    this.courses.getCourses('', '1' , this.limit, 'true', this.filterSelect).subscribe(res => {
       this.data = res;
       this.total = this.data.total;
       this.data = this.data.data;
+      console.log(this.data);
     },
     err => {
       console.log(err);
@@ -68,7 +69,7 @@ export class AllCoursesComponent implements OnInit {
   }
 
   getPage(page){
-    this.courses.getCourses('0', page , this.limit).subscribe(res => {
+    this.courses.getCourses('0', page , this.limit , 'true' , this.filterSelect).subscribe(res => {
       console.log(res);
       this.data = res;
       this.total = this.data.total;
@@ -176,7 +177,7 @@ export class AllCoursesComponent implements OnInit {
 
   changeLimit(e){
     this.limit = e;
-    this.courses.getCourses('', '1' , this.limit, 'true').subscribe(res => {
+    this.courses.getCourses('', '1' , this.limit, 'true' , this.filterSelect).subscribe(res => {
       console.log(res);
       this.data = res;
       this.total = this.data.total;
@@ -188,5 +189,16 @@ export class AllCoursesComponent implements OnInit {
   }
 
 
+  changeFilter(){
+    this.courses.getCourses('', '1' , this.limit, 'true' , this.filterSelect).subscribe(res => {
+      console.log(res);
+      this.data = res;
+      this.total = this.data.total;
+      this.data = this.data.data;
+    },
+    err => {
+      console.log(err);
+    });
+  }
 
 }
