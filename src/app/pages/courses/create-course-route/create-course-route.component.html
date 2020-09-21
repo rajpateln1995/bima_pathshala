@@ -82,9 +82,9 @@
         </div>
         <div class="text-right">
             <button nbButton status="primary" class="mr-2" (click)="disable = false">Edit</button>
-            <button nbButton status="success" [disabled]="f.invalid || disable" (click)="saveCourse()">Save Course
+            <button nbButton status="success" [disabled]="f.invalid || disable" (click)="saveCourse(false)">Save Course
                 Details</button>
-        </div>
+        </div>  
     </form>
     <hr>
     <p class="text-center" style="font-size: larger;"><b>Course Sections</b></p>

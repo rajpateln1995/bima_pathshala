@@ -9,7 +9,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NbSelectModule,  NbButtonModule, NbInputModule, NbRadioModule, NbDatepickerModule, NbListModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { NgOtpInputModule } from 'ng-otp-input';
+
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { NbMomentDateModule } from '@nebular/moment';
 
@@ -32,7 +32,6 @@ import { NbMomentDateModule } from '@nebular/moment';
     ReactiveFormsModule,
     NbInputModule,
     Ng2SearchPipeModule,
-    NgOtpInputModule,
     NbRadioModule,
     NbDatepickerModule,
     NbListModule,

@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NbSpinnerService } from '@nebular/theme';
 import { LoaderService } from '../../services/loader.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'ngx-login',
@@ -26,8 +27,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   login_form: FormGroup;
   showMsg;
   pleaseWait = false;
+  env;
 
   ngOnInit(): void {
+    this.env = environment.environmentName;
     this.spinner$.load();
     this.login_form = new FormGroup({
       'email' : new FormControl(null, [Validators.required , Validators.email]),
@@ -49,6 +52,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       const r = res;
       if (r['success'] === 1) {
         this.pleaseWait = true;
+        this.showMsg = false;
         this.router.navigateByUrl('/pages/home');
       }else{
         this.loader.hide();

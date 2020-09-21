@@ -58,7 +58,7 @@ export class AssessmentsComponent implements OnInit {
         answer : '',
       }],
       courseSection : this.section_id,
-    }
+    };
     this.course.addAssessment(obj).subscribe(res => {
       console.log(res);
       const temp: any = res;
@@ -68,7 +68,6 @@ export class AssessmentsComponent implements OnInit {
       console.log(err);
       this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
-
   }
 
 
@@ -94,17 +93,20 @@ export class AssessmentsComponent implements OnInit {
     this.data.questions.splice(i, 1);
   }
 
-  save() {
+  save(ondestroy) {
     console.log(this.data);
     const obj = {
       time : this.data.time,
       certificateThreshold : this.data.certificateThreshold,
       questions : this.data.questions,
       _id : this.data._id,
-    }
-    
+    };
+
     this.course.editAssesment(obj).subscribe(res => {
       console.log(res);
+      if (!ondestroy){
+        this.toaster.show('Assesment Saved Successfully !' , 'Assessment Saved' , { status : 'success' });
+      }
     },
     err => {
       this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
@@ -114,7 +116,7 @@ export class AssessmentsComponent implements OnInit {
 
   // tslint:disable-next-line: use-lifecycle-interface
   ngOnDestroy() {
-    this.save();
+    this.save(true);
   }
 
 

@@ -2,6 +2,34 @@
 <button nbButton status="success" (click)="createModal()" class="float" ><i class="fa fa-plus mr-2" aria-hidden="true"></i>Add New Course</button>
 <button style="display: none;" id="create-modal" data-toggle="modal" data-target="#newCourseModal"></button>
 <!-- data Table -->
+<!-- <ng-container *ngIf="(lang | json) != '{}'">
+  <label class="d-block bold">Filter By Keywords</label>
+  <select class="custom-select mb-3" style="width: 40%;" [(ngModel)]="filterSelect">
+    <option selected value="">--Select--</option>
+    <optgroup label="Languages">
+      <ng-container *ngFor="let l of lang | keyvalue">
+        <option [value]="l.key">{{l.value}}</option>
+      </ng-container>
+    </optgroup>
+    <optgroup label="Type">
+      <option value="free">Free</option>
+      <option value="paid">Paid</option>
+    </optgroup>
+    <optgroup label="Status">
+      <option value="Not Completed">{{status[0]}}</option>
+      <option value="1">{{status[1]}}</option>
+      <option value="2">{{status[2]}}</option>
+      <option value="3">{{status[3]}}</option>
+    </optgroup>
+  </select>
+</ng-container> -->
+<label class="d-block bold"><b>Filter By Language</b></label>
+<select class="custom-select mb-3" style="width: 40%;" [(ngModel)]="filterSelect"  (ngModelChange)="changeFilter()">
+  <ng-container *ngFor="let l of lang | keyvalue" >
+    <option [value]="l.key">{{l.value}}</option>
+  </ng-container>
+</select>
+
 <div class="row">
     <div class="col-lg-12">
       <div class="card">
@@ -17,19 +45,22 @@
                       </tr>
                     </thead>
                     <tbody> 
-                        <tr *ngFor="let d of data | paginate: { id: 'pagination',
-                      itemsPerPage: limit,
-                      currentPage: curr_page,
-                      totalItems: total}">
-                        <td>{{d.name}}</td>                
-                        <td>{{d.type}}</td>                
-                        <td>{{d.fee}}</td>    
-                        <td>{{d.language}}</td>    
-                        <td>{{status[d.status]}}</td>            
-                        <td>{{d.duration}}</td>                
-                        <td>{{d.rating}}</td>                
-                        <td (click)="viewCourse(d.id, d.status)" style="color:#28a745; cursor: pointer;"><i class="fa fa-eye" aria-hidden="true"></i></td>                
-                      </tr>
+                      <ng-container *ngFor="let d of data | paginate: { id: 'pagination',
+                                            itemsPerPage: limit,
+                                            currentPage: curr_page,
+                                            totalItems: total}">                                      
+                        <tr>
+                          <td>{{d.name}}</td>                
+                          <td>{{d.type}}</td>                
+                          <td>{{d.fee}}</td>    
+                          <td>{{lang[d.language]}}</td>    
+                          <td>{{status[d.status]}}</td>            
+                          <td>{{d.duration}}</td>                
+                          <td>{{d.rating}}</td>                
+                          <td (click)="viewCourse(d.id, d.status)" style="color:#28a745; cursor: pointer;"><i class="fa fa-eye" aria-hidden="true"></i></td>                
+                        </tr>
+                      </ng-container>
+                        
                       <tr *ngIf="total === 0">
                         <td style="text-align: center;">No Data Available</td>                    
                       </tr>

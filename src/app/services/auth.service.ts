@@ -5,6 +5,7 @@ import { User } from '../user.model';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import * as crypto from 'crypto-js';
 
 
 
@@ -25,13 +26,14 @@ export class AuthService {
 
   getToken() {
     const data = JSON.parse(localStorage.getItem('Token'));
-    console.log(Date.now());
-    if (data.expDate < Date.now()){
+    var bytes = crypto.AES.decrypt(data.token, 'Secret Key Bima Paathshala');
+    var deToken = bytes.toString(crypto.enc.Utf8);
+    if (data.expDate < Date.now()) {
       alert('Your Session has expired! Please Log In Again');
       this.logout();
       return null;
     }else{
-      return 'Bearer ' + data.token;
+      return 'Bearer ' + deToken;
     }
   }
 
@@ -43,18 +45,19 @@ export class AuthService {
     }).pipe(tap(res => {
       console.log(res);
       const data: any = res;
+      var enToken = crypto.AES.encrypt(data.data.auth.token, 'Secret Key Bima Paathshala').toString();
+
       if(data.data[0] !== null) {
         const Obj = {
           'email' : data.data.email,
           'fName' : data.data.fName,
           'lName' : data.data.lName,
           'imageUrl' : data.data.imageUrl,
-          'token' : data.data.auth.token,
+          'token' : enToken,
           'expDate' : data.data.auth.expires,
         };
         localStorage.setItem('Token', JSON.stringify(Obj));
       }
-      
     }));
   }
 
@@ -79,8 +82,16 @@ export class AuthService {
 
 
   logout(){
-    localStorage.setItem('Token', null);
-    this.router.navigateByUrl('auth/login');
+    let header = new HttpHeaders();
+    header = header.append('Authorization', this.getToken());
+
+    this.http.get(this.base_url +  '/user/logout' , { headers : header }).subscribe(res => {
+      console.log(res);
+      localStorage.setItem('Token', null);
+      this.router.navigateByUrl('auth/login');
+    }, err => {
+      console.log(err);
+    });
   }
 
 }

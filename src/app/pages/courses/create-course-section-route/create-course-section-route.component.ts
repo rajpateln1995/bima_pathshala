@@ -104,7 +104,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     });
   }
 
-  saveSection(){
+  saveSection(ondestroy){
 
     const obj = {
       _id : this.section._id,
@@ -113,7 +113,9 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     };
     this.courses.createSubSection(obj).subscribe(res => {
       console.log(res);
-      this.toaster.show('Section Saved Successfully !', 'Section Saved' , { status : 'success' });
+      if(!ondestroy){
+        this.toaster.show('Section Saved Successfully !', 'Section Saved' , { status : 'success' });
+      }
     },
     err => {
       console.log(err);
@@ -149,7 +151,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.saveSection();
+    this.saveSection(true);
   }
 
   editMediaType;

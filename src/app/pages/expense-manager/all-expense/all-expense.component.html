@@ -25,6 +25,7 @@
                                 <td>{{d.displayTime}}</td>
                                 <td>{{d.amount}}</td>
                                 <td>{{status[d.status]}}</td>
+                                <td (click)="showUser(d.userId)" style="color:#28a745; cursor: pointer;"><i class="fa fa-eye" aria-hidden="true"></i></td>
                                 <td>
                                     <a target="_blank" href="{{d.billLink}}"><i class="fa fa-eye"
                                             aria-hidden="true"></i></a>

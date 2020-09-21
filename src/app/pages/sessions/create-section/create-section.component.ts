@@ -124,7 +124,7 @@ export class CreateSectionComponent implements OnInit {
     this.courses.delSection('', this.curriculum._id, this.route.snapshot.params['id']).subscribe(res => {
       console.log(res);
       this.courseEvent.next();
-      this.toaster.show('Section Deleted', 'Error' , { status : 'danger' });
+      this.toaster.show('Section Deleted Successfully', 'Session Deleted' , { status : 'success' });
     },
     err => {
       console.log(err);

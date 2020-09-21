@@ -6,6 +6,7 @@ import { saveAs } from 'file-saver';
 import { Router } from '@angular/router';
 import { Papa } from 'ngx-papaparse';
 import { CourseService } from '../../../services/course.service';
+import { NbGlobalLogicalPosition, NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-shishya',
@@ -18,6 +19,7 @@ export class ShishyaComponent implements OnInit {
               private user: UserService,
               private router: Router,
               private papa: Papa,
+              private toaster : NbToastrService,
               private courses :CourseService) { }
 
   data: any;
@@ -178,10 +180,15 @@ export class ShishyaComponent implements OnInit {
       this.total = this.data.total;
       this.data = this.data.data.shishya;
       console.log(this.data);
-      
+      if(this.total === 0){
+        this.toaster.show('Your Search Parameters Did not Match to Any Users !', 'No Users Found' , 
+        { status : 'warning' , duration : 5000 , position : NbGlobalLogicalPosition.TOP_START });
+      }
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' ,
+        { status : 'danger' , duration : 5000 , position : NbGlobalLogicalPosition.TOP_START });
     });
   }
 
@@ -192,7 +199,6 @@ export class ShishyaComponent implements OnInit {
       this.data = res;
       this.total = this.data.total;
       this.data = this.data.data.guru;
-
     },
     err => {
       console.log(err);
@@ -213,6 +219,8 @@ export class ShishyaComponent implements OnInit {
     });
   }
 
+
+  pincodeCheck = false;
   pincode(event){
     if (event.target.value.length === 6){
       const x = event.target.value;
@@ -226,6 +234,7 @@ export class ShishyaComponent implements OnInit {
           res => {
             console.log(res);
             if (res[0].PostOffice !== null){
+              this.pincodeCheck = true;
               for (const loc of res[0].PostOffice){
                 loc_obj.push({
                  'city': loc.District,
@@ -247,9 +256,9 @@ export class ShishyaComponent implements OnInit {
             }else{
               this.location = loc_obj;
               this.pincodeInvalid = true;
+              this.pincodeCheck = false;
               this.pinCode = '';
             }
-
             console.log(this.location);
           },
           err => {
@@ -257,9 +266,9 @@ export class ShishyaComponent implements OnInit {
           },
         );
       }else{
-        console.log('else');
         this.pincodeInvalid = true;
-              this.pinCode = '';
+        this.pincodeCheck = false;
+        this.pinCode = '';
       }
 
     }
@@ -482,11 +491,17 @@ export class ShishyaComponent implements OnInit {
       console.log(res);
       this.createShishya.reset();
       document.getElementById('close-btn').click();
-
-
+      
     },
     err => {
       console.log(err);
+      if (err.status === 401){
+        this.toaster.show('The Phone No. you Entered Already Exist ! Please Provide a Different Phone No.' , 'Cannot Create User' ,
+         { status : 'warning' , duration : 5000 , position : NbGlobalLogicalPosition.TOP_START });
+      }else{
+        this.toaster.show('Something Went Wrong !' , 'Error' , { status : 'danger' });
+      }
+      
     });
     
 

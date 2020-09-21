@@ -2,6 +2,16 @@
         aria-hidden="true"></i>Create New Session</button>
 <button style="display: none;" id="create-session" data-toggle="modal" data-target="#newSessionModal"></button>
 <!-- data Table -->
+
+
+<label class="d-block bold"><b>Filter By Language</b></label>
+<select class="custom-select mb-3" style="width: 40%;" [(ngModel)]="filterSelect" (ngModelChange)="changeFilter()">
+<ng-container *ngFor="let l of lang | keyvalue" >
+    <option [value]="l.key">{{l.value}}</option>
+</ng-container>
+</select>
+
+
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
@@ -23,14 +33,15 @@
                 </tbody> -->
                         <!-- <tbody *ngIf="total !== 0"> -->
                         <tbody>
-                            <tr *ngFor="let d of Data | paginate: { id: 'pagination',
+                            <ng-container *ngFor="let d of Data | paginate: { id: 'pagination',
                             itemsPerPage: limit,
                             currentPage: curr_page,
                             totalItems: total}">
+                            <tr>
                                 <td>{{d.name}}</td>
                                 <td>{{d.duration}}</td>
-                                <td>{{d.sessionDate}}</td>
-                                <td>{{d.language}}</td>
+                                <td>{{formatDate(d.sessionDate)}}</td>
+                                <td>{{lang[d.language]}}</td>
                                 <td>{{status[d.status]}}</td>
                                 <td>
                                     <a target="_blank" href="{{d.coverImage}}"><i class="fa fa-eye"
@@ -43,6 +54,7 @@
                                 <td (click)="viewSession(d._id, d.status)" style="color:#28a745; cursor: pointer;"><i
                                         class="fa fa-eye" aria-hidden="true"></i></td>
                             </tr>
+                        </ng-container>
                         </tbody>
                     </table>
                 </div>

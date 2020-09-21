@@ -21,6 +21,7 @@ export class DocumentsComponent implements OnInit {
   limit = '50';
   curr_page = 1;
   pageSize;
+  filterSelect = 'EN';
   table_head = [
     'Title',
     'Type',
@@ -42,11 +43,25 @@ export class DocumentsComponent implements OnInit {
 
   ngOnInit() {
     this.getDocuments('1');
+    this.getLang();
+  }
+
+  lang = {};
+  getLang(){
+    this.courses.getLanguages().subscribe((res: any) => {
+      for (const l of res.data){
+        this.lang[l.name] = l.displayName;
+      }
+    })
   }
 
   getPage(page) {
     this.getDocuments(page);
     this.curr_page = page;
+  }
+
+  changeFilter(){
+    this.getDocuments('1');
   }
 
   getLanguages(){
@@ -80,7 +95,7 @@ export class DocumentsComponent implements OnInit {
   }
 
   getDocuments(page){
-    this.document.getDocAndArticle('', '', page , this.limit , 'true').subscribe(res => {
+    this.document.getDocAndArticle('', '', page , this.limit , 'true' , this.filterSelect).subscribe(res => {
       console.log(res);
       const temp: any = res;
       this.Data = temp.data;
@@ -154,7 +169,7 @@ export class DocumentsComponent implements OnInit {
   }
 
   viewDocument(id, status){
-      this.document.getDocAndArticle('' , id, '1', '10', 'true').subscribe(res => {
+      this.document.getDocAndArticle('' , id, '1', '10', 'true' , this.filterSelect).subscribe(res => {
         console.log(res);
         const temp: any = res;
         console.log(id);

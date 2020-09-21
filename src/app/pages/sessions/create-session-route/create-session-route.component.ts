@@ -123,39 +123,39 @@ saveSession(){
 }
 
 validateSession(){
-  // let validate = false;
-  // const temp: any = this.details;
-  // if (temp && temp.sections.length > 0){
-  //   if(temp.sections && temp.sections.length > 0 ){
-  //     for (const sec of temp.sections){
-  //       if (sec.assessment && sec.data && sec.data.length > 0){
-  //         validate = true;
-  //       } else{
-  //         validate = false;
-  //       }
-  //     }
-  //   } else {
-  //     validate = false;
-  //   }
-  // }else {
-  //   validate = false;
-  // }
-  // if(validate){
-  //   this.s = 1;
-  //   const obj = {
-  //     _id : this.route.snapshot.params['id'],
-  //     status : 1,
-  //   };
-  //   this.courses.putCourse(obj).subscribe(res => {
-  //     console.log(res);
-  //     this.toaster.show('Course Validated Successfully !', 'Course Validated' , { status : 'success' });
-  //   }, err => {
-  //     console.log(err);
-  //     this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
-  //   });
-  // }else{
-  //   this.toaster.show('Please Make Sure Session Has Atleast 1 Section with 1 Sub-Section in Each !', 'Cannot Verify Session' , { status : 'danger' });
-  // }
+  let validate = false;
+  const temp: any = this.details;
+  if (temp && temp.curriculum.length > 0){
+    if(temp.curriculum && temp.curriculum.length > 0 ){
+      for (const curr of temp.curriculum){
+        if (curr.data && curr.data.length > 0){
+          validate = true;
+        } else{
+          validate = false;
+        }
+      }
+    } else {
+      validate = false;
+    }
+  }else {
+    validate = false;
+  }
+  if(validate){
+    this.s = 1;
+    const obj = {
+      _id : this.route.snapshot.params['id'],
+      status : 1,
+    };
+    this.session.saveSession(obj).subscribe(res => {
+      console.log(res);
+      this.toaster.show('Session Validated Successfully !', 'Session Validated' , { status : 'success' });
+    }, err => {
+      console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
+    });
+  }else{
+    this.toaster.show('Please Make Sure Session Has Atleast 1 Section with 1 Sub-Section in Each !', 'Cannot Verify Session' , { status : 'danger' });
+  }
 }
 
 

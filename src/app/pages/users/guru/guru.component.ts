@@ -3,7 +3,7 @@ import { guru } from './guru.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient, HttpEventType } from '@angular/common/http';
 import { UserService } from '../../../services/user.service';
-import { NbDateService } from '@nebular/theme';
+import { NbDateService, NbGlobalLogicalPosition, NbGlobalPosition , NbToastrService } from '@nebular/theme';
 import { saveAs } from 'file-saver';
 import { Router } from '@angular/router';
 import { Papa } from 'ngx-papaparse';
@@ -21,6 +21,7 @@ export class GuruComponent implements OnInit {
               private user: UserService,
               private router: Router,
               private papa: Papa,
+              private toaster : NbToastrService,
               private courses: CourseService) { }
 
   data: any;
@@ -191,9 +192,15 @@ export class GuruComponent implements OnInit {
       this.total = this.data.total;
       this.data = this.data.data.guru;
       console.log(this.data);
+      if(this.total === 0){
+        this.toaster.show('Your Search Parameters Did not Match to Any Users !', 'No Users Found' , 
+        { status : 'warning' , duration : 5000 , position : NbGlobalLogicalPosition.TOP_START });
+      }
     },
     err => {
       console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' ,
+        { status : 'danger' });
     });
   }
 
@@ -314,7 +321,6 @@ export class GuruComponent implements OnInit {
   pincodeCheck = false;
   pincode(event){
     if (event.target.value.length === 6){
-      this.pincodeCheck = true;
       const x = event.target.value;
       const match = x.match(/^\d{6}$/);
       console.log(match);
@@ -326,6 +332,7 @@ export class GuruComponent implements OnInit {
           res => {
             console.log(res);
             if (res[0].PostOffice !== null){
+              this.pincodeCheck = true;
               for (const loc of res[0].PostOffice){
                 loc_obj.push({
                  'city': loc.District,
@@ -346,11 +353,11 @@ export class GuruComponent implements OnInit {
                 this.pincodeInvalid = false;
               }
             }else{
+              this.pincodeCheck = false;
               this.location = loc_obj;
               this.pincodeInvalid = true;
               this.pinCode = '';
             }
-
             console.log(this.location);
           },
           err => {
@@ -358,9 +365,9 @@ export class GuruComponent implements OnInit {
           },
         );
       }else{
-        console.log('else');
+        this.pincodeCheck = false;
         this.pincodeInvalid = true;
-              this.pinCode = '';
+        this.pinCode = '';
       }
 
     }
@@ -513,9 +520,13 @@ export class GuruComponent implements OnInit {
     },
     err => {
       console.log(err);
+      if (err.status === 401){
+        this.toaster.show('The Phone No. you Entered Already Exist ! Please Provide a Different Phone No.' , 'Cannot Create User' , 
+        { status : 'warning' , duration : 5000 , position : NbGlobalLogicalPosition.TOP_START });
+      }else{
+        this.toaster.show('Something Went Wrong !' , 'Error' , { status : 'danger' });
+      }
     });
 
   }
-
-
 }
