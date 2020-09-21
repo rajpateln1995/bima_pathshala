@@ -2,11 +2,11 @@
     <hr>
     <p class="text-center"><span style="color: #3366ff;">Current Status :</span> {{status[s]}}</p>
     <hr>
-    <p style="color:#ffaa00;" class="text-center">**Make sure that you validate course before making live !**</p>
+    <p style="color:#ffaa00;" class="text-center">**Make sure that you validate Session before making live !**</p>
     <div class="text-center">
         <button class="mr-2" size="small" (click)="validateSession()" type="button" nbButton status="primary">Mark as
             Complete / Validate</button>
-        <button class="mr-2" disabled="s === 1" size="small" (click)="changeStatus('2', 'success')" type="button" nbButton status="success">Live</button>
+        <button class="mr-2" [disabled]="!(s === 1)" size="small" (click)="changeStatus('2', 'success')" type="button" nbButton status="success">Live</button>
         <button class="mr-2" size="small" (click)="changeStatus('3' , 'warning')" type="button" nbButton status="danger">Disable</button>
     </div>
     <form #f="ngForm">
