@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[1],{cZdB:function(n,e,o){"use strict";o.d(e,"a",(function(){return c}));var t=o("fXoL");let c=(()=>{class n{}return n.\u0275mod=t["\u0275\u0275defineNgModule"]({type:n}),n.\u0275inj=t["\u0275\u0275defineInjector"]({factory:function(e){return new(e||n)}}),n})()}}]);
