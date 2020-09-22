@@ -57,6 +57,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       title: this.subSectionTitle,
       type : this.mediaType,
       url : this.mediaUrl,
+      thumb : this.thumb,
     });
 
     const obj = {
@@ -95,6 +96,26 @@ export class CreateCourseSectionRouteComponent implements OnInit {
         const data: any = event;
         this.mediaUrl = data.body.data[0];
         this.disableBtn = false;
+        this.toaster.show(' Media Uploaded Successfull !', 'Uploaded Successfully' , { status : 'success' });
+      }
+    },
+    err => {
+      console.log(err);
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
+    });
+  }
+
+  thumb = '';
+  progressThumb = 0;
+  uploadThumb(event){
+    const data = event.target.files[0];
+    this.courses.upload(data).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress){
+        this.progressThumb = (event.loaded / event.total) * 100;
+      }else if (event.type === HttpEventType.Response){
+        console.log(event);
+        const data: any = event;
+        this.thumb = data.body.data[0];
         this.toaster.show(' Media Uploaded Successfull !', 'Uploaded Successfully' , { status : 'success' });
       }
     },
@@ -168,6 +189,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     this.sub[this.subSecIndex].type = this.editMediaType;
     this.sub[this.subSecIndex].title = this.editSubSectionTitle;
     this.sub[this.subSecIndex].url = this.mediaUrl;
+    this.sub[this.subSecIndex].thumb = this.thumb;
 
     const obj = {
       _id : this.section._id,

@@ -38,7 +38,6 @@
                                 totalItems: total}">
                             <tr>
                                 <td>{{d.title}}</td>
-                                <td>{{d.type}}</td>
                                 <td>{{lang[d.language]}}</td>
                                 <td>{{d.readingTime}}</td>
                                 <td>{{status[d.status]}}</td>
@@ -80,7 +79,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Create new Document / Article</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Create new Article</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -99,7 +98,7 @@
                     </div> -->
 
                     <div class="form-group">
-                        <label class="label d-block">Document / Article Languages<span style="color: red;">*</span></label>
+                        <label class="label d-block">Article Languages<span style="color: red;">*</span></label>
                         <div class="row">
                             <div *ngFor="let lang of languages" class="form-check form-check-inline col-3 text-center">
                                 <input disabled name="{{lang.name}}" class="form-check-input" [(ngModel)]="lang.value" type="checkbox"

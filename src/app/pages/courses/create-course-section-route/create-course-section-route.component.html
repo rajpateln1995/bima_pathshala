@@ -58,8 +58,12 @@
             <label>Type : </label>
             <label>{{data.type}}</label>
             <br>
+            {{data.type}} : <a target="_blank" href="{{data.url}}">Preview</a>
+            <br>
+            <ng-container *ngIf="data.type === 'video'">
+                <label>Thumbnail : </label><a target="_blank" href="{{data.thumb}}">Preview</a>
+            </ng-container>
             
-            <a target="_blank" href="{{data.url}}">Preview</a>
         </nb-accordion-item-body>
     </nb-accordion-item>
 </nb-accordion>
@@ -98,6 +102,7 @@
                     </select>
                     <p *ngIf="media.invalid && media.touched" class="text-center mb-3 mt-1"
                             style="color: red;">This Field is Mandatory !</p>
+                    
                     <div class="mt-4">
                         <label class="label d-block">Select Media To Upload</label>
                         <input (change)="uploadMedia($event)" required accept="{{mediaType}}/*" #media="ngModel" ngModel
@@ -107,6 +112,18 @@
                         <div class="progress-bar bg-success" role="progressbar" style="width: {{progress}}%"
                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
+                    <ng-container *ngIf="mediaType === 'video'">
+                        <div class="mt-4">
+                            <label class="label d-block">Select Thumbnail for Video</label>
+                            <input (change)="uploadThumb($event)" required accept="image/*" #thumb="ngModel" ngModel
+                                name="thumb" type="file">
+                        </div>
+                        <div *ngIf="progressThumb > 0" class="progress mt-4">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{progressThumb}}%"
+                                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </ng-container>
+                    
                 </div>
                 <div class="modal-footer">
                     <button id="{{'close-sub-section' + section_id}}" data-dismiss="modal" nbButton status="basic">Close</button>
@@ -158,6 +175,17 @@
                         <div class="progress-bar bg-success" role="progressbar" style="width: {{progress}}%"
                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
+                    <ng-container *ngIf="editMediaType === 'video'">
+                        <div class="mt-4">
+                            <label class="label d-block">Select Thumbnail for Video</label>
+                            <input (change)="uploadThumb($event)" required accept="image/*" #thumb="ngModel" ngModel
+                                name="thumb" type="file">
+                        </div>
+                        <div *ngIf="progressThumb > 0" class="progress mt-4">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{progressThumb}}%"
+                                aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </ng-container>
                 </div>
                 <div class="modal-footer">
                     <button id="close-edit-sub-section" data-dismiss="modal" nbButton status="basic">Close</button>
