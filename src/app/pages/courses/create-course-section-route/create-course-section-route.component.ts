@@ -13,9 +13,9 @@ export class CreateCourseSectionRouteComponent implements OnInit {
 
   constructor(private courses: CourseService,
               private route: ActivatedRoute,
-              private toaster : NbToastrService) { }
+              private toaster: NbToastrService) { }
 
-  
+
   @Input() section: any;
   @Input() language: any;
   @Output() courseEvent = new EventEmitter();
@@ -64,7 +64,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       data : this.sub,
     };
     this.disableBtn = true;
-    this.courses.createSubSection(obj).subscribe((res : any) => {
+    this.courses.createSubSection(obj).subscribe((res: any) => {
       console.log(res);
       this.sub = res.data.data;
       const str = `close-sub-section${this.section_id}`;
@@ -113,7 +113,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     };
     this.courses.createSubSection(obj).subscribe(res => {
       console.log(res);
-      if(!ondestroy){
+      if (!ondestroy){
         this.toaster.show('Section Saved Successfully !', 'Section Saved' , { status : 'success' });
       }
     },
@@ -185,7 +185,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       console.log(err);
       this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
-    
+
   }
 
 }

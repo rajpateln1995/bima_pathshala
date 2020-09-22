@@ -1,60 +1,60 @@
+
+<div class="text-center" style="font-size:larger;">
+    <b>Assessments</b>
+</div>
+<hr>
+<div class="text-right">
+    <button class="mr-2" nbButton size="tiny" (click)="disable = false" status="success">edit</button>
+    <button class="mr-2" nbButton size="tiny" [disabled]="disable" (click)="addQuestion()" status="primary">add
+        new question</button>
+    <button nbButton size="tiny" (click)="save(false)" [disabled]="disable" status="success">save</button>
+</div>
+<hr>
 <ng-container *ngIf="data">
-    <div>
-        <div class="text-center" style="font-size:larger;">
-            <b>Assessments</b>
-        </div>
-        <hr>
-        <div class="text-right">
-            <button class="mr-2" nbButton size="tiny" (click)="disable = false" status="success">edit</button>
-            <button class="mr-2" nbButton size="tiny" [disabled]="disable" (click)="addQuestion()" status="primary">add
-                new question</button>
-            <button nbButton size="tiny" (click)="save(false)" [disabled]="disable" status="success">save</button>
-        </div>
-        <hr>
-        <div class="form-group">
-            <label class="d-block mt-1"><b>Enter Assessment Completion Time [In Minutes] :</b></label>
-            <input style="width: 55%" [disabled]="disable" [(ngModel)]="data.time" type="number"
-                placeholder="Enter Time in Minutes" class="form-control form-control-sm">
-        </div>
-        <div class="form-group">
-            <label class="d-block mt-1"><b>Enter Minimum Score For Assessment [In Percentage] :</b></label>
-            <input style="width: 55%" [disabled]="disable" [(ngModel)]="data.certificateThreshold" type="number"
-                placeholder="Enter Score In Percentage" class="form-control form-control-sm">
-        </div>
-        <div class="mt-5" *ngFor="let question of data.questions ; let i = index ; trackBy:trackbyq">
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1"><b>Question {{i + 1}}:</b></label>
-                <div style="float: right;">
-                    <button class="mr-2" [disabled]="disable" (click)="deleteQuestion(i)" nbButton size="tiny"
-                        status="danger">delete
-                        question</button>
-                </div>
-                <textarea class="form-control" [disabled]="disable" [(ngModel)]="question.question"
-                    placeholder="Enter Question Text" rows="2"></textarea>
-            </div>
-            <div *ngFor="let opt of question.options ; let j = index ; trackBy:trackByFn">
-                <span class="mr-2">{{j + 1}})</span>
-                <input style="width: 40%" [disabled]="disable" [(ngModel)]="question.options[j]"
-                    class="form-control form-control-sm d-inline-block mb-1" type="text"
-                    placeholder="Enter Option Text">
-                <button nbButton size="tiny" [disabled]="disable" (click)="deleteOption(i , j)" status="danger"
-                    class="ml-3">Delete
-                    option</button>
-            </div>
-            <button class="mt-2" nbButton size="tiny" [disabled]="disable" (click)="addOption(i)" status="primary">Add
-                Option</button>
-            <div class="form-group mt-4">
-                <label class="d-block mt-1"><b>Select Correct Option :</b></label>
-                <select style="width: 45%;" [disabled]="disable" class="custom-select custom-select-sm"
-                    [(ngModel)]="question.answer">
-                    <ng-container *ngFor="let option of question.options">
-                        <option [ngValue]="option">{{option}}</option>
-                    </ng-container>
-
-                </select>
-            </div>
-
-            <hr>
-        </div>
+    <div class="form-group">
+        <label class="d-block mt-1"><b>Enter Assessment Completion Time [In Minutes] :</b></label>
+        <input style="width: 55%" [disabled]="disable" [(ngModel)]="data.time" type="number"
+            placeholder="Enter Time in Minutes" class="form-control form-control-sm">
     </div>
+    <div class="form-group">
+        <label class="d-block mt-1"><b>Enter Minimum Score For Assessment [In Percentage] :</b></label>
+        <input style="width: 55%" [disabled]="disable" [(ngModel)]="data.certificateThreshold" type="number"
+            placeholder="Enter Score In Percentage" class="form-control form-control-sm">
+    </div>
+    <div class="mt-5" *ngFor="let question of data.questions ; let i = index ; trackBy:trackbyq">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1"><b>Question {{i + 1}}:</b></label>
+            <div style="float: right;">
+                <button class="mr-2" [disabled]="disable" (click)="deleteQuestion(i)" nbButton size="tiny"
+                    status="danger">delete
+                    question</button>
+            </div>
+            <textarea class="form-control" [disabled]="disable" [(ngModel)]="question.question"
+                placeholder="Enter Question Text" rows="2"></textarea>
+        </div>
+        <div *ngFor="let opt of question.options ; let j = index ; trackBy:trackByFn">
+            <span class="mr-2">{{j + 1}})</span>
+            <input style="width: 40%" [disabled]="disable" [(ngModel)]="question.options[j]"
+                class="form-control form-control-sm d-inline-block mb-1" type="text"
+                placeholder="Enter Option Text">
+            <button nbButton size="tiny" [disabled]="disable" (click)="deleteOption(i , j)" status="danger"
+                class="ml-3">Delete
+                option</button>
+        </div>
+        <button class="mt-2" nbButton size="tiny" [disabled]="disable" (click)="addOption(i)" status="primary">Add
+            Option</button>
+        <div class="form-group mt-4">
+            <label class="d-block mt-1"><b>Select Correct Option :</b></label>
+            <select style="width: 45%;" [disabled]="disable" class="custom-select custom-select-sm"
+                [(ngModel)]="question.answer">
+                <ng-container *ngFor="let option of question.options">
+                    <option [ngValue]="option">{{option}}</option>
+                </ng-container>
+
+            </select>
+        </div>
+
+        <hr>
+    </div>
+    
 </ng-container>

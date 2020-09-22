@@ -23,7 +23,7 @@ export class AssessmentsComponent implements OnInit {
     if(this.assessment && this.assessment !== null) {
       this.data = this.assessment;
     } else {
-      this.createAssessment();
+      // this.createAssessment();
     }
     console.log(this.section_id);
 
@@ -80,12 +80,18 @@ export class AssessmentsComponent implements OnInit {
   }
 
   addQuestion() {
-    const question = {
-      options : [],
-      question : '',
-      answer : '',
-    };
-    this.data.questions.push(question);
+
+    if (this.data){
+      const question = {
+        options : [],
+        question : '',
+        answer : '',
+      };
+      this.data.questions.push(question);
+    }else {
+      this.createAssessment();
+    }
+
   }
 
   deleteQuestion(i){
@@ -94,24 +100,27 @@ export class AssessmentsComponent implements OnInit {
   }
 
   save(ondestroy) {
-    console.log(this.data);
-    const obj = {
+    if(this.data){
+      console.log(this.data);
+      const obj = {
       time : this.data.time,
       certificateThreshold : this.data.certificateThreshold,
       questions : this.data.questions,
       _id : this.data._id,
     };
 
-    this.course.editAssesment(obj).subscribe(res => {
-      console.log(res);
-      if (!ondestroy){
-        this.toaster.show('Assesment Saved Successfully !' , 'Assessment Saved' , { status : 'success' });
-      }
-    },
-    err => {
-      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
-      console.log(err);
-    });
+      this.course.editAssesment(obj).subscribe(res => {
+        console.log(res);
+        if (!ondestroy){
+          this.toaster.show('Assesment Saved Successfully !' , 'Assessment Saved' , { status : 'success' });
+        }
+      },
+      err => {
+        this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
+        console.log(err);
+      });
+    }
+    
   }
 
   // tslint:disable-next-line: use-lifecycle-interface

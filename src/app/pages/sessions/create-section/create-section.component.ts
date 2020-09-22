@@ -109,7 +109,7 @@ export class CreateSectionComponent implements OnInit {
       console.log(res);
       const temp: any = res;
       this.curriculum.data = temp.data.data;
-      this.toaster.show('Sub Section Deleted', 'Error' , { status : 'danger' });
+      this.toaster.show('Sub Section Deleted Successfully', 'Sub Section Deleted' , { status : 'success' });
     },
     err => {
       console.log(err);

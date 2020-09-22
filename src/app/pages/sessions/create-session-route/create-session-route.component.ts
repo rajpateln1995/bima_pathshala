@@ -56,7 +56,7 @@ export class CreateSessionRouteComponent implements OnInit {
       };
     this.courses.putCourse(obj).subscribe(res => {
       console.log(res);
-      this.toaster.show(`Course Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
+      this.toaster.show(`Session Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
     }, err => {
       console.log(err);
     });
@@ -113,7 +113,7 @@ saveSession(){
 
   this.session.saveSession(this.details).subscribe(res => {
     console.log(res);
-    this.toaster.show('Section Saved Successfully', 'Section Saved' , { status : 'success' });
+    this.toaster.show('Session Saved Successfully', 'Session Saved' , { status : 'success' });
   },
   err => {
     console.log(err);
@@ -172,7 +172,7 @@ createSection(form) {
     this.details.curriculum.push(res.data);
     this.saveSession();
     document.getElementById('close-section').click();
-    this.toaster.show('Section Created Successfully', 'Section Crested' , { status : 'success' });
+    this.toaster.show('Section Created Successfully', 'Section Created' , { status : 'success' });
   },
   err => {
     console.log(err);

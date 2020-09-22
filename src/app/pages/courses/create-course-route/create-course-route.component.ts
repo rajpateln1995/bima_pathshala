@@ -52,45 +52,56 @@ export class CreateCourseRouteComponent implements OnInit {
   validateCourse(){
     let validate = false;
     const temp: any = this.details;
-    if (temp && temp.sections.length > 0){
-      if(temp.sections && temp.sections.length > 0 ){
-        for (const sec of temp.sections){
-          if (sec.assessment && sec.data && sec.data.length > 0){
-            validate = true;
-          } else{
-            validate = false;
-          }
-        }
-      } else {
-        validate = false;
-      }
-    }else {
-      validate = false;
-    }
-    if(validate){
-      this.s = 1;
-      const obj = {
-        _id : this.route.snapshot.params['id'],
-        status : 1,
-      };
-      this.courses.putCourse(obj).subscribe(res => {
-        console.log(res);
-        this.toaster.show('Course Validated Successfully !', 'Course Validated' , { status : 'success' });
-      }, err => {
-        console.log(err);
-        this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
-      });
-    }else{
-      this.toaster.show('Please Make Sure Course Has Atleast 1 Section with Atleast 1 Sub-Section in Each !', 'Cannot Verify Course' , { status : 'danger' , duration : 5000 });
-    }
-  }
-
-  getCourse(){
-    console.log(this.route.snapshot.params['id'])
     this.id = this.route.snapshot.params['id'];
     this.courses.getCourseDetails(this.id).subscribe(res => {
       console.log(res);
-      const data: any = res;  
+      const data: any = res;
+      this.details = data.data.course;
+      this.s = data.data.course.status;
+      if (temp && temp.sections){
+        if (temp.sections && temp.sections.length > 0 ){
+          for (const sec of temp.sections){
+            if (sec.data && sec.data.length > 0){
+              validate = true;
+            } else{
+              validate = false;
+            }
+          }
+        } else {
+          validate = false;
+        }
+      }else {
+        validate = false;
+      }
+      if (validate){
+        this.s = 1;
+        const obj = {
+          _id : this.route.snapshot.params['id'],
+          status : 1,
+        };
+        this.courses.putCourse(obj).subscribe(res => {
+          console.log(res);
+          this.toaster.show('Course Validated Successfully !', 'Course Validated' , { status : 'success' });
+        }, err => {
+          console.log(err);
+          this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
+        });
+      }else{
+        this.toaster.show('Please Make Sure Course Has Atleast 1 Section with Atleast 1 Sub-Section in Each !', 'Cannot Verify Course' , { status : 'danger' , duration : 5000 });
+      }
+    },
+    err => {
+      console.log(err);
+    });
+
+  }
+
+  getCourse(){
+    console.log(this.route.snapshot.params['id']);
+    this.id = this.route.snapshot.params['id'];
+    this.courses.getCourseDetails(this.id).subscribe(res => {
+      console.log(res);
+      const data: any = res;
       this.details = data.data.course;
       this.s = data.data.course.status;
     },
@@ -178,7 +189,7 @@ export class CreateCourseRouteComponent implements OnInit {
     this.courses.putCourse(obj).subscribe(res => {
       console.log(res);
       this.getCourse();
-      if(!ondestroy){
+      if (!ondestroy){
         this.toaster.show('Course Details Saved Successfully !', 'Course Saved Successfully' , { status : 'success' });
       }
     },
@@ -200,7 +211,7 @@ export class CreateCourseRouteComponent implements OnInit {
     'Live',
     'Disabled',
     'Deleted',
-  ]
+  ];
 
 
 
