@@ -7,8 +7,10 @@
     <div class="text-center">
         <button class="mr-2" size="small" (click)="validateCourse()" type="button" nbButton status="primary">Mark as
             Complete / Validate</button>
-        <button class="mr-2" [disabled]="!(s === 1)" size="small" (click)="changeStatus('2', 'success')" type="button" nbButton status="success">Live</button>
-        <button class="mr-2" size="small" (click)="changeStatus('3' , 'warning')" type="button" nbButton status="danger">Disable</button>
+        <button class="mr-2" [disabled]="!(s === 1)" size="small" (click)="changeStatus('2', 'success')" type="button"
+            nbButton status="success">Live</button>
+        <button class="mr-2" size="small" (click)="changeStatus('3' , 'warning')" type="button" nbButton
+            status="danger">Disable</button>
     </div>
 
     <!-- <button size="small" (click)="changeStatus('4' , 'danger')" type="button" nbButton status="danger">Delete</button> -->
@@ -59,8 +61,7 @@
             <label class="col-md-4 col-form-label text-center">Cover Video </label>
             <div class="col-md-8 pt-2">
                 <input [disabled]="disable" type="file" accept="video/*" class="d-block form-control-file"
-                    name="courseVideo" #courseVideo="ngModel" ngModel
-                    (change)="uploadVideo($event)">
+                    name="courseVideo" #courseVideo="ngModel" ngModel (change)="uploadVideo($event)">
                 <a target="_blank" *ngIf="details.coverVideo.length > 0 && details.coverVideo !== 'NA'"
                     href="{{details.coverVideo}}">preview</a>
                 <div *ngIf="progressVideo > 0" class="progress mt-4">
@@ -76,15 +77,29 @@
                 <input type="text" [disabled]="disable" name="courseDuration" required #courseDuration="ngModel"
                     [(ngModel)]="details.duration" class="form-control"
                     placeholder="Enter Course Duration [In {{details.language}}]">
-                <p *ngIf="courseDuration.invalid && courseDuration.touched" class="text-center mb-3 mt-1" style="color: red;">
+                <p *ngIf="courseDuration.invalid && courseDuration.touched" class="text-center mb-3 mt-1"
+                    style="color: red;">
                     This Field is Mandatory !</p>
             </div>
+        </div>
+        <div class="form-group row mt-4">
+            <label class="col-md-4 col-form-label text-center">Enter Minimum Score For Assessment [In Percentage]
+                <span style="color: red;">
+                    *</span></label>
+            <div class="col-md-8">
+                <input style="width: 55%" name="threshold" required #threshold="ngModel" [disabled]="disable"
+                    [(ngModel)]="details.certificateThreshold" type="number" placeholder="Enter Score In Percentage"
+                    class="form-control">
+                <p *ngIf="threshold.invalid && threshold.touched" class="text-center mb-3 mt-1" style="color: red;">
+                    This Field is Mandatory !</p>
+            </div>
+
         </div>
         <div class="text-right">
             <button nbButton status="primary" class="mr-2" (click)="disable = false">Edit</button>
             <button nbButton status="success" [disabled]="f.invalid || disable" (click)="saveCourse(false)">Save Course
                 Details</button>
-        </div>  
+        </div>
     </form>
     <hr>
     <p class="text-center" style="font-size: larger;"><b>Course Sections</b></p>

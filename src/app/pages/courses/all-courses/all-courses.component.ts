@@ -130,6 +130,7 @@ export class AllCoursesComponent implements OnInit {
   finance;
   accounting;
   protection;
+  certificate;
   submit() {
     let languages = '';
     for (const lang of this.languages){
@@ -152,6 +153,7 @@ export class AllCoursesComponent implements OnInit {
       'type' : this.courseType,
       'languages' : languages.slice(0, (languages.length - 1)),
       'category' : category,
+      'certificateThreshold' : this.certificate,
     };
     this.toaster.show('Courses Created Successfully !', 'Courses Created' , { status : 'success' });
     this.courses.createCourse(obj).subscribe(res => {

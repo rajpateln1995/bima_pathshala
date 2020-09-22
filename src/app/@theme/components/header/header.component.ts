@@ -42,12 +42,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private auth: AuthService) {
   }
 
+  initials = '';
   ngOnInit() {
 
     const temp: any = JSON.parse(localStorage.getItem('Token'));
     this.userName = temp.fName + ' ' + temp.lName;
     this.profileImg = temp.imageUrl;
-    
+    this.initials = this.userName.split(" ").map((n)=>n[0]).join("");
 
     this.currentTheme = this.themeService.currentTheme;
 

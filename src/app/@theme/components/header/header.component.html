@@ -19,8 +19,11 @@
   <div style="border-left: solid #8f9bb3 1px;
   padding-left: 20px;">
     <ng-container *ngIf="userName.length > 0 && profileImg.length > 0">
-      <div class="profile_image d-inline-block">
-        <img width = "40px" height="40px" style="border-radius: 50%;" src="{{profileImg}}">
+      <div class="d-inline-block">
+        <div *ngIf="profileImg && profileImg !== null && profileImg !== ''" class="profile_image">
+          <p>{{initials}}</p>
+        </div>
+        <img width = "40px" height="40px" style="border-radius: 50%; display: none;" src="{{profileImg}}">
       </div>
       <div class="ml-3 d-inline-block">
         {{userName}}

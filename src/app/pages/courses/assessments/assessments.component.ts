@@ -95,7 +95,7 @@ export class AssessmentsComponent implements OnInit {
   }
 
   deleteQuestion(i){
-    this.toaster.show('Question Deleted Successfully !', 'Question Deleted' , { status : 'danger' });
+    this.toaster.show('Question Deleted Successfully !', 'Question Deleted' , { status : 'warning' });
     this.data.questions.splice(i, 1);
   }
 

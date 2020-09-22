@@ -184,6 +184,7 @@ export class CreateCourseRouteComponent implements OnInit {
       coverImage : this.coverimage,
       coverVideo : this.covervideo,
       duration : this.details.duration,
+      certificateThreshold : this.details.certificateThreshold,
       _id : this.route.snapshot.params['id'],
     };
     this.courses.putCourse(obj).subscribe(res => {
