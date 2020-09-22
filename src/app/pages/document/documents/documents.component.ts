@@ -24,7 +24,6 @@ export class DocumentsComponent implements OnInit {
   filterSelect = 'EN';
   table_head = [
     'Title',
-    'Type',
     'Language',
     'Reading Time',
     'Status',
@@ -109,7 +108,7 @@ export class DocumentsComponent implements OnInit {
   }
 
 
-  docType;
+  docType = 'article';
   docTitle;
   createDocument(){
     this.getLanguages();

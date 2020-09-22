@@ -70,6 +70,27 @@ export class CreateSectionComponent implements OnInit {
   }
 
 
+  thumb = '';
+  progressThumb = 0;
+  uploadThumb(event){
+    const data = event.target.files[0];
+    this.courses.upload(data).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress){
+        this.progressThumb = (event.loaded / event.total) * 100;
+      }else if (event.type === HttpEventType.Response){
+        console.log(event);
+        const data: any = event;
+        this.thumb = data.body.data[0];
+        this.toaster.show('Media Uploaded Successfully', 'Media Uploaded' , { status : 'success' });
+      }
+    },
+    err => {
+      console.log(err);
+      this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
+    });
+  }
+
+
   saveSection(){
 
     this.courses.createSubSection(this.curriculum).subscribe(res => {
@@ -88,6 +109,7 @@ export class CreateSectionComponent implements OnInit {
       title: this.subSectionTitle,
       type : this.mediaType,
       url : this.mediaUrl,
+      thumb : this.thumb,
     });
 
     this.courses.createSubSection(this.curriculum).subscribe(res => {
