@@ -43,6 +43,7 @@ export class CreateSessionRouteComponent implements OnInit {
       this.details = this.details.data;
       this.curriculum = this.details.curriculum;
       this.s = this.details.status;
+      this.details.sessionDate = this.details.sessionDate.slice(0, 16);
     },
     err => {
       console.log(err);
@@ -184,11 +185,6 @@ createSection(form) {
 
 }
 
-config = {
-  hours24Format : true,
-  hideInputContainer :false,
-  
-}
 
 
 status = [

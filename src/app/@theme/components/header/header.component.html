@@ -23,7 +23,10 @@
         <div *ngIf="profileImg === ''; else elseBlock" class="profile_image">
           <p>{{initials}}</p>
         </div>
-        <img #elseBlock width = "40px" height="40px" style="border-radius: 50%; display: none;" src="{{profileImg}}">
+        <ng-template #elseBlock>
+          <img width = "40px" height="40px" style="border-radius: 50%; display: none;" src="{{profileImg}}">
+        </ng-template>
+        
       </div>
       <div class="ml-3 d-inline-block">
         {{userName}}

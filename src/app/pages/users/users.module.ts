@@ -6,12 +6,11 @@ import { SanchalakComponent } from './sanchalak/sanchalak.component';
 import { GuruComponent } from './guru/guru.component';
 import { ShishyaComponent } from './shishya/shishya.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { NbSelectModule,  NbButtonModule, NbInputModule, NbRadioModule, NbDatepickerModule, NbListModule } from '@nebular/theme';
+import { NbSelectModule,  NbButtonModule, NbInputModule, NbRadioModule, NbListModule } from '@nebular/theme';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { UserDetailsComponent } from './user-details/user-details.component';
-import { NbMomentDateModule } from '@nebular/moment';
 
 
 
@@ -33,9 +32,7 @@ import { NbMomentDateModule } from '@nebular/moment';
     NbInputModule,
     Ng2SearchPipeModule,
     NbRadioModule,
-    NbDatepickerModule,
     NbListModule,
-    NbMomentDateModule,
   ]
 })
 export class UsersModule { }

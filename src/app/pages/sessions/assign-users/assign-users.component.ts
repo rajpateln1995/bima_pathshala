@@ -23,8 +23,9 @@ export class AssignUsersComponent implements OnInit {
   guruArray = [];
   shishyaArray = [];
 
-  ngOnInit(): void {
 
+  ngOnInit(): void {
+    
     console.log(this.gurus);
     console.log(this.attendees);
     for (const g of this.gurus){
@@ -57,7 +58,7 @@ export class AssignUsersComponent implements OnInit {
         const temp: any = res;
         this.guru = temp.data.guru;
         this.shishya = temp.data.shishya;
-
+        console.log(this.shishya)
       },
       err => {
         console.log(err);
@@ -68,13 +69,18 @@ export class AssignUsersComponent implements OnInit {
           const temp: any = res;
           this.guru = temp.data.guru;
           this.shishya = temp.data.shishya;
-          
+        console.log(this.shishya)
           
         },
         err => {
           console.log(err);
         });
     }
+  }
+  
+  
+  getInitials(fullName){
+    return fullName.split(" ").map((n)=>n[0].toUpperCase()).join("");
   }
 
 
