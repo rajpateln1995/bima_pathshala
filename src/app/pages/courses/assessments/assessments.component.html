@@ -5,9 +5,9 @@
 <hr>
 <div class="text-right">
     <button class="mr-2" nbButton size="tiny" (click)="disable = false" status="success">edit</button>
-    <button class="mr-2" nbButton size="tiny" [disabled]="disable" (click)="addQuestion()" status="primary">add
+    <button class="mr-2" nbButton size="tiny" (click)="addQuestion()" status="primary">add
         new question</button>
-    <button nbButton size="tiny" (click)="save(false)" [disabled]="disable" status="success">save</button>
+    <button nbButton size="tiny" (click)="save(false)" status="success">save</button>
 </div>
 <hr>
 <ng-container *ngIf="data">
