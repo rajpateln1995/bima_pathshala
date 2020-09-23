@@ -133,9 +133,6 @@ SOFTWARE.
 @nebular/eva-icons
 MIT
 
-@nebular/moment
-MIT
-
 @nebular/security
 MIT
 The MIT License (MIT)
