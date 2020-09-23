@@ -18,12 +18,15 @@
   </div>
   <div style="border-left: solid #8f9bb3 1px;
   padding-left: 20px;">
-    <ng-container *ngIf="userName.length > 0 && profileImg.length > 0">
+    <ng-container *ngIf="userName.length > 0">
       <div class="d-inline-block">
-        <div *ngIf="profileImg && profileImg !== null && profileImg !== '' ; else elseBlock" class="profile_image">
+        <div *ngIf="profileImg === ''; else elseBlock" class="profile_image">
           <p>{{initials}}</p>
         </div>
-        <img #elseBlock width = "40px" height="40px" style="border-radius: 50%; display: none;" src="{{profileImg}}">
+        <ng-template #elseBlock>
+          <img width = "40px" height="40px" style="border-radius: 50%; display: none;" src="{{profileImg}}">
+        </ng-template>
+        
       </div>
       <div class="ml-3 d-inline-block">
         {{userName}}

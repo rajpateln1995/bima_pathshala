@@ -21,7 +21,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div *ngIf="guru || shishya" class="modal-body">
+            <div *ngIf="guru || shishya ; else elseTemplate" class="modal-body">
                 <div class="row">
                     <div class="col-6">
                         <div>
@@ -33,13 +33,28 @@
                             <p class="text-center" style="font-size: larger;"><b>Shishya</b></p>
                         </div>
                     </div>
-
+                    <div class="col-6">
+                        <div>
+                            <p *ngIf="guru.length === 0" class="text-center" style="font-size: medium;">**No Guru Matched Your Search**</p>
+                        </div>
+                    </div>
+                    <div   class="col-6">
+                        <div>
+                            <p *ngIf="shishya.length === 0" class="text-center" style="font-size: medium;">**No Shishya Matched Your Search**</p>
+                        </div>
+                    </div>
                     <ng-container *ngIf="guru">
                         <div class="col-6">
-                            <div class="locModal" (click)="assignGuru(g)" *ngFor="let g of guru">
-                                <div>
-                                    <img style="border-radius: 50%;" width="40px" height="40px" src="{{g.imageUrl}}">
-                                    <p class="text-center">{{g.fName + ' ' + g.lName}}</p>
+                            <div  (click)="assignGuru(g)" *ngFor="let g of guru">
+                                <div class="highlight">
+                                    <div *ngIf="g.profileImage === ''; else elseBlock" class="profile_image">
+                                        <p>{{getInitials(g.fName + ' ' + g.lName)}}</p>
+                                    </div>
+                                    <ng-template #elseBlock>   
+                                        <img style="border-radius: 50%; margin-left: 5px;" width="40px" height="40px" src="{{g.profileImage}}">
+                                    </ng-template>
+                                    
+                                    <p style="margin-left: 40px; display: inline-block;" class="text-center">{{g.fName + ' ' + g.lName}}</p>
                                 </div>
                             </div>
                         </div>
@@ -47,18 +62,26 @@
 
                     <ng-container *ngIf="shishya">
                         <div class="col-6">
-                            <div class="locModal" (click)="assignShishya(s)" *ngFor="let s of shishya">
-                                <div>
-                                    <img style="border-radius: 50%;" width="40px" height="40px" src="{{s.imageUrl}}">
-                                    <p class="text-center">{{s.fName + ' ' + s.lName}}</p>
+                            <div (click)="assignShishya(s)" *ngFor="let s of shishya">
+                                <div class="highlight">
+                                    <div *ngIf="s.profileImage === ''; else elseBlock" class="profile_image">
+                                        <p>{{getInitials(s.fName + ' ' + s.lName)}}</p>
+                                    </div>
+                                    <ng-template #elseBlock> 
+                                        <img style="border-radius: 50%; margin-left: 5px;" width="40px" height="40px" src="{{s.profileImage}}">
+                                    </ng-template>
+                                    <p style="margin-left: 40px; display: inline-block;" class="text-center">{{s.fName + ' ' + s.lName}}</p>
                                 </div>
                             </div>
                         </div>
 
                     </ng-container>
-
+                    
                 </div>
             </div>
+            <ng-template #elseTemplate>
+                <p class="text-center mt-2">No Results Matched Your Search Try Searching with Different Name or Phone No.</p>
+            </ng-template>
         </div>
     </div>
 </div>

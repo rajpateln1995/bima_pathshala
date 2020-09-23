@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     const temp: any = JSON.parse(localStorage.getItem('Token'));
     this.userName = temp.fName + ' ' + temp.lName;
     this.profileImg = temp.imageUrl;
-    this.initials = this.userName.split(" ").map((n)=>n[0]).join("");
+    this.initials = this.userName.split(" ").map((n)=>n[0].toUpperCase()).join("");
 
     this.currentTheme = this.themeService.currentTheme;
 

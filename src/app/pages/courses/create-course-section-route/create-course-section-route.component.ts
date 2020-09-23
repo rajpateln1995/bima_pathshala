@@ -52,13 +52,24 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   mediaType;
   subSectionTitle;
   disableBtn: boolean = true;
+  blogUrl = '';
   createSubSection(subSectionModal) {
-    this.sub.push({
-      title: this.subSectionTitle,
-      type : this.mediaType,
-      url : this.mediaUrl,
-      thumb : this.thumb,
-    });
+    if(this.mediaType === 'blog'){
+      this.sub.push({
+        title: this.subSectionTitle,
+        type : this.mediaType,
+        url : this.blogUrl,
+        thumb : this.thumb,
+      });
+    }else {
+      this.sub.push({
+        title: this.subSectionTitle,
+        type : this.mediaType,
+        url : this.mediaUrl,
+        thumb : this.thumb,
+      });
+    }
+   
 
     const obj = {
       _id : this.section._id,
@@ -72,11 +83,13 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       document.getElementById(str).click();
       subSectionModal.resetForm();
       this.progress = 0;
+      this.thumb = '';
       this.toaster.show('Sub Section Created Successfully !', 'Sub Section Created' , { status : 'success' });
     },
     err => {
       console.log(err);
       subSectionModal.resetForm();
+      this.thumb = '';
       this.toaster.show('Something Went Wrong !', 'Error' , { status : 'warning' });
     });
 
@@ -116,11 +129,14 @@ export class CreateCourseSectionRouteComponent implements OnInit {
         console.log(event);
         const data: any = event;
         this.thumb = data.body.data[0];
+        this.disableBtn = false;
+        this.progressThumb = 0;
         this.toaster.show(' Media Uploaded Successfull !', 'Uploaded Successfully' , { status : 'success' });
       }
     },
     err => {
       console.log(err);
+      this.progressThumb = 0;
       this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
   }
@@ -178,18 +194,26 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   editMediaType;
   editSubSectionTitle;
   subSecIndex;
-  editSubSection(title , type , i){
+  edit_blogUrl;
+  editSubSection(title , type , blogURL , i){
     this.editMediaType = type;
     this.editSubSectionTitle = title;
     this.subSecIndex = i;
+    this.edit_blogUrl = blogURL;
     document.getElementById('toogle-edit-modal').click();
   }
 
   saveSubSectionChanges(form){
     this.sub[this.subSecIndex].type = this.editMediaType;
     this.sub[this.subSecIndex].title = this.editSubSectionTitle;
-    this.sub[this.subSecIndex].url = this.mediaUrl;
-    this.sub[this.subSecIndex].thumb = this.thumb;
+    if(this.editMediaType === 'blog'){
+      this.sub[this.subSecIndex].url = this.edit_blogUrl;
+    }else{
+      this.sub[this.subSecIndex].url = this.mediaUrl;
+    }
+    if(this.thumb !== ''){
+      this.sub[this.subSecIndex].thumb = this.thumb;
+    }
 
     const obj = {
       _id : this.section._id,
@@ -202,10 +226,13 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       form.resetForm();
       this.progress = 0;
       this.toaster.show('Sub Section Saved Successfully!', 'Sub Section Saved' , { status : 'success' });
+      this.thumb = '';
     },
     err => {
       console.log(err);
       this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
+      this.thumb = '';
+
     });
 
   }

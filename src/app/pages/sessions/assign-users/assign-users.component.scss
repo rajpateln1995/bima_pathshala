@@ -1,10 +1,20 @@
-.locModal{
+
+  .highlight {
+    height: 50px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  .highlight:hover{
+    background-color: #e9ecef;
+    
+  }
+
+  .locModal{
     border-radius: 4px;
   }
 
   .locModal:hover{
     background-color: #e9ecef;
-    
   }
 
   .locModal p{
@@ -13,5 +23,22 @@
     padding-top: 15px;
     padding-bottom: 15px;
     display: inline-block;
+  }
+
+  .profile_image{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ecf0f6;
+    display: inline-block;
+    margin-left: 5px;
+    p {
+      font-size: 18px;
+      font-weight: 600;
+      color: #3366ff;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      text-align: center;
+    }
   }
 

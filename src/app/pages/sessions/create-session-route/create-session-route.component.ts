@@ -2,6 +2,7 @@ import { HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NbComponentStatus, NbToastrService } from '@nebular/theme';
+import { stat } from 'fs';
 import { CourseService } from '../../../services/course.service';
 import { SessionsService } from '../../../services/sessions.service';
 
@@ -41,6 +42,8 @@ export class CreateSessionRouteComponent implements OnInit {
       this.details = res;
       this.details = this.details.data;
       this.curriculum = this.details.curriculum;
+      this.s = this.details.status;
+      this.details.sessionDate = this.details.sessionDate.slice(0, 16);
     },
     err => {
       console.log(err);
@@ -50,11 +53,12 @@ export class CreateSessionRouteComponent implements OnInit {
 
   changeStatus(status, type: NbComponentStatus) {
     this.s = status;
+    console.log(status)
       const obj = {
         _id : this.route.snapshot.params['id'],
         status : status,
       };
-    this.courses.putCourse(obj).subscribe(res => {
+    this.session.saveSession(obj).subscribe(res => {
       console.log(res);
       this.toaster.show(`Session Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
     }, err => {
@@ -181,11 +185,6 @@ createSection(form) {
 
 }
 
-config = {
-  hours24Format : true,
-  hideInputContainer :false,
-  
-}
 
 
 status = [
