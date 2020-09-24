@@ -62,10 +62,16 @@
             <label>Type : </label>
             <label>{{data.type}}</label>
             <br>
+            <ng-container *ngIf="data.type !== 'blog'">
             {{data.type}} : <a target="_blank" href="{{data.url}}">Preview</a>
+            </ng-container>
             <br>
             <ng-container *ngIf="data.type === 'video' || data.type === 'blog'">
                 <label>Thumbnail : </label><a target="_blank" href="{{data.thumb}}">Preview</a>
+            </ng-container>
+            <br>
+            <ng-container *ngIf="data.type === 'blog'">
+                <label>Blog : </label><a href="javascript:void(0)" (click)="getArticleHref(data.blogId, '2')">Preview</a>
             </ng-container>
 
         </nb-accordion-item-body>
@@ -184,7 +190,6 @@
 
                 </div>
                 <div class="modal-footer">
-                    {{!isBlogSelected()}}
                     <button id="{{'close-sub-section' + section_id}}" data-dismiss="modal" nbButton
                         status="basic">Close</button>
                     <button [disabled]="subSecModal.invalid || disableBtn || !isBlogSelected()"
@@ -197,8 +202,8 @@
 
 
 <button style="display: none;" id="toogle-edit-modal"></button>
-<div class="modal" tabindex="-1" [id]="editSubSecId">
-    <div class="modal-dialog">
+<div class="modal fullHeight" tabindex="-1" [id]="editSubSecId">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
             <form #editSubSectionModal="ngForm">
                 <div class="modal-header">
@@ -207,7 +212,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div style="height: 75vh;" class="modal-body">
 
                     <div class="form-group">
                         <label for="inputFirstName" class="label">Enter Sub-Section Name <span

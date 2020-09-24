@@ -112,7 +112,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
 
 
 
-  progress;
+  progress = 0;
   mediaUrl = '';
   uploadMedia(event) {
     const data = event.target.files[0];
@@ -124,11 +124,13 @@ export class CreateCourseSectionRouteComponent implements OnInit {
         const data: any = event;
         this.mediaUrl = data.body.data[0];
         this.disableBtn = false;
+        this.progress = 0;
         this.toaster.show(' Media Uploaded Successfull !', 'Uploaded Successfully' , { status : 'success' });
       }
     },
     err => {
       console.log(err);
+      this.progress = 0;
       this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
     });
   }
