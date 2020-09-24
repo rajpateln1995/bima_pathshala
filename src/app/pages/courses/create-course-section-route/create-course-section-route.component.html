@@ -1,6 +1,6 @@
 <div class="mr-2 ml-2 mb-2 text-right">
-    <button data-toggle="modal" attr.data-target="{{deleteTarget}}"  size="small" type="button" nbButton status="danger"><i class="fa fa-trash mr-1"
-            aria-hidden="true"></i>Delete Section</button>
+    <button data-toggle="modal" attr.data-target="{{deleteTarget}}" size="small" type="button" nbButton
+        status="danger"><i class="fa fa-trash mr-1" aria-hidden="true"></i>Delete Section</button>
 
 
 </div>
@@ -31,19 +31,20 @@
     <div class="text-right mb-3">
         <button class="mr-2" size="small" (click)="section_disable = false" type="button" nbButton status="success">
             Edit</button>
-        <button class="mr-2" [disabled]="section.invalid || section_disable" size="small" (click)="saveSection(false)" type="button" nbButton status="success">
+        <button class="mr-2" [disabled]="section.invalid || section_disable" size="small" (click)="saveSection(false)"
+            type="button" nbButton status="success">
             Save</button>
     </div>
 </form>
 
 <hr>
-    <div class="text-center" style="font-size:larger;">
-        <b>Sub Sections</b>
-    </div>
+<div class="text-center" style="font-size:larger;">
+    <b>Sub Sections</b>
+</div>
 <hr>
 <div class="text-right mb-2">
     <button class="mr-2" size="small" data-toggle="modal" attr.data-target="{{subSecTarget}}" type="button" nbButton
-    status="success"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add New Sub-Section</button>
+        status="success"><i class="fa fa-plus mr-1" aria-hidden="true"></i>Add New Sub-Section</button>
 </div>
 <nb-accordion>
     <nb-accordion-item *ngFor="let data of sub ; let i = index" style="border: solid #5d5c5ce0 1px;">
@@ -52,8 +53,11 @@
         </nb-accordion-item-header>
         <nb-accordion-item-body>
             <div class="text-right">
-                <button class="mr-2" nbButton size="tiny" (click)="deleteSubSection(data._id)" status="danger">Delete</button>
-                <button class="mr-2" data-toggle="modal" attr.data-target="{{editSubSecTarget}}" nbButton size="tiny" (click)="editSubSection(data.title , data.type, data.url , i)" status="success">Edit</button>
+                <button class="mr-2" nbButton size="tiny" (click)="deleteSubSection(data._id)"
+                    status="danger">Delete</button>
+                <button class="mr-2" data-toggle="modal" attr.data-target="{{editSubSecTarget}}" nbButton size="tiny"
+                    (click)="editSubSection(data.title , data.type, data.blogId, data.url , i)"
+                    status="success">Edit</button>
             </div>
             <label>Type : </label>
             <label>{{data.type}}</label>
@@ -63,7 +67,7 @@
             <ng-container *ngIf="data.type === 'video' || data.type === 'blog'">
                 <label>Thumbnail : </label><a target="_blank" href="{{data.thumb}}">Preview</a>
             </ng-container>
-            
+
         </nb-accordion-item-body>
     </nb-accordion-item>
 </nb-accordion>
@@ -73,8 +77,8 @@
 
 
 
-<div class="modal" tabindex="-1" [id]="subSecId">
-    <div class="modal-dialog">
+<div class="modal fullHeight" tabindex="-1" [id]="subSecId">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
             <form #subSecModal="ngForm">
                 <div class="modal-header">
@@ -83,7 +87,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
+                <div style="height: 75vh;" class="modal-body">
 
                     <div class="form-group">
                         <label for="inputFirstName" class="label">Enter Sub-Section Name <span
@@ -101,50 +105,89 @@
                         <option value="file">Text</option>
                         <option value="blog">Blog</option>
                     </select>
-                    <p *ngIf="media.invalid && media.touched" class="text-center mb-3 mt-1"
-                            style="color: red;">This Field is Mandatory !</p>
-                    
+                    <p *ngIf="media.invalid && media.touched" class="text-center mb-3 mt-1" style="color: red;">This
+                        Field is Mandatory !</p>
+
                     <ng-container *ngIf="mediaType !== 'blog'">
                         <div class="mt-4">
-                            <label class="label d-block">Select Media To Upload <span style="color: red;">*</span></label>
-                            <input (change)="uploadMedia($event)" required accept="{{mediaType}}/*" #media="ngModel" ngModel
-                                name="media" type="file">
+                            <label class="label d-block">Select Media To Upload <span
+                                    style="color: red;">*</span></label>
+                            <input (change)="uploadMedia($event)" required accept="{{mediaType}}/*" #media="ngModel"
+                                ngModel name="media" type="file">
                         </div>
-                        <p *ngIf="media.invalid && media.touched" class="text-center mb-3 mt-1"
-                            style="color: red;">This Field is Mandatory !</p>
+                        <p *ngIf="media.invalid && media.touched" class="text-center mb-3 mt-1" style="color: red;">This
+                            Field is Mandatory !</p>
                         <div *ngIf="progress > 0" class="progress mt-4">
                             <div class="progress-bar bg-success" role="progressbar" style="width: {{progress}}%"
                                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </ng-container>
-                    
+
                     <ng-container *ngIf="mediaType === 'video' || mediaType === 'blog'">
                         <div class="mt-4">
                             <label class="label d-block">Select Thumbnail <span style="color: red;">*</span></label>
                             <input (change)="uploadThumb($event)" required accept="image/*" #thumb="ngModel" ngModel
                                 name="thumb" type="file">
                         </div>
-                        <p *ngIf="thumb.invalid && thumb.touched" class="text-center mb-3 mt-1"
-                            style="color: red;">This Field is Mandatory !</p>
+                        <p *ngIf="thumb.invalid && thumb.touched" class="text-center mb-3 mt-1" style="color: red;">This
+                            Field is Mandatory !</p>
                         <div *ngIf="progressThumb > 0" class="progress mt-4">
                             <div class="progress-bar bg-success" role="progressbar" style="width: {{progressThumb}}%"
                                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="mediaType === 'blog'">
-                        <div class="mt-4">
+                        <!-- <div class="mt-4">
                             <label class="label d-block">Blog URL <span style="color: red;">*</span></label>
                             <input required type="text" #url="ngModel" [(ngModel)]="blogUrl"
                                 name="url" nbInput fullWidth>
                         </div>
                         <p *ngIf="url.invalid && url.touched" class="text-center mb-3 mt-1"
-                            style="color: red;">This Field is Mandatory !</p>
+                            style="color: red;">This Field is Mandatory !</p> -->
+                        <div class="input-group mt-4">
+                            <input type="text" id="input1-group2" [(ngModel)]="articleSearch" name="input1-group2"
+                                class="form-control" placeholder="Search Blog By Name">
+                            <span class="input-group-prepend" (click)="getArticles()">
+                                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i>
+                                    Search</button>
+                            </span>
+                        </div>
+                        <div *ngIf="articles.length > 0" class="list-group mt-4">
+                            <a class="list-group-item list-group-item-action disabled">
+                                <p class="text-center mb-0 text-primary"><b>Select Blog</b></p>
+                            </a>
+                            <ng-container *ngFor="let a of articles">
+                                <a (click)="setBlogDetails(a._id , a.title)"
+                                    class="list-group-item list-group-item-action">
+                                    <div class="row">
+                                        <div class="col-9">{{a.title}}</div>
+                                        <div class="col-3" style="display: inline-block; float: right;">
+                                            <button (click)="getArticleHref(a._id, a.status); $event.stopPropagation();"
+                                                nbButton status="primary" size="tiny">
+                                                Preview
+                                            </button>
+                                        </div>
+                                    </div>
+                                </a>
+                            </ng-container>
+                        </div>
+                        <div *ngIf="blogDetails.id.length > 0" class="list-group mt-4">
+                            <a class="list-group-item list-group-item-action disabled">
+                                <p class="text-center mb-0 text-primary"><b>Selected Blog</b></p>
+                            </a>
+                            <a class="list-group-item list-group-item-action">
+                                <p class="text-center">{{blogDetails.name}}</p>
+                            </a>
+                        </div>
+
                     </ng-container>
-                    
+
                 </div>
                 <div class="modal-footer">
-                    <button id="{{'close-sub-section' + section_id}}" data-dismiss="modal" nbButton status="basic">Close</button>
-                    <button [disabled]="subSecModal.invalid || disableBtn"
+                    {{!isBlogSelected()}}
+                    <button id="{{'close-sub-section' + section_id}}" data-dismiss="modal" nbButton
+                        status="basic">Close</button>
+                    <button [disabled]="subSecModal.invalid || disableBtn || !isBlogSelected()"
                         (click)="createSubSection(subSecModal)" nbButton status="success">Create</button>
                 </div>
             </form>
@@ -153,7 +196,7 @@
 </div>
 
 
-<button style="display: none;"  id="toogle-edit-modal" ></button>
+<button style="display: none;" id="toogle-edit-modal"></button>
 <div class="modal" tabindex="-1" [id]="editSubSecId">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -171,19 +214,20 @@
                                 style="color: red;">*</span></label>
                         <input type="text" name="editsubSectionName" required #editsubSectionName="ngModel"
                             [(ngModel)]="editSubSectionTitle" nbInput fullWidth placeholder="Enter Section Name ">
-                        <p *ngIf="editsubSectionName.invalid && editsubSectionName.touched" class="text-center mb-3 mt-1"
-                            style="color: red;">This Field is Mandatory !</p>
+                        <p *ngIf="editsubSectionName.invalid && editsubSectionName.touched"
+                            class="text-center mb-3 mt-1" style="color: red;">This Field is Mandatory !</p>
                     </div>
                     <label class="label">Media Type <span style="color: red;">*</span></label>
-                    <select class="form-control" name="editmedia" required #editmedia="ngModel" [(ngModel)]="editMediaType">
+                    <select class="form-control" name="editmedia" required #editmedia="ngModel"
+                        [(ngModel)]="editMediaType">
                         <option selected>--Select--</option>
                         <option value="audio">Audio</option>
                         <option value="video">Video</option>
                         <option value="file">Text</option>
                         <option value="blog">Blog</option>
                     </select>
-                    <p *ngIf="editmedia.invalid && editmedia.touched" class="text-center mb-3 mt-1"
-                            style="color: red;">This Field is Mandatory !</p>
+                    <p *ngIf="editmedia.invalid && editmedia.touched" class="text-center mb-3 mt-1" style="color: red;">
+                        This Field is Mandatory !</p>
                     <ng-container *ngIf="editMediaType !== 'blog'">
                         <div class="mt-4">
                             <label class="label d-block">Select Media To Upload</label>
@@ -195,12 +239,12 @@
                                 aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </ng-container>
-                    
+
                     <ng-container *ngIf="editMediaType === 'video' || editMediaType === 'blog'">
                         <div class="mt-4">
                             <label class="label d-block">Select Thumbnail</label>
-                            <input (change)="uploadThumb($event)" accept="image/*" #thumb="ngModel" ngModel
-                                name="thumb" type="file">
+                            <input (change)="uploadThumb($event)" accept="image/*" #thumb="ngModel" ngModel name="thumb"
+                                type="file">
                         </div>
                         <div *ngIf="progressThumb > 0" class="progress mt-4">
                             <div class="progress-bar bg-success" role="progressbar" style="width: {{progressThumb}}%"
@@ -208,19 +252,56 @@
                         </div>
                     </ng-container>
                     <ng-container *ngIf="editMediaType === 'blog'">
-                        <div class="mt-4">
+                        <!-- <div class="mt-4">
                             <label class="label d-block">Blog URL <span style="color: red;">*</span></label>
-                            <input required type="text" #url="ngModel" [(ngModel)]="edit_blogUrl"
+                            <input required type="text" #url="ngModel" [(ngModel)]="blogUrl"
                                 name="url" nbInput fullWidth>
                         </div>
                         <p *ngIf="url.invalid && url.touched" class="text-center mb-3 mt-1"
-                            style="color: red;">This Field is Mandatory !</p>
+                            style="color: red;">This Field is Mandatory !</p> -->
+                        <div class="input-group mt-4">
+                            <input type="text" id="input1-group2" [(ngModel)]="articleSearch" name="input1-group2"
+                                class="form-control" placeholder="Search Blog By Name">
+                            <span class="input-group-prepend" (click)="getArticles()">
+                                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i>
+                                    Search</button>
+                            </span>
+                        </div>
+                        <div *ngIf="articles.length > 0" class="list-group mt-4">
+                            <a class="list-group-item list-group-item-action disabled">
+                                <p class="text-center mb-0 text-primary"><b>Select Blog</b></p>
+                            </a>
+                            <ng-container *ngFor="let a of articles">
+                                <a (click)="setBlogDetails(a._id , a.title)"
+                                    class="list-group-item list-group-item-action">
+                                    <div class="row">
+                                        <div class="col-9">{{a.title}}</div>
+                                        <div class="col-3" style="display: inline-block; float: right;">
+                                            <button (click)="getArticleHref(a._id, a.status); $event.stopPropagation();"
+                                                nbButton status="primary" size="tiny">
+                                                Preview
+                                            </button>
+                                        </div>
+                                    </div>
+                                </a>
+                            </ng-container>
+                        </div>
+                        <div *ngIf="blogDetails.id.length > 0" class="list-group mt-4">
+                            <a class="list-group-item list-group-item-action disabled">
+                                <p class="text-center mb-0 text-primary"><b>Selected Blog</b></p>
+                            </a>
+                            <a class="list-group-item list-group-item-action">
+                                <p class="text-center">{{blogDetails.name}}</p>
+                            </a>
+                        </div>
+
                     </ng-container>
                 </div>
                 <div class="modal-footer">
                     <button id="close-edit-sub-section" data-dismiss="modal" nbButton status="basic">Close</button>
                     <button data-dismiss="modal" [disabled]="editSubSectionModal.invalid"
-                        (click)="saveSubSectionChanges(editSubSectionModal)" nbButton status="success">Save Changes</button>
+                        (click)="saveSubSectionChanges(editSubSectionModal)" nbButton status="success">Save
+                        Changes</button>
                 </div>
             </form>
         </div>
@@ -229,7 +310,7 @@
 
 
 
-<button style="display: none;" data-toggle="modal" data-target="#deleteConfirmModal" id="delete-modal" ></button>
+<button style="display: none;" data-toggle="modal" data-target="#deleteConfirmModal" id="delete-modal"></button>
 <div class="modal" tabindex="-1" id="{{deleteId}}">
     <div style="margin-top: 20%;" class="modal-dialog">
         <div class="modal-content">
@@ -239,8 +320,7 @@
                 </div>
                 <div class="modal-footer">
                     <button id="close-delete" data-dismiss="modal" nbButton status="basic">NO</button>
-                    <button (click)="deleteSection()" nbButton data-dismiss="modal"
-                        status="danger">YES</button>
+                    <button (click)="deleteSection()" nbButton data-dismiss="modal" status="danger">YES</button>
                 </div>
             </form>
         </div>

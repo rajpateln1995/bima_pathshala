@@ -136,7 +136,7 @@ export class UserDetailsComponent implements OnInit {
 
   getShishyas() {
     for (const id of this.myShishya){
-      this.user.getUsers('', '10', '1', id).subscribe(res => {
+      this.user.getUsers('', '100000', '1', id).subscribe(res => {
         console.log(res);
         const temp: any = res;
         const obj = {
@@ -157,7 +157,7 @@ export class UserDetailsComponent implements OnInit {
 
   getGurus(){
     for (const id of this.myGuru) {
-      this.user.getUsers('', '10', '1', id).subscribe(res => {
+      this.user.getUsers('', '100000', '1', id).subscribe(res => {
         console.log(res);
         const temp: any = res;
         const obj = {

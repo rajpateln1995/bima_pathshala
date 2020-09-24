@@ -42,7 +42,8 @@
             <label class="d-block mt-1"><b>Select Correct Option :</b></label>
             <select style="width: 45%;" [disabled]="disable" class="custom-select custom-select-sm"
                 [(ngModel)]="question.answer">
-                <ng-container *ngFor="let option of question.options">
+                <option selected disabled value="">--Select Option--</option>
+                <ng-container *ngFor="let option of question.options">                    
                     <option [ngValue]="option">{{option}}</option>
                 </ng-container>
 

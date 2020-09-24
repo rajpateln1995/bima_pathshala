@@ -57,7 +57,7 @@ export class EditDocumentRouteComponent implements OnInit {
       };
       this.document.saveDocument(obj).subscribe(res => {
       console.log(res);
-      this.toaster.show(`Document Is ${this.status[this.s]}`, this.status[this.s] , { status : type });
+      this.toaster.show(`Document Is ${this.status[status]}`, this.status[status] , { status : type });
       this.s = status;
     }, err => {
       console.log(err);

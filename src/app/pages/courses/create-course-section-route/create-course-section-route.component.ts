@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CourseService } from '../../../services/course.service';
 import { HttpEventType } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
+import { DocumentService } from '../../../services/document.service';
+import { TemperatureHumidityService } from '../../../@core/mock/temperature-humidity.service';
 
 @Component({
   selector: 'ngx-create-course-section-route',
@@ -13,7 +15,9 @@ export class CreateCourseSectionRouteComponent implements OnInit {
 
   constructor(private courses: CourseService,
               private route: ActivatedRoute,
-              private toaster: NbToastrService) { }
+              private toaster: NbToastrService,
+              private document: DocumentService,
+              private router: Router) { }
 
 
   @Input() section: any;
@@ -35,7 +39,8 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     this.section_name = this.section.name;
     this.section_description = this.section.description;
     this.sub = this.section.data;
-    console.log(this.sub);
+    console.log(this.section);
+    console.log(this.language);
     this.assessment = this.section.assessment;
     this.section_id = this.section._id;
     this.subSecId = `subSec${this.section_id}`;
@@ -52,13 +57,13 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   mediaType;
   subSectionTitle;
   disableBtn: boolean = true;
-  blogUrl = '';
   createSubSection(subSectionModal) {
+
     if(this.mediaType === 'blog'){
       this.sub.push({
         title: this.subSectionTitle,
         type : this.mediaType,
-        url : this.blogUrl,
+        blogId : this.blogDetails.id,
         thumb : this.thumb,
       });
     }else {
@@ -70,11 +75,15 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       });
     }
    
+   
+
 
     const obj = {
       _id : this.section._id,
       data : this.sub,
     };
+    console.log(obj);
+
     this.disableBtn = true;
     this.courses.createSubSection(obj).subscribe((res: any) => {
       console.log(res);
@@ -84,12 +93,18 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       subSectionModal.resetForm();
       this.progress = 0;
       this.thumb = '';
+      this.blogDetails.id = '';
+      this.blogDetails.name = '';
+      this.mediaType = '';
       this.toaster.show('Sub Section Created Successfully !', 'Sub Section Created' , { status : 'success' });
     },
     err => {
       console.log(err);
       subSectionModal.resetForm();
       this.thumb = '';
+      this.blogDetails.id = '';
+      this.blogDetails.name = '';
+      this.mediaType = '';
       this.toaster.show('Something Went Wrong !', 'Error' , { status : 'warning' });
     });
 
@@ -98,7 +113,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
 
 
   progress;
-  mediaUrl;
+  mediaUrl = '';
   uploadMedia(event) {
     const data = event.target.files[0];
     this.courses.upload(data).subscribe(event => {
@@ -195,23 +210,24 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   editSubSectionTitle;
   subSecIndex;
   edit_blogUrl;
-  editSubSection(title , type , blogURL , i){
+  edit_blogId;
+  editSubSection(title , type , blog_id , blogURL , i){
     this.editMediaType = type;
     this.editSubSectionTitle = title;
     this.subSecIndex = i;
-    this.edit_blogUrl = blogURL;
+    this.edit_blogId = blog_id;
     document.getElementById('toogle-edit-modal').click();
   }
 
   saveSubSectionChanges(form){
     this.sub[this.subSecIndex].type = this.editMediaType;
     this.sub[this.subSecIndex].title = this.editSubSectionTitle;
-    if(this.editMediaType === 'blog'){
-      this.sub[this.subSecIndex].url = this.edit_blogUrl;
+    if (this.editMediaType === 'blog'){
+      this.sub[this.subSecIndex].blogId = this.blogDetails.id;
     }else{
       this.sub[this.subSecIndex].url = this.mediaUrl;
     }
-    if(this.thumb !== ''){
+    if (this.thumb !== ''){
       this.sub[this.subSecIndex].thumb = this.thumb;
     }
 
@@ -235,6 +251,50 @@ export class CreateCourseSectionRouteComponent implements OnInit {
 
     });
 
+  }
+
+
+  articles = [];
+  getArticles() {
+    this.document.getDocAndArticle('', '', '1', '10000', 'false', this.language).subscribe((res: any) => {
+      this.articles = res.data;
+      console.log(res);
+    },
+    err => {
+      this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
+    });
+  }
+
+  getArticleHref(id , status){
+    const url = this.router.serializeUrl(
+      this.router.createUrlTree([`/pages/document/edit/id/${id}/${status}`]),
+    );
+
+    window.open(url , '_blank')
+
+    console.log(url);
+  }
+
+  blogDetails = {
+    id : '',
+    name : ''
+  };
+  setBlogDetails(id , name){
+    this.blogDetails.id = id;
+    this.blogDetails.name = name;
+    this.articles = [];
+  }
+
+  isBlogSelected(){
+    if(this.mediaType === 'blog'){
+      if(this.blogDetails.id.length > 0){
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return true;
+    }
   }
 
 }
