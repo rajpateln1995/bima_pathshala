@@ -19,8 +19,9 @@ export class CreateCourseSectionRouteComponent implements OnInit {
               private document: DocumentService,
               private router: Router) { }
 
-
-  @Input() section: any;
+  @Input() index: number;
+  @Output() indexChange = new EventEmitter<number>();
+  @Input() section: any = {};
   @Input() language: any;
   @Output() courseEvent = new EventEmitter();
   sub;
@@ -39,6 +40,8 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     this.section_name = this.section.name;
     this.section_description = this.section.description;
     this.sub = this.section.data;
+    this.SubSectionIndex = this.sub.length + 1;
+    console.log(this.SubSectionIndex);
     console.log(this.section);
     console.log(this.language);
     this.assessment = this.section.assessment;
@@ -52,8 +55,11 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   }
 
 
+  updateIndex(event){
+    this.indexChange.emit(event);
+  }
 
-
+  SubSectionIndex;
   mediaType;
   subSectionTitle;
   disableBtn: boolean = true;
@@ -65,6 +71,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
         type : this.mediaType,
         blogId : this.blogDetails.id,
         thumb : this.thumb,
+        index : this.SubSectionIndex,
       });
     }else {
       this.sub.push({
@@ -72,11 +79,9 @@ export class CreateCourseSectionRouteComponent implements OnInit {
         type : this.mediaType,
         url : this.mediaUrl,
         thumb : this.thumb,
+        index : this.SubSectionIndex,
       });
     }
-   
-   
-
 
     const obj = {
       _id : this.section._id,
@@ -96,6 +101,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       this.blogDetails.id = '';
       this.blogDetails.name = '';
       this.mediaType = '';
+      this.SubSectionIndex++;
       this.toaster.show('Sub Section Created Successfully !', 'Sub Section Created' , { status : 'success' });
     },
     err => {
@@ -164,6 +170,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       _id : this.section._id,
       name : this.section_name,
       description : this.section_description,
+      index : this.index,
     };
     this.courses.createSubSection(obj).subscribe(res => {
       console.log(res);
@@ -213,17 +220,21 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   subSecIndex;
   edit_blogUrl;
   edit_blogId;
-  editSubSection(title , type , blog_id , blogURL , i){
+  editSubSectionIndex;
+  editSubSection(title , type , blog_id , blogURL , subIndex , i){
     this.editMediaType = type;
     this.editSubSectionTitle = title;
     this.subSecIndex = i;
     this.edit_blogId = blog_id;
+    this.editSubSectionIndex = subIndex;
+
     document.getElementById('toogle-edit-modal').click();
   }
 
   saveSubSectionChanges(form){
     this.sub[this.subSecIndex].type = this.editMediaType;
     this.sub[this.subSecIndex].title = this.editSubSectionTitle;
+    this.sub[this.subSecIndex].index = this.editSubSectionIndex;
     if (this.editMediaType === 'blog'){
       this.sub[this.subSecIndex].blogId = this.blogDetails.id;
     }else{

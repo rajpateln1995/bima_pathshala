@@ -1,7 +1,10 @@
-<div class="mr-2 ml-2 mb-2 text-right">
-    <button data-toggle="modal" attr.data-target="{{deleteTarget}}" size="small" type="button" nbButton
-        status="danger"><i class="fa fa-trash mr-1" aria-hidden="true"></i>Delete Section</button>
-
+<div class="mr-2 ml-2 mb-2">
+    <label class="d-block">Section Index <span style="color: red;">
+            *</span></label>
+    <input style="width: 50%;" [disabled]="section_disable" class="form-control form-control-sm d-inline-block" type="number" [(ngModel)]="index"
+        (ngModelChange)="updateIndex($event)" placeholder="Select Index of Section">
+    <button class="float-right" data-toggle="modal" attr.data-target="{{deleteTarget}}" size="small" type="button"
+        nbButton status="danger"><i class="fa fa-trash mr-1" aria-hidden="true"></i>Delete Section</button>
 
 </div>
 
@@ -49,21 +52,28 @@
 <nb-accordion>
     <nb-accordion-item *ngFor="let data of sub ; let i = index" style="border: solid #5d5c5ce0 1px;">
         <nb-accordion-item-header>
-            {{data.title}}
+            <div class="mr-5">({{data.index}})</div>{{data.title}}
         </nb-accordion-item-header>
         <nb-accordion-item-body>
-            <div class="text-right">
-                <button class="mr-2" nbButton size="tiny" (click)="deleteSubSection(data._id)"
+            <div>
+                <!-- <label class="d-block">Section Index <span style="color: red;">
+                    *</span></label>
+                <input style="width: 50%;" class="form-control form-control-sm d-inline-block" type="number" [(ngModel)]="data.index"
+                placeholder="Select Index of Section"> -->
+                <button class="mr-2 float-right" nbButton size="tiny" (click)="deleteSubSection(data._id)"
                     status="danger">Delete</button>
-                <button class="mr-2" data-toggle="modal" attr.data-target="{{editSubSecTarget}}" nbButton size="tiny"
-                    (click)="editSubSection(data.title , data.type, data.blogId, data.url , i)"
+                <button class="mr-2 float-right" data-toggle="modal" attr.data-target="{{editSubSecTarget}}" nbButton size="tiny"
+                    (click)="editSubSection(data.title , data.type, data.blogId, data.url, data.index , i)"
                     status="success">Edit</button>
             </div>
+            <label>Sub-Section Index : </label>
+            <label>{{data.index}}</label>
+            <br>
             <label>Type : </label>
             <label>{{data.type}}</label>
             <br>
             <ng-container *ngIf="data.type !== 'blog'">
-            {{data.type}} : <a target="_blank" href="{{data.url}}">Preview</a>
+                {{data.type}} : <a target="_blank" href="{{data.url}}">Preview</a>
             </ng-container>
             <br>
             <ng-container *ngIf="data.type === 'video' || data.type === 'blog'">
@@ -71,7 +81,8 @@
             </ng-container>
             <br>
             <ng-container *ngIf="data.type === 'blog'">
-                <label>Blog : </label><a href="javascript:void(0)" (click)="getArticleHref(data.blogId, '2')">Preview</a>
+                <label>Blog : </label><a href="javascript:void(0)"
+                    (click)="getArticleHref(data.blogId, '2')">Preview</a>
             </ng-container>
 
         </nb-accordion-item-body>
@@ -94,7 +105,15 @@
                     </button>
                 </div>
                 <div style="height: 75vh;" class="modal-body">
-
+                    <div class="form-group">
+                        <label class="label">Sub-Section Index <span style="color: red;">
+                            *</span></label>
+                        <input type="number" name="subsecindex" required #subsecindex="ngModel"
+                        [(ngModel)]="SubSectionIndex" nbInput fullWidth placeholder="Enter Index of Section">
+                        <p *ngIf="subsecindex.invalid && subsecindex.touched" class="text-center mb-3 mt-1"
+                        style="color: red;">This Field is Mandatory !</p>
+                    </div>
+                    
                     <div class="form-group">
                         <label for="inputFirstName" class="label">Enter Sub-Section Name <span
                                 style="color: red;">*</span></label>
@@ -214,6 +233,11 @@
                 </div>
                 <div style="height: 75vh;" class="modal-body">
 
+
+                    <label class="d-block">Section Index <span style="color: red;">
+                        *</span></label>
+                    <input class="form-control form-control-sm d-inline-block" type="number" 
+                    placeholder="Select Index of Section" name="editsubsecindex" [(ngModel)]="editSubSectionIndex">
                     <div class="form-group">
                         <label for="inputFirstName" class="label">Enter Sub-Section Name <span
                                 style="color: red;">*</span></label>
