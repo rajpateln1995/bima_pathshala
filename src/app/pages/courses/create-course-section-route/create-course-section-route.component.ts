@@ -268,8 +268,9 @@ export class CreateCourseSectionRouteComponent implements OnInit {
 
 
   articles = [];
+  articleSearch = '';
   getArticles() {
-    this.document.getDocAndArticle('', '', '1', '10000', 'false', this.language).subscribe((res: any) => {
+    this.document.getDocAndArticle('', '', '1', '10000', 'false', this.language, this.articleSearch).subscribe((res: any) => {
       this.articles = res.data;
       console.log(res);
     },

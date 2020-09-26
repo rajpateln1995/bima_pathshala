@@ -24,7 +24,7 @@ export class DocumentService {
     q_params = q_params.append('limit', limit);
     q_params = q_params.append('all', all);
     q_params = q_params.append('language', language);
-    q_params = q_params.append('name', name);
+    q_params = q_params.append('title', name);
 
     return this.http.get(this.base_url + '/document/all' , { headers : header , params: q_params });
   }
