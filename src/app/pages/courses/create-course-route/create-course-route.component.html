@@ -114,7 +114,7 @@
             <nb-accordion-item-body>
                 
                 <ngx-create-course-section-route (courseEvent)="getCourse()" [section]="section"
-                    [language]="details.language" [(index)]="section.index">
+                    [language]="details.language" [(index)]="section.index" (sortSections)="sortSections()">
 
                 </ngx-create-course-section-route>
             </nb-accordion-item-body>

@@ -80,7 +80,11 @@ export class AssignUsersComponent implements OnInit {
   
   
   getInitials(fullName){
-    return fullName.split(" ").map((n)=>n[0].toUpperCase()).join("");
+    if(fullName.length > 0){
+      return fullName.split(" ").map((n)=>n[0].toUpperCase()).join("");
+    }else{
+      return 'XX';
+    }
   }
 
 

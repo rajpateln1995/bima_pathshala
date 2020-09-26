@@ -82,7 +82,6 @@ export class CreateCourseRouteComponent implements OnInit {
               }
               if (this.checkIndexing(subsecindexSum, sec.data.length)) {
                 // pass
-                
               } else {
                 this.toaster.show(`Please Correct the Index of Sub-Sections in "${sec.name}" Section`,
                 'Cannot Validate Course', { status: 'warning', duration: 7000 });
@@ -133,8 +132,7 @@ export class CreateCourseRouteComponent implements OnInit {
       return;
     });
 
-    
-    
+
   }
 
   getCourse() {
@@ -145,6 +143,7 @@ export class CreateCourseRouteComponent implements OnInit {
       const data: any = res;
       this.details = data.data.course;
       this.s = data.data.course.status;
+      this.sortSections();
     },
       err => {
         console.log(err);
@@ -170,6 +169,13 @@ export class CreateCourseRouteComponent implements OnInit {
       console.log(err);
       this.toaster.show('Something Went Wrong !', 'Error', { status: 'danger' });
       document.getElementById('close-section').click();
+    });
+  }
+
+
+  sortSections(){
+    this.details.sections = this.details.sections.sort((a , b) => {
+      return a.index - b.index;
     });
   }
 
@@ -242,11 +248,9 @@ export class CreateCourseRouteComponent implements OnInit {
       });
   }
 
-
   ngOnDestroy() {
     this.saveCourse(true);
   }
-
 
   status = [
     'Not Verified',
@@ -255,7 +259,5 @@ export class CreateCourseRouteComponent implements OnInit {
     'Disabled',
     'Deleted',
   ];
-
-
 
 }

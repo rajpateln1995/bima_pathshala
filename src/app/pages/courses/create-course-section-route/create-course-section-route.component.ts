@@ -24,6 +24,8 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   @Input() section: any = {};
   @Input() language: any;
   @Output() courseEvent = new EventEmitter();
+  @Output() sortSections = new EventEmitter();
+
   sub;
   assessment;
   section_id;
@@ -82,6 +84,8 @@ export class CreateCourseSectionRouteComponent implements OnInit {
         index : this.SubSectionIndex,
       });
     }
+
+    this.sortSubsection();
 
     const obj = {
       _id : this.section._id,
@@ -174,6 +178,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     };
     this.courses.createSubSection(obj).subscribe(res => {
       console.log(res);
+      this.sortSections.emit();
       if (!ondestroy){
         this.toaster.show('Section Saved Successfully !', 'Section Saved' , { status : 'success' });
       }
@@ -186,6 +191,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
 
   deleteSubSection(subSecId) {
     console.log(this.section._id);
+    this.sortSubsection();
     this.courses.delSubSection(subSecId , this.section._id).subscribe(res => {
       console.log(res);
       const temp: any = res;
@@ -225,7 +231,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     this.editMediaType = type;
     this.editSubSectionTitle = title;
     this.subSecIndex = i;
-    this.edit_blogId = blog_id;
+    this.blogDetails.id = blog_id;
     this.editSubSectionIndex = subIndex;
 
     document.getElementById('toogle-edit-modal').click();
@@ -244,6 +250,8 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     if (this.thumb !== ''){
       this.sub[this.subSecIndex].thumb = this.thumb;
     }
+
+    this.sortSubsection();
 
     const obj = {
       _id : this.section._id,
@@ -281,13 +289,19 @@ export class CreateCourseSectionRouteComponent implements OnInit {
   }
 
   getArticleHref(id , status){
-    const url = this.router.serializeUrl(
-      this.router.createUrlTree([`/pages/document/edit/id/${id}/${status}`]),
-    );
 
-    window.open(url , '_blank')
-
-    console.log(url);
+    this.document.getDocAndArticle('',id, '1', '10').subscribe((res: any) => {
+      const obj = res.data[0].otherLanguages;
+      localStorage.setItem('doc-list' , JSON.stringify({ data : obj }));
+      const url = this.router.serializeUrl(
+        this.router.createUrlTree([`/pages/document/edit/id/${id}/${status}`]),
+      );
+      window.open(url , '_blank');
+      console.log(res);
+    },
+    err => {
+      console.log(err);
+    });
   }
 
   blogDetails = {
@@ -300,6 +314,8 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     this.articles = [];
   }
 
+
+  //Submit button validation
   isBlogSelected(){
     if(this.mediaType === 'blog'){
       if(this.blogDetails.id.length > 0){
@@ -307,9 +323,18 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       }else{
         return false;
       }
-    }else{
+    }else {
       return true;
     }
+  }
+
+
+  // sorting index wise
+  sortSubsection(){
+    this.sub = this.sub.sort((a , b) => {
+      return a.index - b.index;
+    });
+
   }
 
 }
