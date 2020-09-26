@@ -237,7 +237,8 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     this.sub[this.subSecIndex].index = this.editSubSectionIndex;
     if (this.editMediaType === 'blog'){
       this.sub[this.subSecIndex].blogId = this.blogDetails.id;
-    }else{
+    };
+    if(this.mediaUrl !== ''){
       this.sub[this.subSecIndex].url = this.mediaUrl;
     }
     if (this.thumb !== ''){
