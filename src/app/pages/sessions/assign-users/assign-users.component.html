@@ -99,7 +99,12 @@
             </div>
             <div class="col-6">
                 <div class="locModal" *ngFor="let guru of guruArray ; let g = index">
-                    <img class="ml-1" style="border-radius: 50%;" width="40px" height="40px" src="{{guru.img}}">
+                    <div *ngIf="guru.img === ''; else elseBlock" class="profile_image">
+                        <p class="ml-0 d-block">{{getInitials(guru.name)}}</p>
+                    </div>
+                    <ng-template #elseBlock>   
+                        <img class="ml-1" style="border-radius: 50%;" width="40px" height="40px" src="{{guru.img}}">
+                    </ng-template>
                     <p class="text-center">{{guru.name}}</p>
                     <button class="mr-2" nbButton status="danger" size="tiny"
                        (click)="removeGuru(g)" style="float: right; margin-top: 13px;">Remove</button>
@@ -107,7 +112,13 @@
             </div>
             <div class="col-6">
                 <div class="locModal" *ngFor="let shishya of shishyaArray ; let s = index">
-                    <img class="ml-1" style="border-radius: 50%;" width="40px" height="40px" src="{{shishya.img}}">
+                    <div *ngIf="shishya.img === ''; else elseBlock" class="profile_image">
+                        <p class="ml-0 d-block">{{getInitials(shishya.name)}}</p>
+                    </div>
+                    <ng-template #elseBlock>   
+                        <img class="ml-1" style="border-radius: 50%;" width="40px" height="40px" src="{{shishya.img}}">
+                    </ng-template>
+                    
                     <p class="text-center">{{shishya.name}}</p>
                     <button class="mr-2" nbButton status="danger" size="tiny"
                        (click)="removeShishya(s)" style="float: right; margin-top: 13px;">Remove</button>
