@@ -8,10 +8,18 @@
                 
                 <div class="card-body">
                 <form #f="ngForm">
-                    <div class="text-center" *ngIf="details.imageUrl && details.imageUrl.length > 0">                    
-                        <img class="profile-img" src="{{details.imageUrl}}">    
+                    <div class="text-center" *ngIf="details.profileImage && details.profileImage.length > 0; else elsePart">                    
+                        <img class="profile-img" src="{{details.profileImage}}">    
                         <h2 class="mt-3" style="color: #9ca6bc;">{{details.fName + ' ' + details.lName}}</h2>                
                     </div>
+                    <ng-template #elsePart>
+                        <div class="text-center">     
+                            <div class="align-middle initials-image">
+                                {{getInitials(details.fName + ' ' + details.lName)}}  
+                            </div>                       
+                                                         
+                        </div>
+                    </ng-template>
                     <hr>
                     <h5 class="text-center mb-4">Personal Details</h5>
                     
@@ -465,7 +473,7 @@
                                           
                     <div (click)="assignGuru(g)" data-dismiss="modal" *ngFor="let g of guruList">
                         <div class="ml-4">
-                            <img style="border-radius: 50%;" width="40px" height="40px" src="{{g.imageUrl}}">
+                            <img style="border-radius: 50%;" width="40px" height="40px" src="{{g.profileImage}}">
                             <p style="margin-top: 16px;" class="ml-3 d-inline-block text-center">{{g.fName + ' ' + g.lName}}</p>
                         </div>
                     </div>                        
@@ -493,10 +501,23 @@
                                           
                     <div (click)="assignShishya(s)" data-dismiss="modal" *ngFor="let s of shishyaList">
                         <div class="ml-4">
-                            <img style="border-radius: 50%;" width="40px" height="40px" src="{{s.imageUrl}}">
+                            <img *ngIf="s.profileImage !== ''; else elseBlock" style="border-radius: 50%;" width="40px" height="40px" src="{{s.profileImage}}">
+                            <ng-template #elseBlock>
+                                <div class="user-initials" style="width: 40px; height: 40px; border-radius: 50%;">
+                                    {{getInitials(s.fName + ' ' + s.lName)}}
+                                </div>
+                            </ng-template>
                             <p style="margin-top: 16px;" class="ml-3 d-inline-block text-center">{{s.fName + ' ' + s.lName}}</p>
                         </div>
-                    </div>                        
+                    </div>     
+                    <!-- <div *ngIf="g.profileImage === ''; else elseBlock" class="profile_image">
+                        <p>{{getInitials(g.fName + ' ' + g.lName)}}</p>
+                    </div>
+                    <ng-template #elseBlock>   
+                        <img style="border-radius: 50%; margin-left: 5px;" width="40px" height="40px" src="{{g.profileImage}}">
+                    </ng-template>
+                    
+                    <p style="margin-left: 40px; display: inline-block;" class="text-center">{{g.fName + ' ' + g.lName}}</p>                    -->
                    
                 </div>
             </div>

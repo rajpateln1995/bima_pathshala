@@ -177,6 +177,16 @@ export class UserDetailsComponent implements OnInit {
   }
 
 
+  getInitials(fullName){
+    if(fullName.length > 0){
+      return fullName.split(" ").map((n)=>n[0].toUpperCase()).join("");
+    }else{
+      return 'XX';
+    }
+  }
+
+
+
   save(){
     this.loading = true;
     const data = {
