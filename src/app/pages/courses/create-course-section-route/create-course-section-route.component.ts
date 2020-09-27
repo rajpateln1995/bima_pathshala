@@ -42,7 +42,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     this.section_name = this.section.name;
     this.section_description = this.section.description;
     this.sub = this.section.data;
-    this.SubSectionIndex = this.sub.length + 1;
+    this.SubSectionIndex = this.sub.length;
     console.log(this.SubSectionIndex);
     console.log(this.section);
     console.log(this.language);
@@ -93,7 +93,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     };
     console.log(obj);
 
-    this.disableBtn = true;
+    
     this.courses.createSubSection(obj).subscribe((res: any) => {
       console.log(res);
       this.sub = res.data.data;
@@ -106,6 +106,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       this.blogDetails.name = '';
       this.mediaType = '';
       this.SubSectionIndex++;
+      this.disableBtn = true;
       this.toaster.show('Sub Section Created Successfully !', 'Sub Section Created' , { status : 'success' });
     },
     err => {
@@ -196,6 +197,7 @@ export class CreateCourseSectionRouteComponent implements OnInit {
       console.log(res);
       const temp: any = res;
       this.sub = temp.data.data;
+      this.SubSectionIndex = this.sub.length;
       this.toaster.show('Sub Section Deleted Successfully', 'Sub Section Deleted' , { status : 'success' });
     },
     err => {
@@ -237,7 +239,6 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     this.document.getDocAndArticle('', blog_id, '1', '10').subscribe((res: any) => {
       console.log(res);
       this.blogDetails.name = res.data[0].title;
-      document.getElementById('toogle-edit-modal').click();
     },
     err => {
       console.log(err);

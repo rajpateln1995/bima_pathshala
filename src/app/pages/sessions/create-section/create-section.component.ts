@@ -1,4 +1,5 @@
 import { HttpEventType } from '@angular/common/http';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NbToastrService } from '@nebular/theme';
@@ -19,7 +20,9 @@ export class CreateSectionComponent implements OnInit {
   mediaType;
 
   subSecId;
+  editSubSecId;
   subSecTarget;
+  editSubSecIdTarget;
   deleteId;
   deleteTarget;
 
@@ -33,6 +36,8 @@ export class CreateSectionComponent implements OnInit {
     this.subSecTarget = `#subSec${this.curriculum._id}`;
     this.deleteId =  `deleteConfirmModal${this.curriculum._id}`;
     this.deleteTarget = `#deleteConfirmModal${this.curriculum._id}`;
+    this.editSubSecId = `editSubSecId${this.curriculum._id}`;
+    this.editSubSecIdTarget = `#editSubSecId${this.curriculum._id}`;
   }
 
 
@@ -45,6 +50,71 @@ export class CreateSectionComponent implements OnInit {
   //     console.log(err);
   //   })
   // }
+
+  editSubSectionTitle;
+  editMediaType;
+  subsecindex;
+  editSubSec(type , title , i){
+    this.editSubSectionTitle = title;
+    this.editMediaType = type;
+    this.subsecindex = i;
+  }
+
+
+
+  SaveSubSection(editForm){
+    console.log(this.subsecindex);
+    this.curriculum.data[this.subsecindex].type = this.editMediaType;
+    this.curriculum.data[this.subsecindex].title = this.editSubSectionTitle;
+    if(this.mediaUrl !== ''){
+      this.curriculum.data[this.subsecindex].url = this.mediaUrl;
+    }
+    if (this.thumb !== ''){
+      this.curriculum.data[this.subsecindex].thumb = this.thumb;
+    }
+    
+    const obj = {
+      _id: this.curriculum._id,
+      data : this.curriculum.data,
+    }
+
+    this.courses.createSubSection(obj).subscribe((res: any) => {
+      this.curriculum.data = res.data.data;
+      document.getElementById('close-edit-sub-section'+this.curriculum._id).click();
+      editForm.resetForm();
+      this.thumb = '';
+      this.mediaUrl = '';
+    },err => {
+      console.log(err);
+      this.thumb = '';
+      this.mediaUrl = '';
+      this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
+    })
+
+    // this.sortSubsection();
+
+    // const obj = {
+    //   _id : this.section._id,
+    //   data : this.sub,
+    // };
+
+    // this.courses.createSubSection(obj).subscribe(res => {
+    //   const str = `close-sub-section${this.section_id}`;
+    //   document.getElementById(str).click();
+    //   form.resetForm();
+    //   this.progress = 0;
+    //   this.toaster.show('Sub Section Saved Successfully!', 'Sub Section Saved' , { status : 'success' });
+    //   this.thumb = '';
+    // },
+    // err => {
+    //   console.log(err);
+    //   this.toaster.show('Something Went Wrong !', 'Error' , { status : 'danger' });
+    //   this.thumb = '';
+
+    // });
+  }
+
+
 
   progress;
   mediaUrl;
@@ -81,6 +151,7 @@ export class CreateSectionComponent implements OnInit {
         console.log(event);
         const data: any = event;
         this.thumb = data.body.data[0];
+        this.disableBtn = false;
         this.toaster.show('Media Uploaded Successfully', 'Media Uploaded' , { status : 'success' });
       }
     },
@@ -118,10 +189,15 @@ export class CreateSectionComponent implements OnInit {
       document.getElementById(str).click();
       subSecModal.resetForm();
       this.progress = 0;
+      this.disableBtn = true;
+      this.thumb = '';
+      this.mediaUrl = '';
       this.toaster.show('Sub Section Created Successfully', 'Sub Section Created' , { status : 'success' });
     },
     err => {
       console.log(err);
+      this.thumb = '';
+      this.mediaUrl = '';
       this.toaster.show('Something Went Wrong', 'Error' , { status : 'danger' });
     });
   }

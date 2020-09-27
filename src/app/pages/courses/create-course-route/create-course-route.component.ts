@@ -50,10 +50,7 @@ export class CreateCourseRouteComponent implements OnInit {
 
 
   checkIndexing(sum, length) {
-    if(sum === 0){
-      return false;
-    }
-    if (sum === length * (length + 1) / 2) {
+    if (sum === length * (length - 1) / 2) {
       return true;
     } else {
       return false;
@@ -63,12 +60,14 @@ export class CreateCourseRouteComponent implements OnInit {
 
 
   validateCourse(): any {
-    const temp: any = this.details;
+    let temp: any = this.details;
     this.id = this.route.snapshot.params['id'];
     this.courses.getCourseDetails(this.id).subscribe(res => {
       console.log(res);
       const data: any = res;
       this.details = data.data.course;
+      this.sortSections();
+      temp = data.data.course;
       this.s = data.data.course.status;
       if (temp && temp.sections) {
         if (temp.sections && temp.sections.length > 0) {
@@ -157,7 +156,7 @@ export class CreateCourseRouteComponent implements OnInit {
       'name': this.SectionName,
       'description': this.SectionDescription,
       'course': this.route.snapshot.params['id'],
-      'index': this.details.sections.length + 1,
+      'index': this.details.sections.length,
     };
     console.log(obj);
     this.courses.createSection(obj).subscribe(res => {
