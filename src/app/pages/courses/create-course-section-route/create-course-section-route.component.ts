@@ -234,7 +234,14 @@ export class CreateCourseSectionRouteComponent implements OnInit {
     this.blogDetails.id = blog_id;
     this.editSubSectionIndex = subIndex;
 
-    document.getElementById('toogle-edit-modal').click();
+    this.document.getDocAndArticle('', blog_id, '1', '10').subscribe((res: any) => {
+      console.log(res);
+      this.blogDetails.name = res.data[0].title;
+      document.getElementById('toogle-edit-modal').click();
+    },
+    err => {
+      console.log(err);
+    });
   }
 
   saveSubSectionChanges(form){

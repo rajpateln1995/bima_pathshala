@@ -157,6 +157,7 @@ export class CreateCourseRouteComponent implements OnInit {
       'name': this.SectionName,
       'description': this.SectionDescription,
       'course': this.route.snapshot.params['id'],
+      'index': this.details.sections.length + 1,
     };
     console.log(obj);
     this.courses.createSection(obj).subscribe(res => {
